@@ -71,7 +71,7 @@ time_format_blog = "02.01.2006"
 [params]
 copyright = "The Choco-solver Authors"
 privacy_policy = "https://policies.google.com/privacy"
-choco_version = "4.10.2"
+choco_version = "4.10.3"
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
