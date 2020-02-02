@@ -65,7 +65,7 @@ Stay up to date on the development of Choco solver and reach out to the communit
 - Join [the official Gitter room](https://gitter.im/chocoteam/choco-solver#).
 - Get help on the [google group](https://groups.google.com/forum/#!forum/choco-solver)
 - Implementation help may be found at Stack Overflow (tagged [`choco`](https://stackoverflow.com/questions/tagged/choco)).
-- Use the [issue tracker](https://github.com/chocoteam/choco-solver/issues) here on GitHub to report issues. As far as possible, provide a [Minimal Working Example](https://en.wikipedia.org/wiki/Minimal_Working_Example).
+- Use the [issue tracker](https://github.com/chocoteam/choco-solver/issues) on GitHub to report issues. As far as possible, provide a [Minimal Working Example](https://en.wikipedia.org/wiki/Minimal_Working_Example).
 
 
 Feel free to meet cho-coders : [@cprudhom](https://github.com/cprudhom) (Charles Prud'homme) and [@jgFages](https://github.com/jgFages) (Jean-Guillaume Fages) 

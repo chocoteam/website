@@ -3,7 +3,7 @@ title: "Modeling"
 linkTitle: "Modeling"
 weight: 2
 description: >
-  What does your user need to know to express a problem?
+  What do you need to know to express a problem?
 ---
 
 ## The Model
@@ -20,7 +20,7 @@ or:
 Model model = new Model("my problem");
 ```
 
-`Model` is the top-level objects that stores declared variables, posted constraints and gives access to the `Solver`. 
+`Model` is the top-level object that stores declared variables, posted constraints and gives access to the `Solver`. 
 
 {{% pageinfo %}}
 This should be the first instruction, prior to any other modeling instructions, as it is needed to declare variables and constraints.

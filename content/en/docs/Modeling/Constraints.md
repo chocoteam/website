@@ -10,7 +10,7 @@ A constraint is a logic formula defining allowed combinations of values for a se
 i.e., restrictions over variables that must be respected in order to get a feasible solution.
 A constraint is equipped with a (set of) filtering algorithm(s), named *propagator(s)*.
 A propagator **removes**, from the domains of the target variables, values that cannot correspond to a valid combination of values.
-A solution of a problem is variable-value assignment verifying all the constraints.
+A solution of a problem is a variable-value assignment verifying all the constraints.
 
 Constraint can be declared in *extension*, by defining the valid/invalid tuples, or in *intension*, by defining a relation between the variables.
 For a given requirement, there can be several constraints/propagators available.
@@ -46,7 +46,7 @@ a generic `Constraint` with the right list of propagators.
 Each propagator is associated with a unique java class.
 
 Note that it is not required to manipulate propagators, but only constraints.
-However, one can define specific constraints by defining combinations of existing and/or its own propagators.
+However, one can define specific constraints by defining combinations of existing and/or home-made propagators.
 
 ### Solution checking
 
