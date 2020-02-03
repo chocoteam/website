@@ -64,9 +64,6 @@ An *absolute* constraint is posted like this:
 model.absolute(x, y).post(); // x = |y|
 ```
 
-{{% alert title="Info" color="primary" %}}
-One might prefer to use a view: `x = model.intAbsView(y);`.
-{{% /alert %}}
 
 ### Global constraints
 
