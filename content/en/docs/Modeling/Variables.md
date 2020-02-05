@@ -18,7 +18,7 @@ When creating a variable, the user can specify a name to help reading the output
 
 ## Integer variables
 
-An integer variable an unknown whose value should be an integer. Therefore, the domain of an integer variable is a set of integers (representing possible values).
+An integer variable is an unknown whose value should be an integer. Therefore, the domain of an integer variable is a set of integers (representing possible values).
 To create an integer variable, the `Model` should be used:
 
 ```java
@@ -39,7 +39,7 @@ IntVar[] vs = model.intVarArray("vs", 5, -1, 1);
 IntVar[][] vs = model.intVarMatrix("vs", 5, 6, -1, 1);
 ```
 
-There exists different ways to encode the domain of an integer variable.
+There exists different ways to encode the domain of an integer variable: bounded domain or enumerated domain.
 
 ### Bounded domain
 
@@ -48,6 +48,7 @@ an interval of the form $[\\![a,b]\\!]$ where $a$ and $b$ are integers such that
 This representation is pretty light in memory (it requires only two integers) but it cannot represent *holes* in the domain.
 For instance, if we have a variable whose domain is $[\\![0,10]\\!]$ and a constraint enables to detect that
 values 2, 3, 7 and 8 are infeasible, then this learning will be lost as it cannot be encoded in the domain (which remains the same).
+However, whenever the values 9 and 10 are removed from the variable's domain, the upper bound of the variable will be set to 6 by such a constraint.
 
 To specify you want to use bounded domains, set the `boundedDomain` argument to `true` when creating variables:
 
@@ -163,7 +164,7 @@ IntVar x = model.intScaleView(y, 3);
 
 ### Logical views
 
-A logical view is based on an integer variable, a basic arithmetical relation ($=,\neq,\leq,\geq$) and a constant. The resulting view states wether or not the relation holds.
+A logical view is based on an integer variable, a basic arithmetical relation ($=,\neq,\leq,\geq$) and a constant. The resulting view states whether or not the relation holds.
 
 #### $b \Leftrightarrow (x = 4)$ :
 
