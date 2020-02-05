@@ -2,6 +2,7 @@
 title: "First Model"
 date: 2020-01-31T11:47:58+01:00
 type: docs
+math: "true"
 weight: 11
 description: >
   Let's start with the famous 8-queen problem.
@@ -68,7 +69,7 @@ solution. The values a variable can take is defined by its domain.
 Here, in a solution, there will be exactly one queen per row (and per
 column). So, a modelling trick is to fix the row a queen can go to and
 only question on their column. Thus, there will be *n* queens (one per
-row), each of them to be assigned to one column, among $[1,n]$.
+row), each of them to be assigned to one column, among $\[1,n\]$.
 
 Lines 3 and 5 managed to create variables and their domain.
 
