@@ -136,14 +136,3 @@ Most search strategies rely on :
 Note that some strategies are *dynamic* and might work more efficiently when combined with a [restart policy]({{< ref "Restarts.md" >}}).
 {{%/alert%}}
 
-
-### Making a decision greedy
-
-You can make a decision non-refutable by using `decision.setRefutable(false)`
-
-To make an entire search strategy greedy, use:
-
-```java
-Solver s = model.getSolver();
-s.setSearch(greedySearch(inputOrderLBSearch(x,y,z)));
-```
