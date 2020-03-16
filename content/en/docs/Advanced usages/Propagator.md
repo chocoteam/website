@@ -12,7 +12,7 @@ description: >
 
 You can create your own constraint by creating a generic `Constraint` object with the appropriate propagator:
 
-```
+```java
 Constraint c = new Constraint("MyConstraint", new MyPropagator(vars));
 ```
 
@@ -20,18 +20,24 @@ The only tricky part relies in the propagator implementation.
 Your propagator must extend the `Propagator` class but, at the begining, not all methods have to be overwritted.
 We will see two ways to implement a propagator ensuring that `X >= Y`.
 
+A guided implementation of a scalar constraint is presented in the tutorial: [Designing a constraint]({{< ref "/tutos/Constraints.md" >}}).
+
 #### Basic propagator
 
 You must at least call the super constructor to specifies the scope (set of variables) of the propagator.
 Then you must implement the two following methods:
 
-`void propagate(int evtmask)`
+```java 
+void propagate(int evtmask)
+```
 
 > This method applies the global filtering algorithm of the propagator, that is, from *scratch*.
 > It is called once during initial propagation (to propagate initial domains) and then during the solving process if
 > the propagator is not incremental. It is the most important method of the propagator.
 
-`isEntailed()`
+```java 
+ESat isEntailed()
+```
 
 > This method checks the current state of the propagator. It is used for constraint reification.
 > It checks whether the propagator will be always satisfied (`ESat.TRUE`), never satisfied (`ESat.FALSE`)
@@ -45,7 +51,7 @@ but should at least cover the case where all variables are instantiated, in orde
 
 Here is an example of how to implement a propagator for `X >= Y`:
 
-```
+```java
 // Propagator to apply X >= Y
 public class MySimplePropagator extends Propagator<IntVar> {
 
@@ -96,7 +102,7 @@ The method `why(...)` explains the filtering, to allow learning.
 
 Here is an example of how to implement a propagator for `X >= Y`:
 
-```
+```java
 // Propagator to apply X >= Y
 public final class MyIncrementalPropagator extends Propagator<IntVar> {
 
@@ -151,19 +157,6 @@ public final class MyIncrementalPropagator extends Propagator<IntVar> {
     }
 
     @Override
-    public boolean why(RuleStore ruleStore, IntVar var, IEventType evt, int value) {
-        boolean newrules = ruleStore.addPropagatorActivationRule(this);
-        if (var.equals(x)) {
-            newrules |=ruleStore.addLowerBoundRule(y);
-        } else if (var.equals(y)) {
-            newrules |=ruleStore.addUpperBoundRule(x);
-        } else {
-            newrules |=super.why(ruleStore, var, evt, value);
-        }
-        return newrules;
-    }
-
-    @Override
     public String toString() {
         return "prop(" + vars[0].getName() + ".GEQ." + vars[1].getName() + ")";
     }
@@ -202,7 +195,7 @@ The *coarse* option:
 > The propagator does not react to fine events.
 > The coarse filtering algorithm should be surrounded like this:
 
-> ```
+> ```java
 > // In the case of ``SetVar``, replace ``getDomSize()`` by ``getEnvSize()-getKerSize()``.
 > long size;
 > do{

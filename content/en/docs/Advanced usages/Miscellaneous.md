@@ -1,4 +1,90 @@
-# Miscellaneous
+---
+title: "Miscellaneous"
+date: 2020-01-07T16:06:55+01:00
+weight: 57
+math: "true"
+---
+
+### Search monitors
+
+#### Principle
+
+A search monitor is an observer of the resolver.
+It gives user access before and after executing each main step of the solving process:
+
+
+* initialize: when the solving process starts and the initial propagation is run,
+
+
+* open node: when a decision is computed,
+
+
+* down branch: on going down in the tree search applying or refuting a decision,
+
+
+* up branch: on going up in the tree search to reconsider a decision,
+
+
+* solution: when a solution is got,
+
+
+* restart search: when the search is restarted to a previous node, commonly the root node,
+
+
+* close: when the solving process ends,
+
+
+* contradiction: on a failure,
+
+With the accurate search monitor, one can easily observe with the resolver, from pretty printing of a solution to learning nogoods from restart, or many other actions.
+
+The interfaces to implement are:
+
+
+* `IMonitorInitialize`,
+
+
+* `IMonitorOpenNode`,
+
+
+* `IMonitorDownBranch`,
+
+
+* `IMonitorUpBranch`,
+
+
+* `IMonitorSolution`,
+
+
+* `IMonitorRestart`,
+
+
+* `IMonitorContradiction`,
+
+
+* `IMonitorClose`.
+
+Most of them gives the opportunity to do something before and after a step. The other ones are called after a step.
+
+Simple example to print every solution:
+
+```
+Solver s = model.getSolver();
+s.plugMonitor(new IMonitorSolution() {
+    @Override
+    public void onSolution() {
+        System.out.println("x = "+x.getValue());
+    }
+});
+```
+
+In Java 8 style:
+
+```
+Solver s = model.getSolver();
+s.plugMonitor((IMonitorSolution) () -> {System.out.println("x = "+x.getValue());});
+```
+
 
 ## Settings
 
@@ -38,26 +124,3 @@ choco-gui is an extension of Choco 4.
 It provides a Graphical User Interface with various views which can be simply plugged on any Choco Model object.
 You will find it at [https://github.com/chocoteam/choco-gui](https://github.com/chocoteam/choco-gui)
 
-## Ibex Solver
-
-To manage continuous constraints with Choco, an interface with Ibex has been done.
-It needs Ibex to be installed on your system.
-
-> “IBEX is a C++ library for constraint processing over real numbers.
-
-> It provides reliable algorithms for handling non-linear constraints.
-> In particular, round off errors are also taken into account.
-> It is based on interval arithmetic and affine arithmetic.”
-> – [http://www.ibex-lib.org/](http://www.ibex-lib.org/)
-
-### Installing Ibex
-
-See the [installation instructions](http://www.ibex-lib.org/doc/install.html) of Ibex to complied Ibex on your system.
-More specially, take a look at [Installation as a dynamic library](http://www.ibex-lib.org/doc/install.html#installation-as-a-dynamic-library)
-Do not forget to add the `--with-java-package=org.chocosolver.solver.constraints.real` configuration option.
-
-### Using Ibex
-
-Once the installation is completed, the JVM needs to know where Ibex is installed to fully benefit from the Choco-Ibex bridge and declare real variables and constraints.
-This can be done either with an environment variable of by adding `-Djava.library.path=path/to/ibex/lib` to the JVM arguments.
-The path /path/to/ibex/lib points to the lib directory of the Ibex installation directory.
