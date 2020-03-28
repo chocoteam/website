@@ -45,6 +45,15 @@ resampleFilter = "CatmullRom"
 quality = 75
 anchor = "smart"
 
+
+# Additional menu items
+
+[[menu.main]]
+    name = "Javadoc"
+    weight = 50
+    url = "https://javadoc.io/doc/org.choco-solver/choco-solver/latest/org.chocosolver/module-summary.html"
+
+
 [services]
 [services.googleAnalytics]
 id = "UA-47407732-1"
