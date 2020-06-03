@@ -3,7 +3,7 @@ title: "Designing a constraint"
 date: 2020-02-05
 type: docs
 math: "true"
-weight: 70
+weight: 80
 description: >
   Steps to follow to create your own constraint.
 ---
