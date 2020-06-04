@@ -51,11 +51,11 @@ model.sum(dist, "=", totDist).post();
 The `table` constraints maintain the distance metric when the sub-set of cities to be visited from a given one is refined.
 In order to limit tuples, those expressing a loop over a city (when `i = j`) are not added to `tuples`.
 
-In this example, with declare a `table` constraint over two variables, but an API exists to input an array of variables. Obviously, the tuples declaration should be adapted.
+In this example, we declare a `table` constraint over two variables, but another API exists to input an array of variables. Obviously, the tuples declaration should be adapted.
 The underlying algorithm used to filter inconsistent values in such constraint can also be defined manually but the default one should work well in any case. More details are available in the Javadoc.
 
-There exists some specific cases wherein one wants to define an *universal value*, meaning that some variables can take any values from their domain.
-This is achieved calling `tuples.setUniversalValue(star)`, where `star` is the universal vaue (for example, -1).
+There exists some specific cases wherein one wants to define a *universal value*, meaning that some variables can take any values from their domain.
+This is achieved calling `tuples.setUniversalValue(star)`, where `star` is the universal value (for example, -1).
 
 Alternatively in the TSP, table constraints can be replaced by element constraints:
 
