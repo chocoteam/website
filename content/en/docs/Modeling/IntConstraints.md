@@ -2,6 +2,7 @@
 title: "Constraints over integer variables"
 date: 2020-01-07T16:07:15+01:00
 weight: 23
+math: "true" 
 description: >
   Overview of constraints based on boolean and integer variables.
 ---
@@ -105,6 +106,74 @@ allDifferent, allEqual, nvalues, element
 
 ## Table constraints
 
+Table constraints are really useful and make it possible to encode any relations. 
+Table constraints expect an array of variables as input and a `Tuples` object. 
+The latter stores a list of allowed (resp. forbidden) tuples, each of them expresses an allowed (resp. forbidden) combination  for the variables.
+Table constraints are also known as constraints *in extension* since all possible (or impossible) combinations are needed as input. 
+
+Table constraints usually provide domain consistency filtering algorithm, with diverse spatial and temporal complexities which depend on the number of variables involved and the number of tuples.
+
+### Allowed combinations 
+
+Let's take the example of four variables $X_i = [\\![0,3]\\!], i \in [1,4]$, that **must** all be equal. This relation can be expressed with a Table constraint as follow:
+
+```java
+Tuples allEqual = new Tuples(true); // true stands for 'allowed' combinations
+allEqual.add({0,0,0,0});
+allEqual.add({1,1,1,1});
+allEqual.add({2,2,2,2});
+allEqual.add({3,3,3,3});
+model.table(X, allEqual, "CT+").post();
+```
+
+Only defined combinations are solutions.
+
+The parameter `"CT+"` is optional and defines the filtering algorithm to use. `"CT+"` is a really good default choice.
+
+### Forbidden combinations 
+
+Let's take the previous example but in that case, all variables **must not** be all be equal. This relation can be expressed with a Table constraint as follow, with a little difference in the `Tuples` declaration:
+
+```java
+Tuples allEqual = new Tuples(false); // false stands for 'forbidden' combinations
+allEqual.add({0,0,0,0});
+allEqual.add({1,1,1,1});
+allEqual.add({2,2,2,2});
+allEqual.add({3,3,3,3});
+model.table(X, allEqual, "CT+").post();
+```
+
+All undefined combinations are solution, for example `{0,0,0,1}` or `{0,1,2,3}`.
+
+
+### Universal value
+Under certain conditions, the number of tuples can be reduced by introducing a *universal value*. 
+Consider $X_i = [\\![0,99]\\!], i \in [1,3]$, and the following relation: 
+
+1. *if $X_1 = 0$ then $X_2 = 0$ and $X_3$ can take any value;*
+2. *else if $X_1 = 3$ then $X_2 = 2$ and $X_3 = 1$.*
+
+The allowed tuples are:
+```
+{0, 0, 0}
+{0, 0, 1}
+...
+{0, 0, 98}
+{0, 0, 99}
+{3, 2, 1}
+```
+We can see that this relation requires 100 combinations to be expressed and 99 of them are needed to capture *$X_3$ can take any value*.
+It's a use case of universal value.
+```java
+int STAR = -1;
+Tuples relation = new Tuples(true); 
+relation.setUniversalValue(STAR);
+relation.add({0,0,STAR});
+relation.add({3,2,1});
+model.table(X, relation).post();
+```
+`STAR` represents the universal value, here $-1$.
+The value must be taken outside variables domain.
 
 ## SAT constraints
 
