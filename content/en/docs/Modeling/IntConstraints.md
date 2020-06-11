@@ -109,6 +109,12 @@ allDifferent, allEqual, nvalues, element
 Table constraints are really useful and make it possible to encode any relationships. 
 Table constraints expect an array of variables as input and a `Tuples` object. 
 The latter stores a list of allowed (resp. forbidden) tuples, each of them expresses an allowed (resp. forbidden) combination  for the variables.
+
+Consider an ordered set of variables $X=\\{X_i \mid i\in I\\}$ and a set of allowed combinations $T=\\{t_j \mid j\in J\\}$ where a tuple $t_j$ is defined as an ordered set of integer values $t_j = \\{v_i \mid i \in I\\}$. The ith value in $t_j$ is denoted $t_j[i]$.
+
+A Table constraint ensures that :
+$$Table(X,T)\equiv (\exists j \in J, t_j \in T, \forall i \in I, X_i = t_{j}[i])$$ 
+
 Table constraints are also known as constraints *in extension* since all possible (or impossible) combinations are needed as input. 
 
 Table constraints usually provide domain consistency filtering algorithm, with diverse spatial and temporal complexities which depend on the number of variables involved and the number of tuples.
