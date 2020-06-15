@@ -110,10 +110,12 @@ Table constraints are really useful and make it possible to encode any relations
 Table constraints expect an array of variables as input and a `Tuples` object. 
 The latter stores a list of allowed (resp. forbidden) tuples, each of them expresses an allowed (resp. forbidden) combination  for the variables.
 
-Consider an ordered set of variables $X=\\{X_i \mid i\in I\\}$ and a set of allowed combinations $T=\\{t_j \mid j\in J\\}$ where a tuple $t_j$ is defined as an ordered set of integer values $t_j = \\{v_i \mid i \in I\\}$. The ith value in $t_j$ is denoted $t_j[i]$.
+Consider an ordered set of variables $X=\\{X_i \mid i\in I\\}$ and an allowed combination $t\in T$, which defined an ordered set of integer values. The ith value in $t$ is denoted $t_i$.
 
 A Table constraint ensures that :
-$$Table(X,T)\equiv (\exists j \in J, t_j \in T, \forall i \in I, X_i = t_{j}[i])$$ 
+$$Table(X,T)\equiv \bigvee_{t \in T}\bigwedge_{i \in I}(X_i = t_i)$$
+
+*When dealing with forbidden combinations, the `$=$` operator below is replaced by a `$\neq$` operator.*
 
 Table constraints are also known as constraints *in extension* since all possible (or impossible) combinations are needed as input. 
 
