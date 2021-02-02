@@ -41,7 +41,7 @@ model.times(x, y, z).post(); // x * y = z
 ```
 
 {{% alert title="Info" color="primary" %}}
-For the first type of *times* constraint, one might prefer to use a view: `z = model.intOffsetView(x, a);`.
+For the first type of *times* constraint, one might prefer to use a view: `z = model.intScaleView(x, a);`.
 {{% /alert %}}
 
 A *div* constraint corresponds to a euclidean division. It is posted as following:

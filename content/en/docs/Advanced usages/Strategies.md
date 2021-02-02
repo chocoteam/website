@@ -91,26 +91,66 @@ s.setSearch(greedySearch(inputOrderLBSearch(x,y,z)));
 
 ##### Defining its own neighborhoods
 
-One can define its own neighbor by extending the abstract class `INeighbor`.
-It forces to implements the following methods:
+A presentation of the [functioning of LNS]({{< ref "/docs/Solving/LNS.md" >}}) was given earlier. It is said that anyone can define its own neighbor, dedicated to the problem solved.
+This is achieved by extending either the abstract class `IntNeighbor` or by implementing the interface `INeighbor`. 
+The former implements all methods from the latter but `void fixSomeVariables() throws ContradictionException;` that defines which variables should be fixed to their value in the last solution. 
+
+
+`INeighbor` forces to implements the following methods:
 
 ```java
-void recordSolution()
-// Action to perform on a solution. 
-// Typically, storing the current variables’ value.
+/**
+ * Action to perform on a solution. 
+ * Typically, storing the current variables’ value.
+ */
+public void recordSolution() {
+    // where `values` and `variables` are class instances
+    for (int i = 0; i < variables.length; i++) {
+        values[i] = variables[i].getValue();
+    }
+}  
 ```
+
+
 ```java
-void fixSomeVariables()
-// Fix some variables to their value in the last solution.
+/**
+ * Fix some variables to their value in the last solution.
+ */
+public void fixSomeVariables() throws ContradictionException{
+    // An example of random neighbor where a coin is tossed
+    // for each variable to choose if it is fixed or not in the current fragment
+    for (int i = 0; i < variables.length; i++) {
+        if(Math.random() < .9){
+            variables[i].instantiateTo(values[i], this);
+            // alternatively call: `this.freeze(i);`    
+        }
+    }
+}
+
 ```
+
 ```java
+/**
+ * Relax the number of variables fixed. 
+ * Called when no solution was found during a LNS run 
+ * (i.e., trapped into a local optimum).
+ * if the fragment is based on a class instance (e.g, number of fixed variables)
+ * it may be updated there
+ */
 void restrictLess()
-// Relax the number of variables fixed. 
-// Called when no solution was found during a LNS run 
-// (i.e., trapped into a local optimum).
+// for instance, the threshold (0.9) previously declare in `fixSomeVariables()`
+// can be reduced here
 ```
 
 ```java
+/** 
+ * Indicates whether the neighbor is complete, that is, can end.
+ * Most of the time, this is related to `restrictLess()`
+ */
 boolean isSearchComplete()`
-// Indicates whether the neighbor is complete, that is, can end.
+// for instance, if the threshold is 0. after a certain number of attempts.
 ```
+
+
+
+

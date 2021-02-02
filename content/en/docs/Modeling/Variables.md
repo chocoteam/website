@@ -169,26 +169,26 @@ A logical view is based on an integer variable, a basic arithmetical relation ($
 #### $b \Leftrightarrow (x = 4)$ :
 
 ```java
-BoolVar x = model.intEqView(x, 4);
+BoolVar b = model.intEqView(x, 4);
 ```
 
 #### $b \Leftrightarrow (x \neq 4)$ :
 
 ```java
-BoolVar x = model.intNeView(x, 4);
+BoolVar b = model.intNeView(x, 4);
 ```
 
 
 #### $b \Leftrightarrow (x \leq 4)$ :
 
 ```java
-BoolVar x = model.intLeView(x, 4);
+BoolVar b = model.intLeView(x, 4);
 ```
 
 #### $b \Leftrightarrow (x \geq 4)$ :
 
 ```java
-BoolVar x = model.intGeView(x, 4);
+BoolVar b = model.intGeView(x, 4);
 ```
 
 #### $d \Leftrightarrow \neg b$

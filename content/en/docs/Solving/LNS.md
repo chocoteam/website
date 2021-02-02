@@ -46,7 +46,8 @@ One drawback of LNS is that the relaxation process is quite often problem depend
 Some works have been dedicated to the selection of variables to relax through general concept not related to the class of the problem treated [5,24].
 However, in conjunction with CP, only one generic approach, namely Propagation-Guided LNS [24], has been shown to be very competitive with dedicated ones on a variation of the Car Sequencing Problem.
 Nevertheless, such generic approaches have been evaluated on a single class of problem and need to be thoroughly parametrized at the instance level, which may be a tedious task to do.
-It must, in a way, automatically detect the problem structure in order to be efficient.
+It must, in a way, automatically detect the problem structure in order to be efficient. 
+The details of the methods to be implemented are given in the [Advanced section]({{< ref "/docs/Advanced usages/Strategies.md#large-neighborhood-search-lns" >}}) 
 
 ### Combining neighborhoods
 

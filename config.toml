@@ -90,7 +90,7 @@ choco_version = "4.10.3"
 version_menu = "Releases"
 
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
-github_repo = "https://github.com/chocoteam/choco-solver"
+github_repo = "https://github.com/chocoteam/website"
 # An optional link to a related project repo. For example, the sibling repository where your product code lives.
 github_project_repo = "https://github.com/chocoteam/choco-solver"
 
