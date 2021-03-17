@@ -97,7 +97,38 @@ allDifferent, allEqual, nvalues, element
 
 ## Scheduling constraints
 
+Scheduling problems can be modelled using Task variables and the cumulative constraint.  
+A task represents the entity that should be scheduled, where it is unknown when the task starts and optionally how long it lasts.  
+The cumulative constraint limits the number of concurrent tasks.  
+
 ### `Task` variables
+
+A task needs a start `IntVar` and an int duration.
+
+```java
+Task task = new Task(start, duration);
+```
+
+Optionally and end `IntVar` can be supplied. Task will ensure that start + duration = end, end being an offset view of start + duration.
+
+```java
+Task task = new Task(start, duration, end);
+```
+
+A task can have an unknown duration. In this case create the task with 3 `IntVar`: start, varDuration and end. Task will ensure that start + duration = end, end being an offset view of start + duration.
+
+```java
+Task task = new Task(start, varDuration, end);
+```
+
+Finally, a task can be created based on the `Model` and 5 ints: earliestStart, latestStart, duration, earliestEnd, latestEnd.  
+A start `IntVar` will be created with a domain of $[earliestStart, latestStart]$.  
+An end `IntVar` will be created with a domain of $[earliestEnd, latestEnd]$.  
+Task will ensure that start + duration = end, end being an offset view of start + duration.
+
+```java
+Task task = new Task(model, earliestStart, latestStart, duration, earliestEnd, latestEnd);
+```
 
 
 ### `cumulative` constraint
