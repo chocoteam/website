@@ -130,9 +130,34 @@ Task will ensure that start + duration = end, end being an offset view of start 
 Task task = new Task(model, earliestStart, latestStart, duration, earliestEnd, latestEnd);
 ```
 
+### `Cumulative` constraint
 
-### `cumulative` constraint
+The cumulative constraint ensures that at any point in time, the cumulated heights of a set of overlapping `Tasks` does not exceed a given capacity.  
+Let tasks be an array of `Task`, heights an array of `IntVar` and capacity an `IntVar`.  
+Make sure $|tasks| = |heights|$  
 
+```java
+model.cumulative(tasks, heights, capacity).post();
+```
+
+If only one task can happen concurrently, set the heights fixed equal to the capacity, either by setting fixed values or posting constraints between the variables.  
+Other combinations of concurrently (or not) planned tasks can be modelled by setting different values for the heights and the capacity, or by defining different constraints between these variables.   
+
+Simple example: 4 tasks with a set height that cannot happen at the same time by setting fixed a capacity:
+
+```java
+Task[] tasks = new Task[4];
+Arrays.fill(tasks, new Task(start, duration));
+IntVar[] heights = new IntVar[4];
+Arrays.fill(heights, model.intVar(1));
+IntVar capacity = model.intVar(1);
+
+model.cumulative(tasks, heights, capacity).post();
+```
+Solving this will result in all 4 tasks happening consecutively so:
+$start[i] + duration[i] \leq start[j]$
+
+The cumulative constraint does not enforce a specific order of tasks. Define other constraints between the variables for this if needed.
 
 
 ## Table constraints
