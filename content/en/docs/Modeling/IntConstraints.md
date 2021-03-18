@@ -115,7 +115,7 @@ Optionally an end `IntVar` can be supplied. Task will ensure that *start + durat
 Task task = new Task(start, duration, end);
 ```
 
-A task can have an unknown duration. In this case create the task with 3 `IntVar`: start, varDuration and end. Task will ensure that *start + duration = end*, end being an offset view of *start + duration*.
+A task can have an unknown duration. In this case create the task with 3 `IntVar`: start, varDuration and end. Task will ensure that *start + varDuration = end*, end being an offset view of *start + varDuration*.
 
 ```java
 Task task = new Task(start, varDuration, end);
