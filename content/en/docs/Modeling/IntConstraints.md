@@ -97,11 +97,68 @@ allDifferent, allEqual, nvalues, element
 
 ## Scheduling constraints
 
+Scheduling problems can be modelled using Task variables and the cumulative constraint.  
+A task represents the entity that should be scheduled, where it is unknown when the task starts and optionally how long it lasts.  
+The cumulative constraint limits the number of concurrent tasks.  
+
 ### `Task` variables
 
+A task needs a start `IntVar` and a duration `int`.
 
-### `cumulative` constraint
+```java
+Task task = new Task(start, duration);
+```
 
+Optionally an end `IntVar` can be supplied. Task will ensure that *start + duration = end*, end being an offset view of *start + duration*.
+
+```java
+Task task = new Task(start, duration, end);
+```
+
+A task can have an unknown duration. In this case create the task with 3 `IntVar`: start, varDuration and end. Task will ensure that *start + varDuration = end*, end being an offset view of *start + varDuration*.
+
+```java
+Task task = new Task(start, varDuration, end);
+```
+
+Finally, a task can be created based on the `Model` and 5 `int`: earliestStart, latestStart, duration, earliestEnd, latestEnd.  
+A start `IntVar` will be created with a domain of *[earliestStart, latestStart]*.  
+An end `IntVar` will be created with a domain of *[earliestEnd, latestEnd]*.  
+Task will ensure that *start + duration = end*, end being an offset view of *start + duration*.
+
+```java
+Task task = new Task(model, earliestStart, latestStart, duration, earliestEnd, latestEnd);
+```
+
+### `Cumulative` constraint
+
+The cumulative constraint ensures that at any point in time, the cumulated heights of a set of overlapping `Tasks` does not exceed a given capacity.  
+Let tasks be an array of `Task`, heights an array of `IntVar` and capacity an `IntVar`, where *heights[i]* is the height for *tasks[i]*.  
+Make sure $|tasks| = |heights|$  
+
+```java
+model.cumulative(tasks, heights, capacity).post();
+```
+
+If only one task can happen concurrently, set the heights fixed equal to the capacity, either by setting fixed values or posting constraints between the variables.  
+Other combinations of concurrently (or not) planned tasks can be modelled by setting different values for the heights and the capacity, or by defining different constraints between these variables.   
+
+Example: 4 tasks with a set height that cannot happen at the same time by setting a fixed capacity:
+
+```java
+Task[] tasks = new Task[4];
+Arrays.fill(tasks, new Task(start, duration));
+IntVar[] heights = new IntVar[4];
+Arrays.fill(heights, model.intVar(1));
+IntVar capacity = model.intVar(1);
+
+model.cumulative(tasks, heights, capacity).post();
+```
+
+Solving this will result in all 4 tasks happening consecutively so:
+$start[i] + duration[i] \leq start[j]$
+
+The cumulative constraint does not enforce a specific order of tasks. Define additional constraints between the variables for this if needed.
 
 
 ## Table constraints
