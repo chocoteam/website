@@ -156,7 +156,7 @@ model.cumulative(tasks, heights, capacity).post();
 ```
 
 Solving this will result in all 4 tasks happening consecutively so:
-$start[i] + duration[i] \leq start[j]$
+$start[i] + duration[i] \lt start[j]$
 
 The cumulative constraint does not enforce a specific order of tasks. Define additional constraints between the variables for this if needed.
 
