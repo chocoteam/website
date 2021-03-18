@@ -135,6 +135,7 @@ Task task = new Task(model, earliestStart, latestStart, duration, earliestEnd, l
 The cumulative constraint ensures that at any point in time, the cumulated heights of a set of overlapping `Tasks` does not exceed a given capacity.  
 Let tasks be an array of `Task`, heights an array of `IntVar` and capacity an `IntVar`, where *heights[i]* is the height for *tasks[i]*.  
 Make sure $|tasks| = |heights|$  
+Task duration and height should be $\geq$ 0. Tasks with duration or height equal to 0 will be discarded.
 
 ```java
 model.cumulative(tasks, heights, capacity).post();
