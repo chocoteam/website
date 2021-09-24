@@ -91,8 +91,8 @@ s.plugMonitor((IMonitorSolution) () -> {System.out.println("x = "+x.getValue());
 A `Settings` object is attached to each `Model`.
 It declares default behavior for various purposes: from general purpose (such as the welcome message), modelling purpose (such as enabling views) or solving purpose (such as the search binder).
 
-Default settings can be accessed through `DefaultSettings`.
-This class can be extended to provide more settings and set to modified the default values.
+`Settings` is a _factory design pattern_ and provides two default settings: `Settings.dev()` and `Settings.prod()` which offers configurations adapted to a development or production environment. These can then be modified via setters. 
+
 
 Settings are declared in a `Model` constructor.
 Settings are not immutable but modifying value after `Model` construction can lead to unexpected behavior.

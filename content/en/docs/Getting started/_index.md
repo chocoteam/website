@@ -52,10 +52,15 @@ dependencies {
 
 ### As a stand-alone application
 
-First, download the last jar file from [GitHub Release page](https://github.com/chocoteam/choco-solver/releases/latest).
-This jar file contains all required dependencies, unlike the one hosted in [Maven Central Repository](https://maven-badges.herokuapp.com/maven-central/org.choco-solver/choco-solver).
-The next step is simply to add the jar file to the classpath of your application.
-In the case your program depends on dependencies used by Choco solver too, you should consider using a build automation tool.
+When one wants to manually adds choco-solver as a dependency of a project, it should pay attention to the following:
+
+- the library is available in 2 versions.
+One is prefixed with `choco-solver` and defines what is necessary and sufficient to model and solve problems programmatically.
+The other, prefixed with `choco-parsers`, includes additionnal functions to parse FlatZinc, XCSP3, DIMACS or MPS files directly.
+- Each version is presented in 2 formats: with dependencies (suffixed with `-jar-with-dependencies`) or  without. It is likely tha the former is the needed one.
+- Finally, the [javadoc](https://javadoc.io/doc/org.choco-solver/choco-solver/latest/org.chocosolver/module-summary.html) of each version is also available on line.
+
+The next step is simply to add the jar file to the classpath of your application and eventually the javadoc.
 
 
 ## Community
