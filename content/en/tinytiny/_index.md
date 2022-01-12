@@ -21,5 +21,3 @@ IMT Atlantique, LS2N, TASC
 In this presentation, we are going to code {{< frag class="highlight-blue" c="from scratch" >}} a minimalist constraint solver.
 
 The aim is nothing but {{< frag class="highlight-blue" c="understanding" >}} the internal mechanics.
-
-<small>This is a W.I.P.</small>
