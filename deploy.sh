@@ -28,4 +28,4 @@ cd ../
 
 
 # Push source and build repos.
-git push -u origin master --recurse-submodules=on-demand
+git push origin master

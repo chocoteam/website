@@ -508,8 +508,9 @@ if (!doNotTrack) {
 	<div class="lead">What does your user need to know to solve a problem?</div>
 	<p>Up to here, we have seen how to model a problem with the <code>Model</code> object. To solve it, we need to use
 the <code>Solver</code> object that is obtained from the model as follows:</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000">Solver</span> <span style="color:#000">solver</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">model</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">getSolver</span><span style="color:#ce5c00;font-weight:bold">();</span>
-</code></pre></div><p>The <code>Solver</code> is in charge of alternating constraint-propagation with search, and possibly learning,
+<pre><code class="language-java">Solver solver = model.getSolver();
+</code></pre>
+<p>The <code>Solver</code> is in charge of alternating constraint-propagation with search, and possibly learning,
 in order to compute solutions. This object may be configured in various ways.</p>
 
         <div class="section-index">
@@ -760,7 +761,7 @@ in order to compute solutions. This object may be configured in various ways.</p
         
       </div>
       <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
-        <small class="text-white">&copy; 2021 The Choco-solver Authors All Rights Reserved</small>
+        <small class="text-white">&copy; 2022 The Choco-solver Authors All Rights Reserved</small>
         <small class="ml-1"><a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a></small>
 	
 		
