@@ -23,5 +23,9 @@ if [ -n "$*" ]; then
 fi
 git commit -m "$msg"
 
+# Return to project root
+cd ../
+
+
 # Push source and build repos.
-git push origin master
+git push -u origin master --recurse-submodules=on-demand
