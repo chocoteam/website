@@ -14,7 +14,7 @@ Charles Prud'homme, Jan. 2022
 IMT Atlantique, LS2N, TASC
 
 
-{{% warn c="Work in progress" %}}
+{{% warn c="This is a work in progress" %}}
 
 ---
  
