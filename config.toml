@@ -5,7 +5,7 @@ title = "Choco-solver"
 enableRobotsTXT = true
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
-theme = ["docsy"]
+theme = ["docsy","reveal-hugo"]
 
 # Will give values to .Lastmod etc.
 enableGitInfo = true
@@ -72,10 +72,16 @@ weight = 1
 time_format_default = "02.01.2006"
 time_format_blog = "02.01.2006"
 
-[markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+codeFences = false
+
+[outputFormats.Reveal]
+baseName = "index"
+mediaType = "text/html"
+isHTML = true
 
 # Everything below this are Site Params
 

@@ -8,3 +8,6 @@
 	path = public
 	url = https://github.com/chocoteam/chocoteam.github.io.git
 	branch = master
+[submodule "themes/reveal-hugo"]
+	path = themes/reveal-hugo
+	url = git@github.com:dzello/reveal-hugo.git
