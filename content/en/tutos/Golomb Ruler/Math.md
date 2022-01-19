@@ -55,7 +55,7 @@ earlier in the search.
 
 The following reasoning is based on the fact that:
 
-$$\forall i,j \in [1,m], i < j, \text{diff}\_{i,j} = \text{diff}\_{i,i+1} \ldots \text{diff}\_{j-1,j}$$
+$$\forall i,j \in [1,m], i < j, \text{diff}\_{i,j} = \text{diff}\_{i,i+1} + \ldots + \text{diff}\_{j-1,j}$$
 
 Because all distances must be different, we can estimate the minimal sum
 of distances as a sum of *j-i* different positive numbers.
@@ -68,11 +68,11 @@ $$\text{diff}\_{1,m} = \text{tick}\_{m} - \text{tick}\_1$$
 
 and
 
-$$\text{diff}\_{1,m} = \text{diff}\_{1,2} \ldots \text{diff}\_{i,j} \ldots\text{diff}\_{m-1,m}$$
+$$\text{diff}\_{1,m} = \text{diff}\_{1,2} + \ldots + \text{diff}\_{i,i+1} + \ldots + \text{diff}\_{m-1,m}$$
 
 Thus, since $\text{tick}\_1$ is equal to 0, we deduce that:
 
-$$\text{tick}\_{m} = \text{diff}\_{1,2} \ldots \text{diff}\_{i,j} \ldots\text{diff}\_{m-1,m}$$
+$$\text{tick}\_{m} = \text{diff}\_{1,2} + \ldots + \text{diff}\_{i,i+1} + \ldots + \text{diff}\_{m-1,m}$$
 
 There are *m-1-j+i* different numbers so the upper for
 $\text{diff}\_{i,j}$ can be defined as:
