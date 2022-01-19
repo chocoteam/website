@@ -29,7 +29,7 @@ And several excellent constraint modeling languages:
 ---
 
 So basically here</br>
- we are {{< alert c="not going to reinvent" >}} the wheel </br>
+ we are {{< calert c="not going to reinvent" >}} the wheel </br>
  or break the paradigm </br>
  but just 
 ### understand by doing
