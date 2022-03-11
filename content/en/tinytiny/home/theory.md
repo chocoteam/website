@@ -10,13 +10,22 @@ weight = 20
 
 We are talking about {{% calert c = "Constraint Satisfaction Problem" %}}.
 
-A CSP $\mathcal{P}$ is a triple $\left<\mathcal{X},\mathcal{C},\mathcal{D}\right>$
+A CSP $\mathcal{P}$ is a triple $\left<\mathcal{X},\mathcal{D},\mathcal{C}\right>$
 where:
-- $\mathcal{X} = \{X_1, \ldots, X_n\}$ is a set of variables,
+- $\mathcal{X} = \\{X_1, \ldots, X_n\\}$ is a set of variables,
 - $\mathcal{D}$ is a function associating a domain to each variable,
 - $\mathcal{C}$ is a set of constraints.
 
 _It can be turn into a COP quite easily_
+
+---
+
+{{< slide id="ex1" background="#8CC152" >}}
+
+Let's consider the following CSP $\mathcal{P}$:
+- $\mathcal{X} = \\{X_1, X_2, X_3\\}$
+- $\mathcal{D} = \\{D(X_1)=D(X_2)=[1,2], D(X_3)=[1,3]\\}$
+- $\mathcal{C} = \\{X_1\leq X_2,X_2\leq X_3,AtMost(1,[X_1, X_2, X_3],2)\\}$
 
 ---
 
@@ -29,6 +38,15 @@ It is said to be {{% calert c="satisfied" %}} if :
 </br>
 </br>
 *: $x_{i_k} \in \mathcal{D}(X_{i_k})$
+
+---
+
+{{< slide id="ex2" background="#8CC152" >}}
+
+In $\mathcal{P}$, the constraint $AtMost(1,[X_1, X_2, X_3],2)$ holds iff <u>at most</u> 1 variable among $X_1, X_2, X_3$ is assigned to the value 2.
+
+- $(1,1,1)$ and $(1,2,3)$ satisfy the constraint,
+- $(2,2,1)$ does not. 
 
 ---
 

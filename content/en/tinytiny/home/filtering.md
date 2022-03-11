@@ -56,6 +56,9 @@ assert variables["x1"] == [1]
 assert variables["x2"] == [2]
 ```
 
+<a href="https://colab.research.google.com/drive/1nF0Rf58i4a2uHEIzbVjyWB94uIEUzLL9#scrollTo=GFCDk4qtcfAB&line=18&uniqifier=1" target="_blank">Run it</a>
+
+
 ---
 
 ## What if...
