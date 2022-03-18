@@ -13,20 +13,60 @@ When trying to explain how constraint programming works,
 it is common to draw a parallel with sudoku.
 
 ---
-### Modelling
+## At modelling step
 
-- A cell takes its values in $\[1,9\]$
+- One must write a value in $\[1,9\]$ in each cell
 	- ➡️ a variable and a domain
-- Each digit shoudl be used exactly once per {{% calert c="row" %}}, per {{% calert c="column" %}} and per {{% calert c="square" %}}
+- Such that each digit is used exactly once per {{% calert c="row" %}}, per {{% calert c="column" %}} and per {{% calert c="square" %}}
 	- ➡️ sets of $\neq$ constraints
 ---
-### Solving
 
+## At solving step
+--- 
 
+### Local reasonning
+
+<figure>
+    <img src="/images/tinytiny/sudoku/local.png" alt="This is an alt" width="40%" >
+    <figcaption>Each constraint infers on a local view. </figcaption>
+</figure>
 
 ---
 
+### Filtering
+
+<figure>
+    <img src="/images/tinytiny/sudoku/filtering.png" alt="This is an alt" width="40%" >
+    <figcaption>Impossible values are removed </br> from a variable's domain</figcaption>
+</figure>
+
+---
+
+### Propagation
+
+<figure>
+    <img src="/images/tinytiny/sudoku/propagations.png" alt="This is an alt" width="40%" >
+    <figcaption>The information is shared between the constraints through the variables</figcaption>
+</figure>
+
+---
+
+### Search
+
+On **devil sudoku**, one has to make assumptions.
+
+And validate them by propagation.
+
+---
+
+
 ### A 4x4 sudoku example
+
+<figure>
+    <img src="/images/tinytiny/sudoku/4x4sudoku.png" alt="This is an alt" width="20%" >
+</figure>
+
+---
 
 ```python
 n = 4

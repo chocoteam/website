@@ -9,24 +9,27 @@ Now, we are able to
 
 ---
 
-<h1>The 6 queens puzzle</h1>
+<h1>The 8 queens puzzle</h1>
 
-<blockquote>The six queens puzzle is the problem of placing six chess queens on an 6×6 chessboard so that no two queens threaten each other;  thus, a solution requires that no two queens share the same row, column, or diagonal.</blockquote>
+<blockquote>The eight queens puzzle is the problem of placing eight chess queens on an 8×8  chessboard so that no two queens threaten each other;  thus, a solution requires that no two queens share the same row, column, or diagonal.</blockquote>
 
 [Wikipedia](https://en.wikipedia.org/wiki/Eight_queens_puzzle)
 
 --- 
 
-TODO: image
+<figure>
+    <img src="/images/tinytiny/nqueens/8queens.png" alt="This is an alt" width="40%" >
+    <figcaption>Src: <a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle">Wikipedia</a></figcaption>
+</figure>
 
 
 ---
 
-A first idea is to indicate by a <span style="color:deepskyblue;">boolean</span> variable if a cell is occupied by a queen or not.
+A first idea is to indicate by a <span style="color:deepskyblue;">Boolean</span> variable if a cell is occupied by a queen or not.
 
 {{% fragment %}}But we wouldn't be able to use our constraints.{{% /fragment %}}
 
-{{% fragment %}}Also, it is very MILP or SAT.{{% /fragment %}}
+{{% fragment %}}Also, it is very MILP-like or SAT-like.{{% /fragment %}}
 
 ---
 
@@ -47,7 +50,7 @@ Four groups of inequality <span style="color:deepskyblue;">constraints</span> ar
 ## 6 Queens puzzle in Python
 
 ```python{2-4|6-11|13-15|17}
-n = 6
+n = 8
 variables = {}
 for i in range(1, n + 1):
     variables["x" + str(i)] = {k for k in range(1, n + 1)}
@@ -67,15 +70,18 @@ print("it finds", enumerate(variables, cs), "solutions")
 ```
 ---
 
-### 2 solutions
+### 46 solutions
 
 ```python
-{'x1': [2], 'x2': [4], 'x3': [6], 'x4': [1], 'x5': [3], 'x6': [5], 'cst': {4}}
-{'x1': [3], 'x2': [6], 'x3': [2], 'x4': [5], 'x5': [1], 'x6': [4], 'cst': {4}}
-it finds 2 solutions
+{'x1': [1], 'x2': [5], 'x3': [8], 'x4': [6], 'x5': [3], 'x6': [7], 'x7': [2], 'x8': [4], 'cst': [5]}
+{'x1': [1], 'x2': [6], 'x3': [8], 'x4': [3], 'x5': [7], 'x6': [4], 'x7': [2], 'x8': [5], 'cst': [5]}
+...
+{'x1': [4], 'x2': [8], 'x3': [1], 'x4': [5], 'x5': [7], 'x6': [2], 'x7': [6], 'x8': [3], 'cst': [5]}
+{'x1': [4], 'x2': [8], 'x3': [5], 'x4': [3], 'x5': [1], 'x6': [7], 'x7': [2], 'x8': [6], 'cst': [5]}
+it finds 46 solutions
 ```
 
-There are 4 solutions without the symmetry breaking constraint, 2 otherwise.
+There are 92 solutions without the (simple) symmetry breaking constraint, 46 otherwise.
 
 ---
 
@@ -87,6 +93,6 @@ We build a minimalist CP solver :
 - exploring the search space in DFS way.
 
 And we were able to enumerate solutions</br> 
-on a basic problem !
+on a puzzle !
 
 {{% /section %}}

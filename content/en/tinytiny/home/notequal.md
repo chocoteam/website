@@ -12,7 +12,7 @@ of the different type
 
 ## Adding the constraint 
 
-### $x_1\neq x_2 + c$
+### $X_1\neq X_2 + c$
 where $c$ is a constant
 ## should be quite easy
 
@@ -21,9 +21,9 @@ where $c$ is a constant
 ---
 
 <section data-noprocess>
-<h2>The 2 rules of $x_1\neq x_2 + c$</h2>
-<p class="fragment">1. if $x_2$ is instantied to $v_2$, </br>then $v_2+c$ must be removed from $x_1$ values,</p>
-<p class="fragment">2. if $x_1$ is instantied to $v_1$, </br>then $v_1-c$ must be removed from $x_1$ values.</p>
+<h2>The 2 rules of $X_1\neq X_2 + c$</h2>
+<p class="fragment">1. if $X_2$ is instantied to $v_2$, </br>then $v_2+c$ must be removed from $X_1$ values,</p>
+<p class="fragment">2. if $X_1$ is instantied to $v_1$, </br>then $v_1-c$ must be removed from $X_1$ values.</p>
 
 
 <!--</section> to bind to the next section tag-->

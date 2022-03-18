@@ -4,16 +4,12 @@ weight = 120
 
 {{% section %}}
 
-# It's all about constraints 
-
----
-
 The {{% calert c="value" %}} of CP lies 
-### in the constraints
+## in the constraints
 
-{{% fragment %}}We only saw two basic binary constraints{{% /fragment %}} 
+{{% fragment %}}We only saw two basic binary constraints.{{% /fragment %}} 
 
-{{% fragment %}}But there are hundreds of them{{% /fragment %}}
+{{% fragment %}}But there are hundreds of them.{{% /fragment %}}
 
 --- 
 
@@ -25,7 +21,7 @@ The {{% calert c="value" %}} of CP lies
 
 Is it not possible to do with less?
 
-{{% fragment %}}MILP and SAT are doing very well with **one** type of constraint{{% /fragment %}}
+{{% fragment %}}Indeed, MILP and SAT are doing very well with **one** type of constraint !{{% /fragment %}}
 
 ---
 
@@ -92,19 +88,19 @@ thanks to an adapted filtering algorithm
 
 ---
 
-### $\bigwedge_{x_i,x_j \in X, i\neq j} x_i \neq x_j$ 
+### $\bigwedge_{X_i,X_j \in X, i\neq j} X_i \neq X_j$ 
 ### -vs- 
 ### $\texttt{allDifferent}(X)$
 
 
-{{% fragment %}}Both modelings find the same solutions{{% /fragment %}}
+{{% fragment %}}Both version find the same solutions{{% /fragment %}}
 
 {{% fragment %}}but the 2nd filters more {{% /fragment %}}
 ---
 
 ### With binary constraints
 
-![Alt text.](/images/constraints/alldiff1.svg)
+![Alt text.](/images/tinytiny/constraints/alldiff1.svg)
 
 What can be deduced?{{% fragment %}}Nothing until a variable is set{{% /fragment %}}
 ---
@@ -113,7 +109,7 @@ What can be deduced?{{% fragment %}}Nothing until a variable is set{{% /fragment
 
 ### With a global constraint
 
-![Alt text.](/images/constraints/alldiff1.svg) 
+![Alt text.](/images/tinytiny/constraints/alldiff1.svg) 
 
 Rely on graph theory...
 
@@ -123,7 +119,7 @@ Rely on graph theory...
 
 ### With a global constraint
 
-![Alt text.](/images/constraints/alldiff2.svg) 
+![Alt text.](/images/tinytiny/constraints/alldiff2.svg) 
 
 pair variables and values in a bipartite graph...
 
@@ -133,7 +129,7 @@ pair variables and values in a bipartite graph...
 
 ### With a global constraint
 
-![Alt text.](/images/constraints/alldiff3.svg)
+![Alt text.](/images/tinytiny/constraints/alldiff3.svg)
 
 find maximum cardinality matchings...
 
@@ -143,7 +139,7 @@ find maximum cardinality matchings...
 
 ### With a global constraint
 
-![Alt text.](/images/constraints/alldiff4.svg)
+![Alt text.](/images/tinytiny/constraints/alldiff4.svg)
 
 remove values which belong to none of them.
 

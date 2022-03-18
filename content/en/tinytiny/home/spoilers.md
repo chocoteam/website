@@ -9,9 +9,8 @@ weight = 10
 
 There are already plenty of great open source constraint solvers:
 
-[choco-solver🐙](www), [or-tools](www), [gecode](www), 
-[ACE](www), [JaCoP](www), [Mistral](www), [Sicstus](www),
-[Chuffed](www), ...
+[choco-solver🐙](https://choco-solver.org/), [or-tools](https://developers.google.com/optimization/), [gecode](https://www.gecode.org/), 
+[ACE](http://www.cril.univ-artois.fr/en/software/ace.en.html), [JaCoP](https://github.com/radsz/jacop), [Mistral](https://homepages.laas.fr/ehebrard/mistral.html), [Chuffed](https://github.com/chuffed/chuffed), ...
 
 </br>
 <small>🐙 My favourite.... but I am biased</small>
@@ -24,7 +23,7 @@ There are already plenty of great open source constraint solvers:
 
 And several excellent constraint modeling languages:
 
-[MiniZinc](www), [XCSP3](www), [PyCSP3](www), [Essence](www), [CPMpy](www), ...
+[MiniZinc](https://www.minizinc.org/index.html), [XCSP3 / PyCSP3](http://xcsp.org/), [CPMpy](https://cpmpy.readthedocs.io/en/latest/), ...
 
 ---
 

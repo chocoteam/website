@@ -7,7 +7,7 @@ weight = 40
 
 Let's roll up our sleeves and tackle the case of the binary _"strictly less"_ constraint: 
 
-### $x_1 < x_2$  
+### $X_1 < X_2$  
 
 
 --- 
@@ -32,7 +32,7 @@ class LessThan:
 
 ---
 
-We can impose that "x1" is strictly less than "x2":
+We can impose that $X_1$ is strictly less than $X_2$:
 
 ```python{3}
 variables = {"x1": {1, 2, 3},
@@ -81,8 +81,15 @@ Then
 - 4 is removed from $X_1$
 - 1 is removed from $X_2$
 
---- 
+---
+{{< slide id="ex4" background="#8CC152" >}}
 
+In other words:
+
+- $max(X_2)$ is removed from $X_1$
+- $min(X_1)$ is removed from $X_2$
+
+---
 ### `LessThan` filtering algorithm
 ```python{1|2-3|4-5|6-7|8-9|1-9}
 def filter(self, variables):
