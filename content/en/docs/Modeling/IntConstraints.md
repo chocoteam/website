@@ -65,8 +65,9 @@ An *absolute* constraint is posted like this:
 model.absolute(x, y).post(); // x = |y|
 ```
 
-
 ### Global constraints
+
+#### Minimum and maximum
 
 Let `min` and `max` be `IntVar` and let `vars` be an array of `IntVar`. One can post the following mathematical constraints to assure that `min` is the
 minimum of the variables in `vars` and `max` the maximum of them:
@@ -75,6 +76,8 @@ minimum of the variables in `vars` and `max` the maximum of them:
 model.min(min, vars).post();
 model.max(max, vars).post();
 ```
+
+#### Sum and scalar
 
 Similarly, one can want to sum some variables. For such an operation, one should use the `sum` constraint:
 
@@ -87,13 +90,53 @@ And, finally, for weighted sums, one should use the `scalar` constraint:
 
 ```java
 String op = ">="; // among ">=", ">", "<=", "<", "=" and "!="
-model.sum(vars, coefs, op, x).post(); // coefs being an array of int
+model.scalar(vars, coefs, op, x).post(); // coefs being an array of int
 // here, it gives sum(vars[i]*coefs[i]) >= x
 ```
 
-## Cardinality constraints
+## Remarkable global constraints
 
-allDifferent, allEqual, nvalues, element
+There exists a wide range of global constraints. In this section, we only list some of them. All of them are accessible through the `model` API.
+One can consult the complete list of constraints in the [JavaDoc](https://javadoc.io/doc/org.choco-solver/choco-solver/latest/org.chocosolver/module-summary.html).
+
+### AllDifferent
+
+The `alldifferent` constraint is probably the most famous one. It ensures that all variables in its scope take a distinct value in any solution. 
+
+```java
+IntVar[] vars = model.intVarArray("X", 4, 1, 5);
+model.allDifferent(vars).post();
+```
+
+An instantiation that satisfies this constraint is
+`[1,5,2,3]`.
+
+
+### Count
+
+This constraint is very helpful to count the number of occurences of a value in an array of variables.
+
+```java
+IntVar occ0 = model.intVar("occ0", 0, 5);
+IntVar[] vars = model.intVarArray("X", 7, 0, 5);
+model.count(0, vars, occ0).post();
+``` 
+
+A solution to this constraint is `vars = [0, 1, 0, 1, 5, 5, 5]`, `occ0 = 2`.
+
+### Element
+
+The `element` constraint is very convenient. It permits to dynamically assign a variable to a value based on an array and an index variable.
+
+```java
+IntVar idx = model.intVar("I", 0, 5, false);
+IntVar rst = model.intVar("R", 0, 10, false);
+model.element(rst, new int[]{0, 2, 4, 6, 7}, idx).post();
+```
+
+An assignment of `idx` and `rst` that satisfies this `element` constraint is: `idx = 3` and `rst = 6`.
+
+
 
 ## Scheduling constraints
 

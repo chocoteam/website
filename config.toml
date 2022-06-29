@@ -76,7 +76,7 @@ time_format_blog = "02.01.2006"
 unsafe = true
 
 [markup.highlight]
-codeFences = false
+codeFences = true
 
 [outputFormats.Reveal]
 baseName = "index"
