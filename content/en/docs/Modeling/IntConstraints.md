@@ -134,7 +134,7 @@ IntVar rst = model.intVar("R", 0, 10, false);
 model.element(rst, new int[]{0, 2, 4, 6, 7}, idx).post();
 ```
 
-An assignment of `idx` and `rst` that satisfies this `element` constraint is: `idx = 3` and `rst = 6`.
+An assignment of `idx` and `rst` that satisfies this constraint is: `idx = 3` and `rst = 6`.
 
 
 
