@@ -279,13 +279,4 @@ while (slv.solve()){
     System.out.printf("Spanning tree of cost %d\n", totalCost.getValue());
     printGLB();
 }
-``
-
-
-
-
-
-
-
-
-
+```
