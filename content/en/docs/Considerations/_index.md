@@ -11,17 +11,23 @@ First of all we would :heart: to hear about your use of Choco-solver :
 
 ## In Research
 
-If you use Choco-solver for your research, you may want to know the right way to cite the library:
+If you use Choco-solver for your research, you may want to know the right way to cite the library. You can do this by citing [Choco-solver: A Java library for constraint programming](https://joss.theoj.org/papers/10.21105/joss.04708#) from [The Journal of Open Source Software](https://joss.theoj.org/):
 
 ```latex
-@article{choco2016,
-  title={Choco solver documentation},
-  author={Prud’homme, Charles and Fages, Jean-Guillaume and Lorca, Xavier},
-  journal={TASC, INRIA Rennes, LINA CNRS UMR},
-  volume={6241},
-  year={2016}
+@article{Prud'homme2022, 
+  doi = {10.21105/joss.04708}, 
+  url = {https://doi.org/10.21105/joss.04708}, 
+  year = {2022}, 
+  publisher = {The Open Journal}, 
+  volume = {7}, 
+  number = {78}, 
+  pages = {4708}, 
+  author = {Charles Prud'homme and Jean-Guillaume Fages}, 
+  title = {Choco-solver: A Java library for constraint programming},
+  journal = {Journal of Open Source Software} 
 }
 ```
+ 
 
 And add your article to [:arrow_right: this list](https://scholar.google.com/scholar?oi=bibs&hl=fr&cites=4714165071276482389,1869564298759279370,7119725863983437084,531556205983498199) :white_check_mark:.
 
