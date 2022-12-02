@@ -253,7 +253,7 @@ Model[keysort], 1 Solutions, Resolution time 0,244s, 105 Nodes (431,2 n/s), 186 
 ```
 
 ## Conclusion 
-We have seen how the `Keysort` constraint can be useful to have a second representation of a state. It then becomes relatively simple to constrain each of the views. However, this requires the use of reification constraints to determine when a user is changed or, for a user, when tasks are changed. 
+We have seen how the `StableKeysort` constraint can be useful to have a second representation of a state. It then becomes relatively simple to constrain each of the views. However, this requires the use of reification constraints to determine when a user is changed or, for a user, when tasks are changed. 
 The use of this constraint is not trivial and requires care but it offers great flexibility and strong expressive power.
 
 
