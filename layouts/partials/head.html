@@ -15,9 +15,15 @@
 {{- template "_internal/google_news.html" . -}}
 {{- template "_internal/schema.html" . -}}
 {{- template "_internal/twitter_cards.html" . -}}
-{{ if eq hugo.Environment "production" }}
-{{ template "_internal/google_analytics.html" . }}
-{{ end }}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-738NJHH4T5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-738NJHH4T5');
+</script>
 {{ partialCached "head-css.html" . "asdf" }}
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
