@@ -104,7 +104,7 @@ github_subdir = "site"
 gcs_engine_id = "002090051099228186981:fjdyae7kf1k"
 
 # Google Analytics 4
-googleAnalyticsID = "G-321744325"
+googleAnalyticsID = "G-738NJHH4T5"
 
 # Enable Algolia DocSearch
 algolia_docsearch = false
