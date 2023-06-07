@@ -98,7 +98,7 @@ github_repo = "https://github.com/chocoteam/website"
 # An optional link to a related project repo. For example, the sibling repository where your product code lives.
 github_project_repo = "https://github.com/chocoteam/choco-solver"
 # to reference a different branch
-github_branch=master
+github_branch="master"
 
 # Google Custom Search Engine ID. Remove or comment out to disable search.
 gcs_engine_id = "002090051099228186981:fjdyae7kf1k"
