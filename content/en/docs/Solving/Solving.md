@@ -84,7 +84,7 @@ If you have multiple objective to optimize, you have several options. First, you
 Anytime a solution is found, a constraint is posted which states that at least one of the objective variables must be strictly better:
 Such as $(X_0 < b_0 \lor X_1 < b_1 \lor \ldots \lor X_n < b_n)$ where $X_i$ is the ith objective variable and $b_i$ its value.
 
-Here is a simple example on how to use the ParetoOptimizer to optimize two variables (a and b):
+Here is a simple example on how to use the `findParetoFront(...)` API to optimize two variables (a and b):
 
 ```java
 // simple model
@@ -94,16 +94,9 @@ IntVar b = model.intVar("b", 0, 2, false);
 IntVar c = model.intVar("c", 0, 2, false);
 model.arithm(a, "+", b, "=", c).post();
 
-// create an object that will store the best solutions and remove dominated ones
-ParetoOptimizer po = new ParetoOptimizer(Model.MAXIMIZE,new IntVar[]{a,b});
 Solver solver = model.getSolver();
-solver.plugMonitor(po);
-
-// optimization
-while(solver.solve());
-
-// retrieve the pareto front
-List<Solution> paretoFront = po.getParetoFront();
+// create an object that will store the best solutions and remove dominated ones
+List<Solution> front = solver.findParetoFront(new IntVar[]{a,b},Model.MAXIMIZE); 
 System.out.println("The pareto front has "+paretoFront.size()+" solutions : ");
 for(Solution s:paretoFront){
         System.out.println("a = "+s.getIntVal(a)+" and b = "+s.getIntVal(b));
