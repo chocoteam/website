@@ -69,7 +69,7 @@ double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
 // z = x^(y-2)
-RealVar z = x.pow(y.sub(2))).realVar(p);
+RealVar z = x.pow(y.sub(2)).realVar(p);
 ```
 
 
@@ -96,8 +96,8 @@ A call to this method **does not** create additional variables and returns a sin
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
-// x / (y-2)
-x.div(y.sub(2))).equation().post();
+// x / (y-2) <= 1.5
+x.div(y.sub(2)).le(1.5).equation().post();
 ```
 
 {{% alert title="Alert" color="secondary" %}}
@@ -120,8 +120,8 @@ It must be then posted or reified.
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
-// x / (y-2)
-x.div(y.sub(2))).ibex(p).post();
+// x / (y-2) >= 1.6
+x.div(y.sub(2)).ge(1.6).ibex(p).post();
 ```
 
 {{% alert title="Info" color="primary" %}}
