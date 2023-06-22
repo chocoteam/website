@@ -26,8 +26,8 @@ The `INeighborFactory` provides pre-defined configurations.
 Here is the way to declare LNS to solve a problem:
 
 ```java
-solver.setLNS(INeighborFactory.random(ivars, new FailCounter(solver, 100));
-solver.findOptimalSolution(Model.MINIMIZE, objective);
+solver.setLNS(INeighborFactory.random(ivars), new FailCounter(solver, 100));
+solver.findOptimalSolution(objective, Model.MINIMIZE);
 ```
 
 It declares a *random* LNS which, on a solution, computes a partial solution based on `ivars`.
