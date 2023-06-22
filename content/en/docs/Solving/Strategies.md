@@ -73,7 +73,7 @@ There are several ways to achieve this:
 // 1) verbose approach using usual imports
 
 import org.chocosolver.solver.search.strategy.Search;
-import org.chocosolver.solver.search.strategy.assignments.DecisionOperator;
+import org.chocosolver.solver.search.strategy.assignments.DecisionOperatorFactory;
 import org.chocosolver.solver.search.strategy.selectors.values.*;
 import org.chocosolver.solver.search.strategy.selectors.variables.*;
 
@@ -85,7 +85,7 @@ import org.chocosolver.solver.search.strategy.selectors.variables.*;
                     // selects the smallest domain value (lower bound)
                     new IntDomainMin(),
                     // apply equality (var = val)
-                    DecisionOperator.int_eq,
+                    DecisionOperatorFactory.makeIntEq(),
                     // variables to branch on
                     x, y
     ));
@@ -97,7 +97,6 @@ import org.chocosolver.solver.search.strategy.selectors.variables.*;
 
 import static org.chocosolver.solver.search.strategy.Search.*;
 
-import org.chocosolver.solver.search.strategy.assignments.DecisionOperator;
 import org.chocosolver.solver.search.strategy.selectors.values.*;
 import org.chocosolver.solver.search.strategy.selectors.variables.*;
 
