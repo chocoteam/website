@@ -6,6 +6,19 @@ description: >
   How to look for solutions?
 ---
 
+_This file can be downloaded as a [jupyter notebook](https://jupyter.org/) and executed with a [Java kernel](https://github.com/SpencerPark/IJava). The next cell is then used to add the dependency to choco and can be ignored otherwise._ 
+
+[>> ipynb <<](</notebooks/content/en/docs/Solving/Solving.ipynb>)
+
+
+```Java
+// Add maven dependencies at runtime 
+%maven org.choco-solver:choco-solver:4.10.13
+```
+
+----
+
+
 ## Finding one solution
 
 A call to `solver.solve()` launches a resolution which stops on the first solution found, if any:
@@ -86,7 +99,14 @@ Such as $(X_0 < b_0 \lor X_1 < b_1 \lor \ldots \lor X_n < b_n)$ where $X_i$ is t
 
 Here is a simple example on how to use the `findParetoFront(...)` API to optimize two variables (a and b):
 
-```java
+
+
+```Java
+import org.chocosolver.solver.Model;
+import org.chocosolver.solver.variables.IntVar;
+import org.chocosolver.solver.Solver;
+import org.chocosolver.solver.Solution;
+
 // simple model
 Model model = new Model();
 IntVar a = model.intVar("a", 0, 2, false);
@@ -97,11 +117,17 @@ model.arithm(a, "+", b, "=", c).post();
 Solver solver = model.getSolver();
 // create an object that will store the best solutions and remove dominated ones
 List<Solution> front = solver.findParetoFront(new IntVar[]{a,b},Model.MAXIMIZE); 
-System.out.println("The pareto front has "+paretoFront.size()+" solutions : ");
-for(Solution s:paretoFront){
+System.out.println("The pareto front has "+front.size()+" solutions : ");
+for(Solution s: front){
         System.out.println("a = "+s.getIntVal(a)+" and b = "+s.getIntVal(b));
 }
 ```
+
+    The pareto front has 3 solutions : 
+    a = 0 and b = 2
+    a = 1 and b = 1
+    a = 2 and b = 0
+
 
 **NOTE**: All objectives must be optimized on the same direction (either minimization or maximization).
 
