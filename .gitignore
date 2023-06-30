@@ -9,3 +9,4 @@ content/.DS_Store
 notebooks/docenv
 notebooks/ijava*
 notebooks/**/.ipynb_checkpoints
+notebooks/**/._.DS_Store
