@@ -67,9 +67,15 @@ Please refer to the javadoc of `Model` to have the complete list of available co
 
 To be effective, a constraint must be posted to the solver. This is achieved using the `post()` method:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 model.allDifferent(vars).post();
-```
+{{< /tab >}}
+{{< tab "Python" >}}
+model.all_different(vars).post()
+{{< /tab >}} 
+{{< /tabpane >}}
+
 
 Otherwise, if the `post()` method is not called, the constraint will not be taken into account during the solution process :
 it may not be satisfied in solutions.
@@ -79,27 +85,40 @@ it may not be satisfied in solutions.
 In Choco-solver, it is possible to reify any constraint. Reifying a constraint means associating it with a `BoolVar`
 to represent whether or not the constraint is satisfied :
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 BoolVar b = constraint.reify();
-```
+{{< /tab >}}
+{{< tab "Python" >}}
+b = constraint.reify()
+{{< /tab >}} 
+{{< /tabpane >}}
+
 
 Or:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 BoolVar b = model.boolVar();
 constraint.reifyWith(b);
-```
+{{< /tab >}} 
+{{< /tabpane >}}
+
 
 Reifying a constraint means that we allow the constraint not to be satisfied.
 Therefore, the reified constraint **should not** be posted.
 For instance, let us consider “if `x<0` then `y>42`”:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 model.ifThen(
    model.arithm(x,"<",0),
    model.arithm(y,">",42)
 );
-```
+{{< /tab >}}
+{{< /tabpane >}}
+
+
 
 Such constraint states that *if* `x` takes a value strictly less than `0` *then* `y` should take a value stritctly greater than `42`. Conversely, *if* `x` takes a value greater or equal to `0` *then* `y` is not restricted.
 
@@ -113,12 +132,14 @@ This is why `ifThen`, `ifThenElse`, `ifOnlyIf` and `reification` return void and
 A constraint is reified with only one boolean variable. Multiple calls to `constraint.reify()` will return the same variable.
 However, the following call will associate `b1` with the constraint and then post `b1 = b2`:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 BoolVar b1 = model.boolVar();
 BoolVar b2 = model.boolVar();
 constraint.reifyWith(b1);
 constraint.reifyWith(b2);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 {{% /alert %}}
 
 

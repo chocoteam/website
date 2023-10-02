@@ -8,11 +8,15 @@ description: >
 ---
 ## Quick start
 
-Interested in using Choco in your project?
-There are different ways to do this: either your project is based on a build automation tool or not.
-The only prerequisite for running Choco solver is to have Java (Oracle JRE 11 or OpenJDK 11) installed on your machine. 
+Interested in using Choco-solver in your project?
+Choco-solver is available as a Java library or a Python package.
 
-### Maven 3+
+### Java
+The only prerequisite for running Choco-solver is to have Java (Oracle JRE 11 or OpenJDK 11) installed on your machine.
+We strongly recommend to use a build automation tool, like Maven or Gradle, but adding manually the JAR file to the classpath is still an option.
+
+
+#### Maven 3+
 
 Copy-paste the artifact description to your `pom.xml`:
 
@@ -36,7 +40,7 @@ To test snapshot release, you should update your `pom.xml` with :
 </repository>
 {{< /highlight >}}
 
-### Gradle 6+
+#### Gradle 6+
 
 Copy-paste the dependency declaration in your `build.gradle`:
 
@@ -50,17 +54,23 @@ dependencies {
 }
 {{< /highlight >}}
 
-### As a stand-alone application
+#### As a stand-alone application
 
-When one wants to manually adds choco-solver as a dependency of a project, it should pay attention to the following:
+When one wants to manually adds choco-solver as a dependency of a project, he should pay attention to the following:
 
-- the library is available in 2 versions.
-One is prefixed with `choco-solver` and defines what is necessary and sufficient to model and solve problems programmatically.
-The other, prefixed with `choco-parsers`, includes additionnal functions to parse FlatZinc, XCSP3, DIMACS or MPS files directly.
-- Each version is presented in 2 formats: with dependencies (suffixed with `-jar-with-dependencies`) or  without. It is likely tha the former is the needed one.
+- In the latest version, the library is available as a single JAR file that defines what is necessary and sufficient to model and solve problems programmatically and includes additional functions to parse FlatZinc, XCSP3, DIMACS or MPS files directly.
+- The archive is released with dependencies. If one wants an archive without any dependencies, it is recommended to use Maven or Gradle.
 - Finally, the [javadoc](https://javadoc.io/doc/org.choco-solver/choco-solver/latest/org.chocosolver/module-summary.html) of each version is also available on line.
 
 The next step is simply to add the jar file to the classpath of your application and eventually the javadoc.
+
+### Python
+
+We automatically build 64-bit wheels for Python versions 3.6, 3.7, 3.8, 3.9, and 3.10 on Linux, Windows and MacOSX. They can be directly downloaded from PyPI:
+
+```bash
+pip install pychoco
+```
 
 
 ## Community

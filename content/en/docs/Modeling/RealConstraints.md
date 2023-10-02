@@ -1,7 +1,7 @@
 ---
 title: "Constraints over real variables"
 date: 2020-01-07T16:07:15+01:00
-weight: 26
+weight: 27
 math: "true" 
 description: >
   How to declare constraints based on real variables?
@@ -64,13 +64,15 @@ A call to this method requires [Ibex]({{< ref "/docs/Advanced usages/Ibex.md" >}
 {{% /alert %}}
 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
 // z = x^(y-2)
 RealVar z = x.pow(y.sub(2)).realVar(p);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 
 ### Relational expressions
@@ -92,13 +94,15 @@ Calling `equation()` on a relation expression will return a `Constraint` object 
 
 A call to this method **does not** create additional variables and returns a single constraint.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
 // x / (y-2) <= 1.5
 x.div(y.sub(2)).le(1.5).equation().post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 {{% alert title="Alert" color="secondary" %}}
 
@@ -116,13 +120,15 @@ Alternatively, an expression can be added [Ibex]({{< ref "/docs/Advanced usages/
 This is achieved calling the `ibex(prec)` method which returns a `Constraint` object where `prec` denotes the precision.
 It must be then posted or reified.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
 // x / (y-2) >= 1.6
 x.div(y.sub(2)).ge(1.6).ibex(p).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 {{% alert title="Info" color="primary" %}}
 
@@ -137,11 +143,13 @@ A call to this method requires [Ibex]({{< ref "/docs/Advanced usages/Ibex.md" >}
 It is sometimes relevant to map a real variable to an integer variable.
 Doing so, the real variable is forced to take integer values but it can be declared in real constraints (either as an equation or in Ibex).
 This is achieved by posting an `eq` constraint like this:
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar foo = model.intVar("foo", new int[]{0, 15, 20});
 RealVar bar = model.realVar("bar", 0, 20, 1e-5);
 model.eq(bar, foo).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ### Binding a real value from an array
 
@@ -149,19 +157,23 @@ It is possible to set the value of a real variable thanks to an array of double 
 This relation is also known as an `element` constraint.
 All double values in the array must be different and sorted in a increasing order.  
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 RealVar value = model.realVar("V", 0., 10., 1.e-4);
 IntVar index = model.intVar("I", 0, 5);
 double[] values = new double[]{-1., .8, Math.PI, 12.};
 model.element(value, values, index).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 ### Scalar product
 
 A scalar product where coefficients are double values can be defined over a set of integer variables and/or real variables.
 Available operators are `"=", ">=", "<="`.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 double[] coeffs = new double[]{1, 5, 7, 8};
 RealVar[] vars = model.realVarArray(4, 1., 6., .1);
 model.scalar(vars, coeffs, "=", 35).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}

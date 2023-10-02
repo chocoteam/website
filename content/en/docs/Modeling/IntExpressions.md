@@ -37,12 +37,14 @@ Note that `y` can be either an integer or an arithemic expression.
 An arithmetic expression can be turned into an `IntVar` by calling the `intVar()` method on it.
 If necessary, it creates intermediary variable and posts intermediary constraints then returns the resulting variable.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar x = model.intVar(1, 5);
 IntVar y = model.intVar(1, 5);
 // z = min((x+5)%3, y^2);
 IntVar z = x.add(5).mod(3).min(y.pow(2)).intVar();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 
 ### Relational expressions
@@ -68,11 +70,14 @@ Leaves are either an `int` or `IntVar`.
 When decomposed, an analysis of the tree structure is done, starting from leaves. 
 A call to this method creates additional variables and posts additional constraints.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar x = model.intVar(0, 5);
 IntVar y = model.intVar(0, 5);
 x.ge(y).decompose().post();
-```
+{{< /tab >}}
+
+{{< /tabpane >}}
 Note that `post()` can be directly called from a relation expression and stands for `.decompose().post()`;
 
 #### As a Table constraint
@@ -80,11 +85,14 @@ Note that `post()` can be directly called from a relation expression and stands 
 Alternatively, tuples can be extracted from a relation expression and a Table constraint be posted.
 This is achieved calling the `extension()` method which returns a `Constraint` object (that needs to be posted).
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar x = model.intVar(0, 5);
 IntVar y = model.intVar(0, 5);
 x.ge(y).extension().post();
-```
+{{< /tab >}}
+
+{{< /tabpane >}}
 
 {{% alert title="Info" color="primary" %}}
 The allowed combinations are extracted from the expression by generating all possible combinations and filtering the valid ones (the ones that satisfy the relationship).
@@ -97,11 +105,14 @@ The allowed combinations are extracted from the expression by generating all pos
 Any relation expression can be turned into a `BoolVar` by calling the `boolVar()` method.
 The resulting Boolean variable indicates whether or not the relationship holds.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar x = model.intVar(0, 5);
 IntVar y = model.intVar(0, 5);
 BoolVar b = x.gt(y).boolVar();
-```
+{{< /tab >}}
+
+{{< /tabpane >}}
 
 
 ### Logical expressions
@@ -119,12 +130,15 @@ Based on an **relational expression** `r`, a logical expression can be built usi
 
 Note that `pi` is relational expression and `yi` can be either an integer or an arithemic expression.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar x = model.intVar(0, 5);
 IntVar y = model.intVar(0, 5);
 // (x = y + 1) ==> (x + 2 < 6)
 x.eq(y.add(1)).imp(x.add(2).le(6)).post();
-```
+{{< /tab >}}
+
+{{< /tabpane >}}
 
 ## Expressions with `RealVar`
 
@@ -179,13 +193,16 @@ A call to this method requires [Ibex]({{< ref "/docs/Advanced usages/Ibex.md" >}
 {{% /alert %}}
 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
 // z = x^(y-2)
 RealVar z = x.pow(y.sub(2))).realVar(p);
-```
+{{< /tab >}}
+
+{{< /tabpane >}}
 
 
 ### Relational expressions
@@ -207,13 +224,16 @@ Calling `equation()` on a relation expression will return a `Constraint` object 
 
 A call to this method **does not** create additional variables and returns a single constraint.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
 // x / (y-2)
 x.div(y.sub(2))).equation().post();
-```
+{{< /tab >}}
+
+{{< /tabpane >}}
 
 {{% alert title="Alert" color="secondary" %}}
 
@@ -231,13 +251,16 @@ Alternatively, an expression can be added [Ibex]({{< ref "/docs/Advanced usages/
 This is achieved calling the `ibex(prec)` method which returns a `Constraint` object where `prec` denotes the precision.
 It must be then posted or reified.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
 // x / (y-2)
 x.div(y.sub(2))).ibex(p).post();
-```
+{{< /tab >}}
+
+{{< /tabpane >}}
 
 {{% alert title="Info" color="primary" %}}
 
