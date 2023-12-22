@@ -46,6 +46,16 @@ The resolution process stops in no particular place in the search tree.
 
 * No limit has been declared or reached: The problem has no solution and the solver has proved it.
 
+An alternative API exists to search for a first [solution](/docs/solving/solutions/) and return it.
+
+```java
+Solution solution = solver.findSolution();
+```
+
+The behaviour of `findSolution()` is equivalent to that of `solve()`: when a solution has been found a `Solution` is returned. Otherwise, `null` is returned, indicating that no solution has been found below the given limit (if any).
+
+
+
 ## Enumerating all solutions
 
 You can enumerate all solutions of a problem with a simple while loop as follows:
@@ -57,6 +67,19 @@ while(solver.solve()){
 ```
 
 After the enumeration, the solver closes the search tree and variables are no longer instantiated to a value.
+
+An alternative API exists to search for all [solutions](/docs/solving/solutions/) and return a list of them or an empty list if no solution was found.
+
+```java
+List<Solution> solutions = solver.findAllSolutions();
+```
+
+It is also possible to stream solutions:
+
+```java
+Stream<Solution> solutionsStream = solver.streamSolutions();
+```
+
 
 ## Optimization
 
@@ -79,6 +102,25 @@ while(solver.solve()){
 // the last solution found was optimal (if search completed)
 ```
 
+It also possible to use an alternative API to search for the optimal [solution](/docs/solving/solutions/).
+In that case, there is no need to declare the objective in the model, the paramters can directly be given as input of the methode:
+
+```java
+Solution solution = solver.findOptimalSolution(X, Model.MAXIMIZE);
+```
+
+Another API makes possible to find all optimal solutions.
+
+```java
+List<Solution> solutions = solver.findAllOptimalSolutions(X, Model.MAXIMIZE);
+// alterantively, get a stream of optimal solutions
+//Stream<Solution> solutionsStream = solver.streamOptimalSolutions(X, Model.MAXIMIZE);
+```
+This is a two-stage method that first searches for an optimal solution, then temporarily fixes the value of the objective and stores all the solutions with this additional constraint in a list.
+
+
+#### Adapting the cut
+
 You can use custom cuts by overriding the default cut behavior.
 The *cut computer* function defines how the cut should bound the objective variable.
 The input *number* is the best solution value found so far, the output *number* define the new bound.
@@ -92,6 +134,8 @@ oman.setCutComputer(n -> n - 10);
 ```
 
 ### Multi-objective optimization
+
+#### Pareto
 
 If you have multiple objective to optimize, you have several options. First, you may aggregate them in a function so that you end up with only one objective variable. Second, you can solve the problem multiple times, each one optimizing one variable and possibly fixing some bounds on the other. Third, you can enumerate solutions (without defining any objective) and add constraints on the fly to prevent search from finding dominated solutions. This is done by the ParetoOptimizer object which does the following:
 Anytime a solution is found, a constraint is posted which states that at least one of the objective variables must be strictly better:
@@ -131,6 +175,19 @@ for(Solution s: front){
 
 **NOTE**: All objectives must be optimized on the same direction (either minimization or maximization).
 
+
+#### Lexico
+
+It is also possible to consider several objectives $O_1, 02, ..., O_n$ ordered lexicographically.
+Anytime a solution is found, a constraint is posted which states that the objective variables must be strictly better if the previous ones remain unchanged:
+$(X_1 < b_1) \lor (X_1 = b_1 \land X_2 < b_2) \lor \ldots \lor( \bigwedge_{1 < i < n} X_i = b_i \land X_n < b_n)$
+where $X_i$ is the $i^{th}$ objective variable and $b_i$ its value in the solution.
+
+```java
+Solution solution = solver.findLexOptimalSolution(objectives, Model.MAXIMIZE);
+```
+
+
 ## Propagation
 
 One may want to propagate all constraints without search for a solution.
@@ -141,3 +198,8 @@ In that case, the propagation engine must be flushed calling `solver.getEngine()
 to ensure there is no pending events.
 
 **WARNING**: If there are still pending events in the propagation engine, the propagation may results in unexpected results.
+
+
+```Java
+
+```
