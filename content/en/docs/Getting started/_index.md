@@ -56,7 +56,7 @@ dependencies {
 
 #### As a stand-alone application
 
-When one wants to manually adds choco-solver as a dependency of a project, he should pay attention to the following:
+When one wants to manually adds choco-solver as a dependency of a project, they should pay attention to the following:
 
 - In the latest version, the library is available as a single JAR file that defines what is necessary and sufficient to model and solve problems programmatically and includes additional functions to parse FlatZinc, XCSP3, DIMACS or MPS files directly.
 - The archive is released with dependencies. If one wants an archive without any dependencies, it is recommended to use Maven or Gradle.
