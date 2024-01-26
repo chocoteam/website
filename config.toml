@@ -73,6 +73,7 @@ unsafe = true
 [markup.highlight]
 codeFences = true
 
+
 [outputFormats.Reveal]
 baseName = "index"
 mediaType = "text/html"
@@ -83,7 +84,7 @@ isHTML = true
 [params]
 copyright = "The Choco-solver Authors"
 privacy_policy = "https://policies.google.com/privacy"
-choco_version = "4.10.10"
+choco_version = "4.10.14"
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
