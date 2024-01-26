@@ -23,7 +23,7 @@ Such a constraint will take {{% calert c="two variables" %}} as argument and mak
 
 We will first create a class to declare the behaviour of this constraint:
 
-```python{1|2-4}
+```python[1|2-4]
 class LessThan:
     def __init__(self, v1, v2):
         self.v1 = v1

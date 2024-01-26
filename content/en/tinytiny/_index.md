@@ -5,6 +5,9 @@ outputs = ["Reveal"]
 theme = "league"
 slide_number = true
 highlight_theme = "github"
+
+[markup.highlight]
+codeFences = false
 +++
 
 # The Very Tiny </br> Constraint Solver
