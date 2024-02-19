@@ -17,7 +17,7 @@ The standard scenario for using the library is as follows: declaration of the mo
 
 Before resolution has begun, it is possible to remove a constraint. This is done using the `unpost()` method for constraints that have been added explicitly using the `post()` command. For constraints that have been added implicitly, for example reified, deletion is not possible. 
 
-Once the resolution has begun, removing/unposting a constraint is problematic.
+Once the resolution begins, or more precisely as soon as the first propagation is triggered, removing/unposting a constraint becomes problematic.
 The search is Depth-First which implies the variable domains to be saved and restored. So removing a constraint potentially makes the variables' domain inconsistent upon backtracks. In fact, for a constraint removal to be possible, it would have to be possible to restore the values that have been removed from the variable domain by its filtering algorithm
 
 One way around this problem is to save the branch of the search tree (i.e. the path of decisions leading to the current state), go back to the initial node of the search, remove the constraint, apply each decision in order, saving and propagating, until the desired state is reached.
