@@ -55,36 +55,38 @@ Four groups of inequality <span style="color:deepskyblue;">constraints</span> ar
 
 ## 6 Queens puzzle in Python
 
-```python{2-4|6-11|13-15|17}
+```python{4-6|8-13|15-17|19-23}
+import model as m
+
 n = 8
-variables = {}
+vs = {}
 for i in range(1, n + 1):
-    variables["x" + str(i)] = {k for k in range(1, n + 1)}
+    vs["x" + str(i)] = {k for k in range(1, n + 1)}
 
 cs = []
 for i in range(1, n):
     for j in range(i + 1, n + 1):
-        cs.append(NotEqual("x" + str(i), "x" + str(j)))
-        cs.append(NotEqual("x"+str(i),"x"+str(j), c=(j-i)))
-        cs.append(NotEqual("x"+str(i),"x"+str(j), c=-(j-i)))
+        cs.append(m.NotEqual("x" + str(i), "x" + str(j)))
+        cs.append(m.NotEqual("x" + str(i), "x" + str(j), c=(j - i)))
+        cs.append(m.NotEqual("x" + str(i), "x" + str(j), c=-(j - i)))
 
 # mirror symm. breaking
-variables["cst"] = {int(n / 2) + 1}
-cs.append(LessThan("x1", "cst"))
+vs["cst"] = {int(n / 2) + 1}
+cs.append(m.LessThan("x1", "cst"))
 
-print("it finds", enumerate(variables, cs), "solutions")
+# search for all solutions
+sols = []
+m.dfs(vs, cs, sols, nos=0)
+print(len(sols), "solution(s) found")
+print(sols)
 ```
 ---
 
 ### 46 solutions
 
-```python
-{'x1': [1], 'x2': [5], 'x3': [8], 'x4': [6], 'x5': [3], 'x6': [7], 'x7': [2], 'x8': [4], 'cst': [5]}
-{'x1': [1], 'x2': [6], 'x3': [8], 'x4': [3], 'x5': [7], 'x6': [4], 'x7': [2], 'x8': [5], 'cst': [5]}
-...
-{'x1': [4], 'x2': [8], 'x3': [1], 'x4': [5], 'x5': [7], 'x6': [2], 'x7': [6], 'x8': [3], 'cst': [5]}
-{'x1': [4], 'x2': [8], 'x3': [5], 'x4': [3], 'x5': [1], 'x6': [7], 'x7': [2], 'x8': [6], 'cst': [5]}
-it finds 46 solutions
+```bash
+46 solution(s) found
+[[1, 5, 8, 6, 3, 7, 2, 4, 5], ..., [4, 8, 5, 3, 1, 7, 2, 6, 5]]
 ```
 
 There are 92 solutions without the (simple) symmetry breaking constraint, 46 otherwise.

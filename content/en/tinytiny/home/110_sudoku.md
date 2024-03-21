@@ -9,7 +9,7 @@ weight = 110
 ---
 ## We reached the Sudoku point
 
-When trying to explain how constraint programming works, 
+When trying to explain how constraint programming works,
 it is common to draw a parallel with sudoku.
 
 ---
@@ -22,7 +22,7 @@ it is common to draw a parallel with sudoku.
 ---
 
 ## At solving step
---- 
+---
 
 ### Local reasonning
 
@@ -69,6 +69,8 @@ And validate them by propagation.
 ---
 
 ```python
+import model as m
+
 n = 4
 variables = {}
 for i in range(1, n + 1):
@@ -106,8 +108,27 @@ for z in zones:
         for k in range(j + 1, n):
             cs.append(NotEqual(z[j], z[k]))
 
-print("it finds", enumerate(variables, cs), "solutions")
+sols = []
+m.dfs(variables, cs, sols, nos=0)
+print(len(sols), "solution(s) found")
+u_sol = sols[0]
+for i in range(4):
+		print(u_sol[i * 4:i * 4 + 4])
 ```
+
+---
+
+### 1 solution
+
+```bash
+1 solution(s) found
+[1, 2, 4, 3]
+[3, 4, 1, 2]
+[2, 1, 3, 4]
+[4, 3, 2, 1]
+```
+
+
 
 
 {{% /section %}}

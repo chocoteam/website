@@ -46,7 +46,7 @@ where $c$ is a constant
 ---
 
 ### The `NotEqual` class
-```python{1-5|7-9|11-13|14-16|18,19|10,17,20}
+```python{1-5|6-8|9-14|15-20|21-22}
 class NotEqual:
     def __init__(self, v1, v2, c=0):
         self.v1 = v1
@@ -54,19 +54,21 @@ class NotEqual:
         self.c = c
 
     def filter(self, vars):
-        d1 = vars[self.v1]
-        d2 = vars[self.v2]
-        size = len(d1) + len(d2)
-        if len(d2) == 1:
-            d1 = {v for v in d1 if v != (d2[0] + self.c)}
-            if len(d1) == 0: return False
-        if len(d1) == 1:
-            d2 = {v for v in d2 if v != (d1[0] - self.c)}
-            if len(d2) == 0: return False
-        size -= (len(d1) + len(d2))
-        vars[self.v1] = d1
-        vars[self.v2] = d2
-        return size > 0 or None
+      size = len(vars[self.v1]) + len(vars[self.v2])
+      if len(vars[self.v2]) == 1:
+          f = min(vars[self.v2]) + self.c
+          nd1 = {v for v in vars[self.v1] if v != f}
+          if len(nd1) == 0:
+            return False
+          vars[self.v1] = nd1
+      if len(vars[self.v1]) == 1:
+          f = min(vars[self.v1]) - self.c
+          nd2 = {v for v in vars[self.v2] if v != f}
+          if len(nd2) == 0:
+            return False
+          vars[self.v2] = nd2
+      modif = size > len(vars[self.v1]) + len(vars[self.v2])
+      return modif or None
 ```
 
 ---
