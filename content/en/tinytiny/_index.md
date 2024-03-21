@@ -10,7 +10,7 @@ highlight_theme = "github"
 
 # The Very Tiny </br> Constraint Solver
 </br>
-Charles Prud'homme, Jan. 2022
+Charles Prud'homme, March 2024
 
 IMT Atlantique, LS2N, TASC
 
