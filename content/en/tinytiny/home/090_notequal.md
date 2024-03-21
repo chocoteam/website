@@ -10,7 +10,7 @@ of the different type
 
 ---
 
-## Adding the constraint 
+## Adding the constraint
 
 ### $X_1\neq X_2 + c$
 where $c$ is a constant
@@ -25,6 +25,21 @@ where $c$ is a constant
 <p class="fragment">1. if $X_2$ is instantied to $v_2$, </br>then $v_2+c$ must be removed from $X_1$ values,</p>
 <p class="fragment">2. if $X_1$ is instantied to $v_1$, </br>then $v_1-c$ must be removed from $X_2$ values.</p>
 
+
+---
+### Let's fix the code
+```python{}
+
+  class NotEqual:
+      def __init__(self, v1, v2, c=0):
+          pass
+
+      def filter(self, vars):
+          pass
+```
+
+
+<h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=71050"> >>🥛<<</a></h2>
 
 <!--</section> to bind to the next section tag-->
 
@@ -43,15 +58,26 @@ class NotEqual:
         d2 = vars[self.v2]
         size = len(d1) + len(d2)
         if len(d2) == 1:
-            d1 = [v for v in d1 if v != (d2[0] + self.c)]
+            d1 = {v for v in d1 if v != (d2[0] + self.c)}
             if len(d1) == 0: return False
         if len(d1) == 1:
-            d2 = [v for v in d2 if v != (d1[0] - self.c)]
+            d2 = {v for v in d2 if v != (d1[0] - self.c)}
             if len(d2) == 0: return False
         size -= (len(d1) + len(d2))
         vars[self.v1] = d1
         vars[self.v2] = d2
         return size > 0 or None
 ```
+
+---
+
+{{< slide id="imp7" background="#b4c6d0" >}}
+
+## :rocket: Constraints
+
+- Different level of inconsistency
+- Global reasoning vs decomposition
+- Explain domain modifications
+- Reification, entailment, ...
 
 {{% /section %}}

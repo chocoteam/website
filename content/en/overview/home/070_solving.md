@@ -6,7 +6,7 @@ weight = 70
 
 # Solving
 
---- 
+---
 
 {{< slide id="code3" transition="none-out" >}}
 
@@ -22,7 +22,7 @@ Model model = new Model();
 Solver solver = model.getSolver();
 if(solver.solve()){
 	// here you can read the variables' value
-	System.out.printf("%s is fixed to %d\n", 
+	System.out.printf("%s is fixed to %d\n",
 						x.getName(), x.getValue());
 }
 ```
@@ -46,13 +46,13 @@ Model model = new Model();
 Solver solver = model.getSolver();
 if(solver.solve()){
 	// here you can read the variables' value
-	System.out.printf("%s is fixed to %d\n", 
+	System.out.printf("%s is fixed to %d\n",
 						x.getName(), x.getValue());
 }
 ```
 
 
-Since the {{% ccode c="solver" %}} stops on a solution, 
+Since the {{% ccode c="solver" %}} stops on a solution,
 <br/>
 all the variables are fixed and their value can be read.
 
@@ -74,17 +74,17 @@ Model model = new Model();
 Solver solver = model.getSolver();
 while(solver.solve()){
 	// here you can read the variables' value
-	System.out.printf("%s is fixed to %d\n", 
+	System.out.printf("%s is fixed to %d\n",
 						x.getName(), x.getValue());
 }
 ```
 
-Enumerating solutions can be done in a {{% ccode c="while-loop" %}}. 
+Enumerating solutions can be done in a {{% ccode c="while-loop" %}}.
 <br/>
 <br/>
 
 
---- 
+---
 
 
 {{< slide id="code6" transition="none-out" >}}
@@ -96,11 +96,11 @@ We can capture the current state of variables in a {{% ccode c="Solution" %}}.
 ```java{1,3}
 List<Solution> solutions = new ArrayList<>();
 while(solver.solve()){
-	solutions.add(new Solution(model).record());	
+	solutions.add(new Solution(model).record());
 }
 ```
 
---- 
+---
 
 {{< slide id="code7" transition="none-in" >}}
 
@@ -118,6 +118,107 @@ List<Solution> solutions = solver.findAllSolutions();
 <br/>
 
 ---
+## COP
+
+An {{% ccode c="IntVar" %}} to maximize/minimize    .
+
+```java{1|2}
+Solution bSol = solver.findOptimalSolution(obj, maximize);
+List<Solution> bSols = solver.findAllOptimalSolutions(obj, max);
+```
+
+---
+
+## Solving is reducing
+
+---
+
+### Backtracking algorithm
+- recursive traversal of the search tree
+- make/cancel decisions
+- backtrack on failure
+- incremental construction of a solution
+
+_Branch and Propagate_
+
+---
+
+![Alt text.](/images/tinytiny/filtering/bintree.svg)
+
+:warning: 2-way branching
+
+---
+
+## Making decisions
+
+<p class="fragment" data-fragment-index="1"><em>Can't we just leave it to the solver?</em></p>
+
+<p class="fragment" data-fragment-index="2">Bring business knowledge</p>
+<p class="fragment" data-fragment-index="3">Help moving towards a solution</p>
+<!--<p class="fragment" data-fragment-index="4">or proving unsat</p>-->
+
+{{% fragment %}} _but Yes, we can_ {{% /fragment %}}
+
+---
+
+## Making decisions
+
+- choose a free variable (how?)
+- select an operator (very often $=$)
+- determine a value (how?)
+
+Continue as as long as necessary
+
+{{% note %}}
+A decision is validated through propagation
+{{% \note %}}
+
+
+
+---
+
+### Select the next variable
+
+- `input_order`, `first_fail`, `smallest`,...
+- `dom/wdeg`, `FBA`, `CHS`, `ABS`, ...
+
+<br/>
+<br/>
+
+### Choose a value
+
+- `min`, `max`, `med`, ...
+
+---
+
+## Topping
+
+- Combining searches
+- Restarting: `geo`, `luby`
+- Meta-strategy: `lc`, `cos`
+- Phase saving,
+- Best
+
+---
+
+### Define your own
+
+```java{}
+solver.setSearch(Search.intVarSearch(
+    variables -> Arrays.stream(variables)
+          .filter(v -> !v.isInstantiated())
+          .min((v1, v2) -> closest(v2, map) - closest(v1, map))
+          .orElse(null),
+    v -> closest(v, map),
+    DecisionOperator.int_eq,
+    planes
+));
+```
+[[aircraft landing]](https://choco-solver.org/tutos/aircraft-landing-problem/code/)
+
+
+---
+
 ## Turnkey enumeration strategies
 
 ```java{2,4|3|5-6|7|}
@@ -135,17 +236,11 @@ Have a look at the {{%ccode c="Search" %}} factory.
 
 {{< slide background-iframe="https://choco-solver.org/docs/solving/strategies/" >}}
 
---- 
-## COP
+---
 
-An {{% ccode c="IntVar" %}} be maximized/minimized.
+# Monitoring
 
-```java{1|2}
-Solution bSol = solver.findOptimalSolution(obj, maximize);
-List<Solution> bSols = solver.findAllOptimalSolutions(obj, max);
-```
-
---- 
+---
 
 ## Information on research
 
@@ -159,7 +254,7 @@ while(solver.solve()){};
 Or to execute code on solutions using _monitors_:
 ```java
 solver.plugMonitor((IMonitorSolution) () -> {
-    // do something here 
+    // do something here
 });
 ```
 
@@ -169,10 +264,20 @@ solver.plugMonitor((IMonitorSolution) () -> {
 The search space exploration can be limited.
 
 ```java
-solver.limitTime("10s"); 
+solver.limitTime("10s");
 solver.limitSolution(5);
 solver.findAllSolutions();
 ```
 The first limit reached stops the search.
+
+---
+
+{{< slide background="#76bde8"  >}}
+
+## Warehouse Location
+
+<h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=70539" target="_blank" rel="noopener noreferrer"> >>🥛<<</a></h2>
+
+
 
 {{% /section %}}

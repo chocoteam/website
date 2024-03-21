@@ -6,8 +6,58 @@ weight = 60
 
 # Global Constraints
 
---- 
+---
 
+## Definition(s)
+
+> an expressive and concise condition involving a non-fixed number of variables
+
+[[GCCAT]](https://sofdem.github.io/gccat/gccat/preface.html)
+
+<p class="fragment">allDifferent($x_1,x_2,\dots$)</p>
+
+---
+
+## Definition(s)
+
+> a constraint C is often called "global" when "processing" as a whole gives better results than "processing" any conjunction of constraints that is "semantically equivalent" to C
+
+[[BvH03]](https://www.lirmm.fr/~bessiere/Site/stock/cp03-glob.pdf)
+
+<p class="fragment">allDifferent($x_1,x_2,x_3$) $\iff (x_1\neq x_2) \land (x_2\neq x_3) \land (x_3\neq x_1)$</p>
+
+---
+
+### Example of constraints
+
+{{% warn c="cumulative(starts, durations, heights, capacity)" %}}
+
+<figure>
+    <img src="/images/overview/scheduling.svg" alt="This is an alt" width="40%" >
+    <figcaption>Solution for a <em style="font-variant: small-caps">Cumulative</em> constraint. </figcaption>
+</figure>
+
+---
+
+### Example of constraints
+
+{{% warn c="binpacking(bins, weigths, capacity)" %}}
+
+<figure>
+    <img src="/images/overview/binpacking.svg" alt="" width="20%" >
+    <figcaption>Solution for a <em style="font-variant: small-caps">BinPacking</em> constraint. </figcaption>
+</figure>
+
+---
+
+### Example of constraints
+
+{{% warn c="circuit(successors)" %}}
+
+<figure>
+    <img src="/images/overview/routing.svg" alt="" width="30%" >
+    <figcaption>Solution for a <em style="font-variant: small-caps">Circuit</em> constraint. </figcaption>
+</figure>
 
 ---
 
@@ -21,7 +71,7 @@ weight = 60
 
 |Syntax | Definition|
 |--|--|
-| {{% ccode c="m.allDifferent(X)" %}} | $X_i\neq X_j, \forall i< j$ |
+| {{% ccode c="m.allDifferent(X)" %}} | $x_i\neq x_j, \forall i< j$ |
 | {{% ccode c="m.among(n, X, v)" %}} | $\|x_i : x_i \cap v\neq \emptyset \| = n$ |
 | {{% ccode c="m.count(y, X, n)" %}} | $ \| \\{ x_i : x_i = y \\} \| = n$ |
 | {{% ccode c="m.nValues(X, n)" %}} | $\|x_i\| = n$ |
@@ -33,7 +83,7 @@ weight = 60
 - Arrays: $X=\langle x_0, x_1,\ldots\rangle$
 - Index: $ 0 \leq i < |X|$
 
-</small>	
+</small>
 
 ---
 
@@ -44,11 +94,11 @@ weight = 60
 
 |Syntax | Definition|
 |--|--|
+| {{% ccode c="m.element(v, X, i, o)" %}} | $\exists i : v = x_{i - o}$ |
 | {{% ccode c="m.argmax(i, o, X)" %}} | $i \in \\{j - o : x_j = \max\\{x_k\\}\\}$ |
 | {{% ccode c="m.argmin(i, o, X)" %}} | $i \in \\{j - o : x_j = \max\\{x_k\\}\\}$ |
 | {{% ccode c="m.max(m, X)" %}} | $m = \max\\{x_i\\}$ |
 | {{% ccode c="m.min(m, X)" %}} | $m = \min\\{x_i\\}$ |
-| {{% ccode c="m.element(v, X, i, o)" %}} | $\exists i : v = x_{i - o}$ |
 | {{% ccode c="m.inverseChanneling(X, Y)" %}} | $ \forall i: x_i = j \iff y_j = i \quad (\|X\| = \|Y\|)$|
 |
 
@@ -59,7 +109,7 @@ weight = 60
 - Arrays: $X=\langle x_0, x_1,\ldots\rangle$
 - Index: $ 0 \leq i < |X|$
 
-</small>	
+</small>
 
 
 ---
@@ -73,7 +123,7 @@ weight = 60
 | {{% ccode c="m.binPacking(X, S, L, o)" %}} | $ \forall b \in \\{x_i\\},\sum_{i : x_i = b} S_i \leq L_b$
 | {{% ccode c="m.cumulative(A, H, c)" %}} | $ \forall t \in \mathcal{N},\sum\\{h_i : a^s_i \leq t < a^e_i\\} \leq c$
 | {{% ccode c="m.diffN(X, Y, W, H, true)" %}} | $\forall i<j, x_{i} + w_{i} \leq x_{j} \lor x_{j} + h_{j} ≤ x_{i}$<br/>$\quad\quad\quad \lor y_{i} + h_{i} \leq y_{j} \lor y_{j} + w_{j} ≤ y_{i}$
-| {{% ccode c="m.knapsack(O, w, e, W, E)" %}} | $\sum_{i} w_i \times O_i = W \land \sum_{i} e_i \times O_i = E$
+| {{% ccode c="m.knapsack(O, W, E, w, e)" %}} | $\sum_{i} w_i \times O_i = w \land \sum_{i} e_i \times O_i = e$
 |
 
 
@@ -84,7 +134,7 @@ weight = 60
 - Index: $ 0 \leq i < |X|$
 - Task (or activity): $a^s + a^d = a^e$
 
-</small>	
+</small>
 
 ---
 
@@ -106,15 +156,15 @@ weight = 60
 - Index: $ 0 \leq i < |X|$
 - A pair $(i, x_i)$ represents an arc in a graph induced by $X$
 
-</small>	
+</small>
 
 ---
 
-{{< slide id="ex4" background="#76bde8"  >}}
+{{< slide background="#76bde8"  >}}
 
-## Now it's your turn
+## Magic Sequence
 
-- TODO 
+<h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=71042" target="_blank" rel="noopener noreferrer"> >>🥛<<</a></h2>
 
 
 {{% /section %}}

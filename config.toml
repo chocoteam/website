@@ -49,11 +49,18 @@ anchor = "smart"
 
 
 # Additional menu items
+[[menu.main]]
+    name = "FAQ"
+    weight = 40
+    url = "docs/frequently-asked-questions/"
 
 [[menu.main]]
     name = "Javadoc"
     weight = 50
     url = "https://javadoc.io/doc/org.choco-solver/choco-solver/latest/org.chocosolver/module-summary.html"
+
+
+
 
 [languages]
 [languages.en]

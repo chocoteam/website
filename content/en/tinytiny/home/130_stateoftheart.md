@@ -32,8 +32,4 @@ that we do not develop
 
 And so many other things !
 
-# Thank you
-
-Q?
-
 {{% /section %}}

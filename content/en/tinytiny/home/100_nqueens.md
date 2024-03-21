@@ -15,7 +15,7 @@ Now, we are able to
 
 [Wikipedia](https://en.wikipedia.org/wiki/Eight_queens_puzzle)
 
---- 
+---
 
 <figure>
     <img src="/images/tinytiny/nqueens/8queens.png" alt="This is an alt" width="40%" >
@@ -42,8 +42,14 @@ Each <span style="color:deepskyblue;">domain</span> encodes the row where the qu
 Four groups of inequality <span style="color:deepskyblue;">constraints</span> are posed:
 1. no two queens share the same row
 2. no two queens share the same column (➡️ _handled by the model_ 🤘)
-3. no two queens share the same upward diagonal 
-4. no two queens share the same downward diagonal 
+3. no two queens share the same upward diagonal
+4. no two queens share the same downward diagonal
+
+---
+
+<h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=69930" target="_blank" rel="noopener noreferrer"> >>🥛<<</a></h2>
+
+
 
 ---
 
@@ -92,7 +98,7 @@ We build a minimalist CP solver :
     - each equipped with a filtering algorithm,
 - exploring the search space in DFS way.
 
-And we were able to enumerate solutions</br> 
+And we were able to enumerate solutions</br>
 on a puzzle !
 
 {{% /section %}}

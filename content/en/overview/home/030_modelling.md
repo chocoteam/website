@@ -4,13 +4,13 @@ weight = 30
 
 {{% section %}}
 
-# Modelling 
+# Modelling
 
 ---
 
 ## Creation of a {{% ccode c="Model" %}} instance
 
---- 
+---
 
 {{% ccode c="Model" %}} is the {{% calert c="central object" %}} in the Choco-solver library
 
@@ -27,7 +27,7 @@ In fact, almost anything can be done via a {{% ccode c="Model" %}} instance$^1$.
 ---
 
 ### Several builders
-```java{1-2|}
+```java{|1-2}
 Model m = new Model();								 							 // 1
 Model m = new Model(String name);					 					 // 2
 Model m = new Model(settings settings);				 			 // 3
@@ -48,7 +48,7 @@ package apetizer;
 public class Example{
 
     public static void main(String[] args){
-        
+
     }
 }
 ```
@@ -73,16 +73,5 @@ public class Example{
 }
 ```
 
----
-
-{{< slide id="ex1" background="#76bde8"  >}}
-
-## Now it's your turn
-
-- Create a class named {{% ccode c="Example" %}}
-- Declare a {{% ccode c="main" %}} method
-- Build an instance of {{% ccode c="Model" %}} named {{% ccode c="m" %}}
-
 
 {{% /section %}}
-

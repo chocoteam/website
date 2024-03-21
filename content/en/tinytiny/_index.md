@@ -1,13 +1,11 @@
 +++
 title = "Tiny Tiny Constraint Solver"
 outputs = ["Reveal"]
+
 [reveal_hugo]
 theme = "league"
 slide_number = true
 highlight_theme = "github"
-
-[markup.highlight]
-codeFences = false
 +++
 
 # The Very Tiny </br> Constraint Solver
@@ -19,8 +17,12 @@ IMT Atlantique, LS2N, TASC
 
 {{% warn c="This is a work in progress" %}}
 
+{{% note %}}
+Don't forget disable `codeFences` in `config.toml`.
+{{% /note %}}
+
 ---
- 
+
 In this presentation, we are going to code {{< frag class="highlight-blue" c="from scratch" >}} a minimalist constraint solver.
 
 The aim is nothing but {{< frag class="highlight-blue" c="understanding" >}} the internal mechanics.

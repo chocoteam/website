@@ -20,7 +20,7 @@ _It can be turn into a COP quite easily_
 
 ---
 
-{{< slide id="ex1" background="#8CC152" >}}
+{{< slide id="ex1" background="#C6D0B4" >}}
 
 Let's consider the following CSP $\mathcal{P}$:
 - $\mathcal{X} = \\{X_1, X_2, X_3\\}$
@@ -41,7 +41,7 @@ It is said to be {{% calert c="satisfied" %}} if :
 
 ---
 
-{{< slide id="ex2" background="#8CC152" >}}
+{{< slide id="ex2" background="#C6D0B4" >}}
 
 In $\mathcal{P}$, the constraint $AtMost(1,[X_1, X_2, X_3],2)$ holds iff <u>at most</u> 1 variable among $X_1, X_2, X_3$ is assigned to the value 2.
 
