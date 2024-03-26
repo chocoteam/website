@@ -11,3 +11,5 @@ menu:
 This section is where the documentation for Choco-solver lives - all the information you need to understand and successfully use in your project.
 
 <big>📽️</big> One way to get started is to follow [this presentation](/overview/#) before consulting the documentation.
+
+<big>📽️</big> One way to understand how a CP solver works is to follow [this presentation](/tinytiny/#).

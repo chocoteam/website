@@ -15,7 +15,7 @@ Charles Prud'homme, March 2024
 IMT Atlantique, LS2N, TASC
 
 
-{{% warn c="This is a work in progress" %}}
+<small style="color:#C70039">< press [N] / [P] to go the next / previous slide ></small>
 
 {{% note %}}
 Don't forget disable `codeFences` in `config.toml`.
