@@ -149,6 +149,8 @@ x is not instantiated
 
 ---
 
+{{< slide background="#76bde8"  >}}
+
 ### A Model
 
 - variables
@@ -166,6 +168,8 @@ x is not instantiated
 <h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=69633" target="_blank" rel="noopener noreferrer"> >>🥛<<</a></h2>
 
 ---
+
+{{< slide background="#76bde8"  >}}
 
 ### A Model
 

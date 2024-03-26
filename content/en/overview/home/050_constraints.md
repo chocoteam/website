@@ -262,6 +262,8 @@ Here again, there are different ways to work with an expression $e$, depending o
 
 ---
 
+{{< slide background="#76bde8"  >}}
+
 ### A Model
 
 - Parameters
