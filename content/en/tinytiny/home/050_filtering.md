@@ -77,7 +77,7 @@ Let's break down the needs into 4 functions.
 
 
 ```python
-def make_decision(variables):``
+def make_decision(variables):
     pass
 
 def copy_domains(variables):
