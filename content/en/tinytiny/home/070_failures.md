@@ -63,6 +63,6 @@ There are 0 solutions
 - Explaining failures (LCG)
 - Adapting the research strategy:
   - dom/wdeg, pick-on-dom, ABS, etc
-  - last conflict, COS
+  - last conflict, conflict ordering search
 
 {{% /section %}}

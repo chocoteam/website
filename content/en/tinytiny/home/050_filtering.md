@@ -86,28 +86,12 @@ def copy_domains(variables):
 def apply_decision(variables, var, val, apply, constraint):
     pass
 
-def enumerate(variables, constraint):
+def dfs(variables, constraint):
     pass
 ```
 
 <h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=69653" target="_blank" rel="noopener noreferrer"> >>🥛<<</a></h2>
 
-
----
-
-```python{1|2|3|4-6|7-10|11|}
-def dfs(variables, constraint):
-  constraint.filter(variables)
-  dec = make_decision(variables)
-  if dec is None:
-      print(variables)  # prints the solution
-      return 1
-  else:
-      var, val = dec
-      n = apply_decision(variables, var, val, True, constraint)
-      n += apply_decision(variables, var, val, False, constraint)
-  return n
-```
 
 ---
 
@@ -147,6 +131,22 @@ def apply_decision(variables, var, val, apply, constraint):
   return dfs(c_variables, constraint)
 ```
 
+
+---
+
+```python{1|2|3|4-6|7-10|11|}
+def dfs(variables, constraint):
+  constraint.filter(variables)
+  dec = make_decision(variables)
+  if dec is None:
+      print(variables)  # prints the solution
+      return 1
+  else:
+      var, val = dec
+      n = apply_decision(variables, var, val, True, constraint)
+      n += apply_decision(variables, var, val, False, constraint)
+  return n
+```
 
 
 ---

@@ -98,7 +98,7 @@ So, as long as a constraint filters values,</br>
             </tr>
             <tr class="fragment">
               <td>3</td>
-              <td>-</td>
+              <td>[1,<span style="color:#3BAFDA">1</span>]</td>
               <td>-</td>
               <td>-</td>
               <td>{<span style="color:#3BAFDA">c1</span>}</td>
@@ -109,8 +109,24 @@ So, as long as a constraint filters values,</br>
               <td></td>
               <td></td>
               <td></td>
+              <td>{<span style="color:#ED5565">c2</span>}</td>
+              <td>{<span style="color:#3BAFDA">c1</span>}</td>
+            </tr>
+            <tr class="fragment">
+              <td>4</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>{<span style="color:#3BAFDA">c2</span>}</td>
+              <td>{c1}</td>
+            </tr>
+            <tr class="fragment">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td>{}</td>
-              <td>{<span style="color:#3BAFDA">c1</span>,c2}</td>
+              <td>{<span style="color:#3BAFDA">c1, c2</span>}</td>
             </tr>
           </tbody>
         </table>
