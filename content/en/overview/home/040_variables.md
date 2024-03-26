@@ -176,7 +176,7 @@ x is not instantiated
 - parameter
   - $input$: the current year
 - variables
-  - $\forall i \in \\{th,hu,te,on\\}, x_i \in [1,9]$
+  - $\forall i \in \\{th,hu,te,on\\}, x_i \in [0,9]$
   - $age \in [0,99]$
 - Constraints
   - $x_{th} + x_{hu} + x_{te} + x_{on} = {age}$
