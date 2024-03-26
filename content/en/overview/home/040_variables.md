@@ -149,13 +149,34 @@ x is not instantiated
 
 ---
 
+### A Model
+
+- variables
+  - $\forall i \in \\{a,b,c,d,e\\}, l_i \in [ 0,9]$
+- constraints
+  - $\forall i\neq j \in \\{a,b,c,d,e\\}, l_i \neq l_j$
+  - $39999l_a + 3990l_b + 300l_c - 960l_d - 9996l_e = 0$
+
+---
+
 {{< slide background="#76bde8"  >}}
 
 ###  Can you guess his year of birth?
 
 <h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=69633" target="_blank" rel="noopener noreferrer"> >>🥛<<</a></h2>
 
+---
 
+### A Model
+
+- parameter
+  - $input$: the current year
+- variables
+  - $\forall i \in \\{th,hu,te,on\\}, x_i \in [1,9]$
+  - $age \in [0,99]$
+- Constraints
+  - $x_{th} + x_{hu} + x_{te} + x_{on} = {age}$
+  - $1000x_{th} + 100x_{hu} + 10x_{te} + x_{on} + age = input$
 
 
 {{% /section %}}

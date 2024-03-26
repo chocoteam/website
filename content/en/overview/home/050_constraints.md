@@ -260,6 +260,20 @@ Here again, there are different ways to work with an expression $e$, depending o
 
 <h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=69634" target="_blank" rel="noopener noreferrer"> >>🥛<<</a></h2>
 
+---
+
+### A Model
+
+- Parameters
+	- $S_0, S_1, S_2, S_3$: the four circled number clues
+	- $f_{i,j}$: some fixed cells
+- Variables
+	- $\forall i,j \in [0,2], x_{i,j} \in [0,9]$
+- Constraints
+	- $\forall i\neq i', j\neq j'  \in [0,2], x_i \neq x_j$
+	- $\forall i \in [0,3], k = \frac{i}{2}, \ell = i \mod 2,$
+$x_{k,\ell} + x_{k + 1,\ell} + x_{k,\ell + 1} + x_{k + 1,\ell +1} = S_i$
+ 	- \+clues
 
 
 {{% /section %}}
