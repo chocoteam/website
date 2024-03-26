@@ -15,6 +15,8 @@ Charles Prud'homme, March 2024
 
 IMT Atlantique, LS2N, TASC
 
+<br/>
+<small style="color:#C70039">< press [N] / [P] to go the next / previous slide ></small>
 
 
 ---
