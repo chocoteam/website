@@ -171,7 +171,7 @@ Continue as as long as necessary
 
 {{% note %}}
 A decision is validated through propagation
-{{% \note %}}
+{{% /note %}}
 
 
 
