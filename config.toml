@@ -1,6 +1,6 @@
 baseURL = "https://choco-solver.org/"
 title = "Choco-solver"
-
+description = "A Java library for Constraint Programming"
 
 enableRobotsTXT = true
 
@@ -17,7 +17,7 @@ defaultContentLanguageInSubdir = false
 # Useful when translating.
 enableMissingTranslationPlaceholders = true
 
-disableKinds = ["taxonomy", "taxonomyTerm"]
+disableKinds = ["taxonomy"]
 
 # Highlighting config
 pygmentsCodeFences = true
@@ -60,17 +60,6 @@ anchor = "smart"
     url = "https://javadoc.io/doc/org.choco-solver/choco-solver/latest/org.chocosolver/module-summary.html"
 
 
-
-
-[languages]
-[languages.en]
-title = "Choco-solver"
-description = "A Java library for Constraint Programming"
-languageName ="English"
-# Weight used for sorting.
-weight = 1
-
-
 time_format_default = "02.01.2006"
 time_format_blog = "02.01.2006"
 
@@ -78,7 +67,8 @@ time_format_blog = "02.01.2006"
 unsafe = true
 
 [markup.highlight]
-codeFences = true
+codeFences = false
+style = 'monokai'
 
 
 [outputFormats.Reveal]
