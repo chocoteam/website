@@ -276,7 +276,7 @@ The first limit reached stops the search.
 
 ## Warehouse Location
 
-<h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=70539" target="_blank" rel="noopener noreferrer"> >>🥛<<</a></h2>
+<h1><a href="https://choco-solver.org/tutos/warehouse-location-problem/description/" target="_blank" rel="noopener noreferrer"> >>🏭<<</a></h1>
 
 
 

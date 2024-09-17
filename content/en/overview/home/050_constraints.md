@@ -258,24 +258,120 @@ Here again, there are different ways to work with an expression $e$, depending o
 
 ###  Sujiko
 
-<h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=69634" target="_blank" rel="noopener noreferrer"> >>🥛<<</a></h2>
+The puzzle takes place on a 3x3 grid with four circled number clues at the centre of each quadrant which indicate the sum of the four numbers in that quadrant.
+
+The numbers 1-9 must be placed in the grid, in accordance with the circled clues, to complete the puzzle.
 
 ---
+{{< slide background="#76bde8"  >}}
+
+###  Empty grid
+
+<figure>
+    <img src="/images/overview/sujiko.png" alt="This is an alt" width="50%" >
+</figure>
+
+
+--- 
+
 
 {{< slide background="#76bde8"  >}}
 
 ### A Model
 
-- Parameters
+- **Parameters**
 	- $S_0, S_1, S_2, S_3$: the four circled number clues
 	- $f_{i,j}$: some fixed cells
-- Variables
+- **Variables**
 	- $\forall i,j \in [0,2], x_{i,j} \in [0,9]$
-- Constraints
+- **Constraints**
 	- $\forall i\neq i', j\neq j'  \in [0,2], x_i \neq x_j$
 	- $\forall i \in [0,3], k = \frac{i}{2}, \ell = i \mod 2,$
 $x_{k,\ell} + x_{k + 1,\ell} + x_{k,\ell + 1} + x_{k + 1,\ell +1} = S_i$
  	- \+clues
+
+--- 
+
+{{< slide background="#76bde8"  >}}
+
+### Hints
+
+```java
+model.allDifferent(IntVar[])
+model.sum(IntVar[], String, int)
+model.arithm(IntVar, String, int)
+```
+
+```java
+int[] circles = new int[]{10, 21, 18, 20};
+int[] clues = new int[]{0, 0, 0, 0, 0, 0, 8, 0, 7};
+```
+
+```java
+private IntVar[] quadrant(IntVar[][] grid, int i) {
+	int x = i / 2;
+	int y = i % 2;
+	return new IntVar[]{grid[x][y], grid[x + 1][y], grid[x][y + 1], grid[x + 1][y + 1]};
+}
+```
+
+--- 
+
+{{< slide background="#76bde8"  >}}
+
+### A Choco-solver code
+
+```java
+Model model = new Model("Sujiko");
+
+IntVar[][] grid = model.intVarMatrix("x", 3, 3, 1, 9);
+
+// Constraint: "The numbers 1-9 must be placed in the grid"
+// implies that all values must be different
+model.allDifferent(ArrayUtils.flatten(grid)).post();
+
+// Constraint: "each quadrant which indicate the sum of the four numbers in that quadrant"
+for (int i = 0; i < 4; i++) {
+	IntVar[] cells = quadrant(grid, i);
+	model.sum(cells, "=", circles[i]).post();
+}
+
+// Constraint: "the clues"
+for (int i = 0; i < 3; i++) {
+	for (int j = 0; j < 3; j++) {
+		if (clues[i * 3 + j] != 0) {
+			model.arithm(grid[i][j], "=", clues[i * 3 + j]).post();
+		}
+	}
+}
+
+while (model.getSolver().solve()) {
+	System.out.println("Solution:");
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			System.out.print(grid[i][j].getValue() + " ");
+		}
+		System.out.println();
+	}
+}
+if (model.getSolver().getSolutionCount() == 0) {
+	System.out.println("No solution found");
+}
+```
+
+---
+
+{{< slide background="#76bde8"  >}}
+
+### Output
+
+```shell{}
+Solution:
+1 4 9 
+3 2 6 
+8 5 7 
+ ```
+
 
 
 {{% /section %}}

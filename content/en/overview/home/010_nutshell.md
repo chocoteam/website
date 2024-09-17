@@ -27,7 +27,7 @@ weight = 10
 ---
 
 - About 3 releases per year
-- {{< calert c="4.10.14" >}} is the current version
+- {{< calert c="4.10.16" >}} is the current version
 - $\approx5,860$ downloads per month, according to MCR
 - 5 types of variable available
 - $> 200$  propagators

@@ -11,7 +11,7 @@ highlight_theme = "github"
 ## Modelling and Solving
 ## with Choco-solver
 </br>
-Charles Prud'homme, March 2024
+Charles Prud'homme, Sept. 2025
 
 IMT Atlantique, LS2N, TASC
 

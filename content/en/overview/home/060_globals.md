@@ -164,7 +164,17 @@ weight = 60
 
 ## Magic Sequence
 
-<h2><a href="https://moodle.caseine.org/mod/vpl/view.php?id=71042" target="_blank" rel="noopener noreferrer"> >>🥛<<</a></h2>
+A magic series of length $n$ is a sequence of integers $[x_0, ..., x_{n-1}]$  between $0$ and $n-1$, such that for all $i \in \\{0 , ..., n-1\\}$, the number $i$ occurs exactly $x_i$ times in the sequence. 
+
+For instance, $[1,2,1,0]$ is a magic series of length $4$ : 
+- value 0 occurs once 
+- value 1 occurs twice 
+- value 2 occurs once 
+- value 3 does not occur 
+
+Write a CP model in java using the Choco solver to find magic series for any given n.
+
+
 
 
 {{% /section %}}
