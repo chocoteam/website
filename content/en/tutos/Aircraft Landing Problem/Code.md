@@ -8,7 +8,8 @@ description: >
   A bunch of code.
 ---
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // load parameters
 // ...
 // A new model instance
@@ -52,7 +53,8 @@ for(int i = 0 ; i < N; i++){
     cs[i + N] = PC[i][1];
 }
 model.scalar(ArrayUtils.append(earliness, tardiness), cs, "=", tot_dev).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Note that all variables could be bounded, since no constraint makes
 holes in the domain. However, turning them into enumerated ones will be
@@ -73,12 +75,14 @@ the constraint. Calling method like 'addClause\*' add clauses to a
 specific clause store which acts as specific singleton constraint. The
 code can however replaced by :
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 model.or(iBeforej,jBeforei).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 In that case, the logical expression will be transformed into a sum
-constraint. Yet, $\frac{N \times (N-1}{2}$ constraints will be added to
+constraint. Yet, $\frac{N \times (N-1)}{2}$ constraints will be added to
 the solver.
 
 A search strategy
@@ -95,17 +99,20 @@ target landing time.
 
 First, we map each plane with its target landing time:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Map<IntVar, Integer> map =
     IntStream.range(0, N)
              .boxed()
              .collect(Collectors.toMap(i -> planes[i], i -> LT[i][1]));
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Then, for a given plane, a function is created to look for the possible
 landing time closest to the target landing time:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 private static int closest(IntVar var, Map<IntVar, Integer> map) {
     int target = map.get(var);
     if (var.contains(target)) {
@@ -116,7 +123,8 @@ private static int closest(IntVar var, Map<IntVar, Integer> map) {
         return Math.abs(target - p) < Math.abs(n - target) ? p : n;
     }
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Note that, `var.previousValue(target)` can return `Integer.MIN\_VALUE` which
 indicates that there is no value before target in the domain of var
@@ -125,7 +133,8 @@ why the absolute difference is computed, and the minimum is returned.
 
 Finally, the search strategy is defined:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 solver.setSearch(Search.intVarSearch(
     variables -> Arrays.stream(variables)
           .filter(v -> !v.isInstantiated())
@@ -135,7 +144,8 @@ solver.setSearch(Search.intVarSearch(
     DecisionOperator.int_eq,
     planes
 ));
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Lines 2-7: non-instantiated variables are filtered and the more distant
 to the target landing time is returned. Note that if all variables are
@@ -155,10 +165,12 @@ The resolution objective
 
 The objective is to minimize 'tot\_dev'.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // Find a solution that minimizes 'tot_dev'
 Solution best = solver.findOptimalSolution(tot_dev, false);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 This method attempts to find the optimal solution.
 
@@ -166,7 +178,8 @@ If one wants to interact with each solution without using the unfold
 resolution process, she/he can plug a solution monitor to the solver.
 Such monitor implements an one-method interface called on each solution:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 solver.plugMonitor((IMonitorSolution) () -> {
     for (int i = 0; i < N; i++) {
         System.out.printf("%s lands at %d (%d)\n",
@@ -176,7 +189,8 @@ solver.plugMonitor((IMonitorSolution) () -> {
     }
     System.out.printf("Deviation cost: %d\n", tot_dev.getValue());
 });
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 We print here the real landing time and the distance to the target
 landing time for each plane and the total deviation cost.
@@ -184,7 +198,8 @@ landing time for each plane and the total deviation cost.
 The entire code
 ---------------
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // number of planes
 int N = 10;
 // Times per plane:
@@ -290,7 +305,8 @@ solver.setSearch(Search.intVarSearch(
 ));
 solver.showShortStatistics();
 solver.findOptimalSolution(tot_dev, false);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The best solution found is:
 

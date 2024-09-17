@@ -44,7 +44,8 @@ For example: `"0*<11><22>0*"` will accept words like `00112200` or `1122` but no
 {{%/alert%}}
 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 private void dfa(BoolVar[] cells, int[] rest, Model model) {
     StringBuilder regexp = new StringBuilder("0*");
     int m = rest.length;
@@ -56,7 +57,8 @@ private void dfa(BoolVar[] cells, int[] rest, Model model) {
     IAutomaton auto = new FiniteAutomaton(regexp.toString());
     model.regular(cells, auto).post();
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ### Constructive way
 
@@ -92,7 +94,8 @@ _Graph illustrating the DFA for the sequence {1, 2}. Generated with [Graphviz](h
 
 And here the code for building such a DFA for any sequence:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 private void dfa2(BoolVar[] cells, int[] seq, Model model) {
     FiniteAutomaton auto = new FiniteAutomaton();
     int si = auto.addState();
@@ -126,7 +129,8 @@ private void dfa2(BoolVar[] cells, int[] seq, Model model) {
     }
     model.regular(cells, auto).post();
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 {{%alert title="Info" color="primary"%}}
 Any regexp can be transformed into a DFA and conversely.
@@ -136,7 +140,8 @@ But, most of the time the constructive way is more convenient.
 The entire code
 ---------------
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // number of columns
 int N = 15;
 // number of rows
@@ -196,7 +201,8 @@ if(model.getSolver().solve()){
         System.out.printf("\n");
     }
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Things to remember
 ------------------

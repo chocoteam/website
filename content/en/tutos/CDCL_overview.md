@@ -13,10 +13,12 @@ _This file can be downloaded as a [jupyter notebook](https://jupyter.org/) and e
 [>> ipynb <<](</notebooks/content/en/tutos/CDCL_overview.ipynb>)
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // Add maven dependencies at runtime 
 %maven org.choco-solver:choco-solver:4.10.13
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ----
 
@@ -46,7 +48,8 @@ Note that two dummy activities are added, a source (1) and a sink (32), for succ
 Neither of them consumes any resources.
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // Set up the problem data
 int numActivities = 32;  // Number of activities, including source (1) and sink (32)
 int numResources = 4;  // Number of resources
@@ -122,10 +125,12 @@ int[][] requirements = new int[][]{
         {0, 0, 2, 0},
         {0, 0, 0, 0},
 };
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.constraints.nary.cumulative.Cumulative;
@@ -183,17 +188,20 @@ public Model rcpsp() {
    solver.showShortStatistics();
    return model;
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 #### Without CDCL
 
 Finding the optimal solution to this instance of the RCPSP requires 285653 nodes:
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Model model = rcpsp();
 while(model.getSolver().solve());
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
     Model[RCPSP], 1 Solutions, MINIMIZE IV_1 = 49, Resolution time 0,020s, Time to best solution 0,018s, 33 Nodes (1 671,6 n/s), 0 Backtracks, 0 Backjumps, 0 Fails, 0 Restarts
     [0mModel[RCPSP], 2 Solutions, MINIMIZE IV_1 = 47, Resolution time 3,375s, Time to best solution 3,375s, 256956 Nodes (76 129,8 n/s), 513826 Backtracks, 0 Backjumps, 256927 Fails, 0 Restarts
@@ -208,11 +216,13 @@ while(model.getSolver().solve());
 Using CDCL, the same solution can be found in only 186 nodes only:
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Model model = rcpsp();
 model.getSolver().setLearningSignedClauses();
 while(model.getSolver().solve());
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
     Model[RCPSP], 1 Solutions, MINIMIZE IV_1 = 49, Resolution time 0,007s, Time to best solution 0,006s, 33 Nodes (4 968,7 n/s), 0 Backtracks, 0 Backjumps, 0 Fails, 0 Restarts
     [0mModel[RCPSP], 2 Solutions, MINIMIZE IV_1 = 47, Resolution time 0,057s, Time to best solution 0,057s, 112 Nodes (1 948,1 n/s), 100 Backtracks, 9 Backjumps, 28 Fails, 0 Restarts

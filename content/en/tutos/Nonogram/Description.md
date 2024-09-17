@@ -25,7 +25,8 @@ Input data
 
 We consider here the following input (in java):
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // sequence of shaded blocks
 int[][][] BLOCKS =
         new int[][][]{{
@@ -60,4 +61,5 @@ int[][][] BLOCKS =
                 {10},
                 {3},
                 {2}}};
-```
+{{< /tab >}}
+{{< /tabpane >}}

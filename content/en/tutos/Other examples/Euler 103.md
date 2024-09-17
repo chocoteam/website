@@ -9,7 +9,8 @@ description: >
 
 Thanks to [Mathieu Vavrille](https://www.univ-nantes.fr/mathieu-vavrille) for his modelling of [problem 103 of the Euler project](https://projecteuler.net/problem=103), "Special subset sums: optimum", using Constraint Programming and Choco.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 public class Euler {
 
   public static void main(final String[] args) {
@@ -69,5 +70,6 @@ public class Euler {
   }
   
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 

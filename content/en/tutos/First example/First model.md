@@ -25,7 +25,8 @@ queens on a nxn chessboard).
 There are many ways to model this problem with Choco-solver, we will start with
 a basic one:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 int n = 8;
 Model model = new Model(n + "-queens problem");
 IntVar[] vars = new IntVar[n];
@@ -43,7 +44,8 @@ Solution solution = model.getSolver().findSolution();
 if(solution != null){
     System.out.println(solution.toString());
 }
-```
+{{< /tab >}} 
+{{< /tabpane >}}
 
 If you copy/paste the this code and execute it, it prints the value that
 each variable takes in the solution on the console :

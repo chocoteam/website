@@ -30,7 +30,8 @@ Input data
 
 We consider here the following input (in java):
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // number of planes
 int N = 10;
 // Times per plane: {earliest landing time, target landing time, latest landing time}
@@ -70,6 +71,8 @@ int[][] ST = {
     {15, 15, 8, 8, 8, 8, 8, 99999, 8, 8},
     {15, 15, 8, 8, 8, 8, 8, 8,  99999, 8},
     {15, 15, 8, 8, 8, 8, 8, 8,  8, 99999}};
-```
+{{< /tab >}}
+{{< /tabpane >}}
+
 
 

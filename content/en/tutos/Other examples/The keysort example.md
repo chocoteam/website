@@ -19,11 +19,13 @@ Hence, it eases the expression of constraints on both the *sorted* side of the p
 Consider a task scheduling problem, consisting of 10 tasks fixed in time, to be executed in a given day.
 Any task is either easy or hard. 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 int[] start_dates = {[6, 18, 2, 14, 2, 7, 0, 15, 7, 17]};
 int[] durations = {[1, 2, 2, 1, 2, 1, 2, 1, 1, 1]};
 int[] difficulties = {[1, 0, 0, 1, 0, 0, 0, 1, 1, 1]};
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The team of workers consists of five people: three beginners and two experts. An expert can perform tasks of any difficulty and can work up to 9 hours a day. 
 A beginner can only do easy tasks and cannot work more than 6 hours a day.
@@ -35,7 +37,8 @@ The aim is to assign each task to a worker while respecting the working time of 
 
 First, let's import the needed classes. 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.BoolVar;
@@ -43,12 +46,15 @@ import org.chocosolver.solver.variables.IntVar;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
-```
+{{< /tab >}}
+{{< /tabpane >}}
 And create an instance of the `Model` class:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Model model = new Model("Scheduling");
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 
 
@@ -56,7 +62,8 @@ Model model = new Model("Scheduling");
 For convenience, we consider that beginners are assigned to a value in $[0,2]$ and experts in $[3,4]$.
 
 Then, we can define the tasks, from the inputs:
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar[] starts = IntStream.range(0, n)
                     .mapToObj(i -> model.intVar("S_" + i, start_dates[i])).toArray(IntVar[]::new);
 IntVar[] durs = IntStream.range(0, n)
@@ -68,7 +75,8 @@ IntVar[] ends = IntStream.range(0, n)
 IntVar[] users = IntStream.range(0, n)
                     .mapToObj(i -> model.intVar("U_" + i, difficulties[i] == 0 ? 0 : 3, 4))
                     .toArray(IntVar[]::new); // 0 -> 2 : beginners, 3-4 : experts
-```
+{{< /tab >}}
+{{< /tabpane >}}
 The `starts`, `durs` and `ends` variables are defined as constants, only the `users` are to be defined.
 The domain of each variable that represents the user that does the task is adapted to the difficulty. Indeed, a difficult task cannot be done by a beginner, whereas an expert can do any type of task.
 
@@ -78,13 +86,15 @@ A rectangle is a two-dimension object, defined by an origin and a length on each
 Here, the x-axis will indicate the time and the y-axis the resources.
 So, a task is a rectangle whose the starting time and the user are the origins and the duration and the value $1$ are the lengths.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 model.diffN(
         starts, users, // origins
         durs, IntStream.range(0, n).mapToObj(i -> model.intVar(1)).toArray(IntVar[]::new), // lengths
         true // additional filtering based on cumulative reasoning
 ).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 #### Redundant constraints
 
@@ -92,7 +102,8 @@ In our example, since starting times and durations are fixed, it is possible to 
 Some inequality constraints can be added.
 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 BiPredicate<Integer, Integer> overlap = (i, j) ->
         (start_dates[j] <= start_dates[i] && start_dates[i] < start_dates[j] + durations[j])
                 || (start_dates[i] <= start_dates[j] && start_dates[j] < start_dates[i] + durations[i]);
@@ -106,7 +117,8 @@ for (int i = 0; i < n; i++) {
         }
     }
 }
-``` 
+{{< /tab >}}
+{{< /tabpane >}} 
 Here, only two pairs of tasks overlap in time, so posting $\ne$ constraints is sufficient.
 But, in more complex cases, it would be worthwhile to detect clique of inequalities and post `AllDifferent` constraints.
 
@@ -124,16 +136,19 @@ only if the list $S$ of variables form a rearrangement of $L$ that
 
 We already have the variables forming $L$ (namely, `starts`, `durations`, `ends` and `users`), so we need to introduce variables representing $S$.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar[] sortedStarts = model.intVarArray("SS", n, 0, 23);
 IntVar[] sortedDurs = model.intVarArray("SD", n, 1, 3);
 IntVar[] sortedEnds = model.intVarArray("SE", n, 1, 24);
 IntVar[] sortedUsers = model.intVarArray("SU", n, 0, 4);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The constraint signature includes an optional array of permutation variables. We will declare it to simplify the display of solutions, but it is sometimes convenient to have access to it to constrain the sort.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar[] permutations = model.intVarArray("P", n, 1, n);
 model.keySort(
         IntStream.range(0, n).mapToObj(i -> new IntVar[]{users[i], starts[i], durs[i], ends[i]}).toArray(IntVar[][]::new),
@@ -141,7 +156,8 @@ model.keySort(
         IntStream.range(0, n).mapToObj(i -> new IntVar[]{sortedUsers[i], sortedStarts[i], sortedDurs[i], sortedEnds[i]}).toArray(IntVar[][]::new),
         2
 ).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 We specify 2 as the last parameter, indicating that the sorting only applies to `users` then `starts`.
 
 We now have access to the tasks of each worker, sorted by increasing start. In fact, we do not have this information directly, however, the way the variables are ordered will allow us to easily extract this information.
@@ -160,7 +176,8 @@ Now that the working time are valuated, they can be bounded.
 If the worker is a beginner, its working time may not exceed 6 hours, 9 hours otherwise.
 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 BoolVar[] y = model.boolVarArray(n);
 IntVar[] w = new IntVar[n];
 for (int i = 0; i < n; i++) {
@@ -173,23 +190,27 @@ for (int i = 0; i < n; i++) {
     }
     w[i].le(sortedUsers[i].lt(EXPERT).ift(beginnerWorkingTime, expertWorkingTime)).post();
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 All that remains is to define a research strategy.
 It is optional but since only the users are to be found, we can restrict the decision variables to this set.
 
 ### Solving
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Solver solver = model.getSolver();                 
 solver.printShortFeatures();                       
 solver.setSearch(Search.inputOrderLBSearch(users));
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 We look for the first solution and print it.
 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 if (solver.solve()) {                                                                             
     System.out.printf("\nSolution #%d\n", solver.getSolutionCount());                             
     for (int i = 0; i < n; i++) {                                                                 
@@ -212,7 +233,8 @@ if (solver.solve()) {
     solution = true;                                                          
 }                                                                                                 
 solver.printShortStatistics();                                                                    
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ```
 Model[keysort], 250 variables, 127 constraints, building time: 0,264s, w/o user-defined search strategy, w/o complementary search strategy
@@ -260,7 +282,8 @@ The use of this constraint is not trivial and requires care but it offers great 
 
 ## All together
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 int EXPERT = 3;
 int beginnerWorkingTime = 6;
 int expertWorkingTime = 9;
@@ -357,7 +380,8 @@ if (solver.solve()) {
     solution = true;
 }
 solver.printShortStatistics();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 
 

@@ -10,7 +10,8 @@ description: >
 We will now see and comment some modifications of the code presented
 previously :
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 int n = 8;
 Model model = new Model(n + "-queens problem");
 IntVar[] vars = new IntVar[n];
@@ -28,16 +29,19 @@ Solution solution = model.getSolver().findSolution();
 if(solution != null){
     System.out.println(solution.toString());
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Variables
 ---------
 
 First, lines 3-6 can be compacted into:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar[] vars = model.intVarArray("Q", n, 1, n, false);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Doing so, an n-array of variables with [1,n]-domain is created. Each
 variable name is "Q[i]" where *i* is its position in the array, starting
@@ -49,11 +53,13 @@ Constraints
 
 Second, lines 9 to 11 can be replaced by:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 vars[i].ne(vars[j]).post();
 vars[i].ne(vars[j].sub(j - i)).post();
 vars[i].ne(vars[j].add(j - i)).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 where *ne* stands for *not equal*. Theses instructions express the same
 constraints, or more complex expressions, in a convenient way. Here the
@@ -71,11 +77,13 @@ the expression and post *table* constraints [^1]. To do so, the
 expression should be first turned into extension constraint then be
 posted
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 vars[i].ne(vars[j]).extension().post();
 vars[i].ne(vars[j].sub(j - i)).extension().post();
 vars[i].ne(vars[j].add(j - i)).extension().post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Global constraints
 ------------------
@@ -93,7 +101,8 @@ conditions:
 
 We can reformulate the set of constraints to:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar[] diag1 = new IntVar[n];
 IntVar[] diag2 = new IntVar[n];
 for(int i = 0 ; i < n; i++){
@@ -105,7 +114,8 @@ model.post(
     model.allDifferent(diag1),
     model.allDifferent(diag2)
 );
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The constraint on line 8 simply states that all variables from vars must
 be different. The constraint on line 9 (and 10) states that all variables
@@ -128,14 +138,17 @@ constraints, solutions found, open nodes, etc.
 We can either let the solver explore the search space by itself or
 define a search strategy, like:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 solver.setSearch(Search.domOverWDegSearch(vars));
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Updated code
 ------------
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 int n = 8;
 Model model = new Model(n + "-queens problem");
 IntVar[] vars = model.intVarArray("Q", n, 1, n, false);
@@ -153,7 +166,8 @@ Solution solution = solver.findSolution();
 if (solution != null) {
     System.out.println(solution.toString());
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Running the following code outputs something like:
 

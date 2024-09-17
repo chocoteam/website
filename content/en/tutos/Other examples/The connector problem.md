@@ -27,7 +27,8 @@ On the left side, the initial network. On the right side, a solution to this pro
 
 Now, let's load the data.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // Load data
 String[] cities = new String[]{
   "London", "Mexico City", "New York", "Paris", "Peking", "Tokyo"
@@ -42,27 +43,32 @@ int[][] distances =
   {5074, 7753, 6844, 5120, 0, 1307},  // Pe
   {5959, 7035, 6757, 6053, 1307, 0},  // T
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Imports and model
 -----------------
 
 Before going further, create a class and import the following classes.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.util.objects.graphs.UndirectedGraph;
 import org.chocosolver.util.objects.setDataStructures.SetType;
 import org.chocosolver.solver.variables.UndirectedGraphVar;
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Then declare a model to work with in a method.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Model cop = new Model("The Connector Problem");
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ## How to build `GraphVar`
 
@@ -72,31 +78,38 @@ Elements can be removed from the upper bound or enforced in the lower bound.
 A `GraphVar` is considered as instantiated when the lower bound and the upper bound are equal.
 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 UndirectedGraph GLB = new UndirectedGraph(cop, cities.length, SetType.BITSET, true);
 UndirectedGraph GUB = new UndirectedGraph(cop, cities.length, SetType.BITSET, true);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 **The** last parameter states that all nodes always remain in the graph. The nodes are labeled from 0 to `cities.length`-1.
 The lower bound of the `GraphVar` contains the cities but no edges since none of them are mandatory. The upper bound only contains the cities and the optional edges must now be declared.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 for(int i = 0; i < cities.length; i++){
   for(int j = i+1; j < cities.length; j++){
       GUB.addEdge(i, j);   
   }  
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 It is now possible to declare the graph variable `G` as follow.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 UndirectedGraphVar graph = cop.graphVar("G", GLB, GUB);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 We can see how the current value of the domain of $G$:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 private void printGLB(){
   System.out.println("Lower bound of G:");
   for (int n : graph.getMandatoryNodes()) {
@@ -118,7 +131,8 @@ private void printGUB(){
       System.out.print("}\n");
   }
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 Calling these two methods prints 
 ```
 Lower bound of G:
@@ -141,36 +155,45 @@ Upper bound of G:
 
 In order to impose that G is a spanning tree, we post a **degree constrained-minimum spanning tree** (or *dcmst*). Since this constraint offers to constraint the degrees too, it is required to declare variables that define the degree of each node. This is achieved through a channeling constraint between `G` and `IntVar`s.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar[] degrees = cop.intVarArray("degree", cities.length, 0, cities.length-1);
 cop.degrees(graph, degrees).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Note that the constraint is **posted** to the model. Actually, the other option would be to reify it.
 
 We also need to get the cost of the spanning tree, in order to minimize it.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar totalCost = cop.intVar("cost", 0, 6*99_999);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Now everything is up to post the constraint that ensure that `G` is a minimum spanning tree:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 cop.dcmst(graph,degrees,totalCost,distances,0).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ## Objective and solving
 
 Since we deal with a Constraint Optimization Problem, an objective variable has to be declared, together with the policy:
 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 cop.setObjective(Model.MINIMIZE, totalCost);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 And we are ready to run the resolution:
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Solver slv = cop.getSolver();
 slv.showShortStatistics();
 //slv.reset();
@@ -178,7 +201,8 @@ while (slv.solve()){
     System.out.printf("Spanning tree of cost %d\n", totalCost.getValue());
     printGLB();
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 which prints :
 
 ```
@@ -201,7 +225,8 @@ Model[The Connector Problem], 13 Solutions, MINIMIZE cost = 12154, Resolution ti
 It is possible to give the solver hints to better explore the search space.
 This is done by defining a search strategy. In our case, we want to select first edges associated to small distance.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 import org.chocosolver.solver.search.strategy.strategy.GraphCostBasedSearch;
 // ...
 
@@ -214,7 +239,8 @@ while (slv.solve()){
     System.out.printf("Spanning tree of cost %d\n", totalCost.getValue());
     printGLB();
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 which results in:
 
 ```
@@ -232,7 +258,8 @@ Model[The Connector Problem], 1 Solutions, MINIMIZE cost = 12154, Resolution tim
 
 # The entire code
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 
 String[] cities = new String[]{
   "London", "Mexico City", "New York", "Paris", "Peking", "Tokyo"
@@ -279,4 +306,5 @@ while (slv.solve()){
     System.out.printf("Spanning tree of cost %d\n", totalCost.getValue());
     printGLB();
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}

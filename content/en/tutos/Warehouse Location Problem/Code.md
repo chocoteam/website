@@ -11,7 +11,8 @@ description: >
 A model
 -------
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // load parameters
 // ...
 // A new model instance
@@ -50,7 +51,8 @@ Arrays.fill(coeffs, 0, W, C);
 Arrays.fill(coeffs, W, W + S, 1);
 // then post it
 model.scalar(ArrayUtils.append(open, cost), coeffs, "=", tot_cost).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The last parameter of the element constraints (line 19 and 21) indicates
 an offset. It enables to adapt the index range wrt to the domain of the
@@ -75,7 +77,8 @@ the value in the middle of the domain of the selected variable is
 assigned to it, with a floor rounding policy (the closest value greater
 or equal to the middle value is returned).
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Solver solver = model.getSolver();
 solver.setSearch(Search.intVarSearch(
     new VariableSelectorWithTies<>(
@@ -84,17 +87,20 @@ solver.setSearch(Search.intVarSearch(
     new IntDomainMiddle(false),
     ArrayUtils.append(supplier, cost, open))
 );
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The resolution objective
 ------------------------
 
 The objective is to minimize 'tot\_cost'.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // Find a solution that minimizes 'tot_cost'
 Solution best = solver.findOptimalSolution(tot_cost, false);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 This method attempts to find the optimal solution.
 
@@ -109,36 +115,42 @@ entirely managed by the solver.
 
 Alternatively, the search loop can be unfold.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 model.setObjective(false, tot_cost);
 while(solver.solve()){
     // do something on solution
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The objective variable and criteria should be declared, but there is no
 need to post the cut manually, the solver manages this. When the unfold
 search process is used, one can modify the way the cut is handled:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // Walking cut: allow same value solutions
 solver.getObjectiveManager().<Integer>setCutComputer(obj -> obj);
 model.setObjective(false, tot_cost);
 while(solver.solve()){
     // do something on solution
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Unfold search process allows you to execute code on solution easily.
 
 One can add a limit to the resolution process. For example, a 10
 second-limit can be defined like this:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 solver.limitTime("10s");
 // then run the resolution
 Solution best = solver.findOptimalSolution(tot_cost, false);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The search should be configured **before** being called. There can be
 multiple limitations, in that case, the first reached stops the search.
@@ -148,7 +160,8 @@ Pretty solution output
 
 We can define a function that prints any solutions in a pretty way.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 private void prettyPrint(Model model, IntVar[] open, int W, IntVar[] supplier, int S, IntVar tot_cost) {
     StringBuilder st = new StringBuilder();
     st.append("Solution #").append(model.getSolver().getSolutionCount()).append("\n");
@@ -166,14 +179,16 @@ private void prettyPrint(Model model, IntVar[] open, int W, IntVar[] supplier, i
     st.append("\tTotal C: ").append(tot_cost.getValue());
     System.out.println(st.toString());
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Calling this method is made easy with the unfold resolution instruction.
 
 The entire code
 ---------------
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // load parameters
 // number of warehouses
 int W = 5;
@@ -246,7 +261,8 @@ solver.showShortStatistics();
 while(solver.solve()){
     prettyPrint(model, open, W, supplier, S, tot_cost);
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The best solution found is:
 

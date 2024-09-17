@@ -11,7 +11,8 @@ description: >
 A model
 -------
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 int m = 10;
 // A new model instance
 Model model = new Model("Golomb ruler");
@@ -41,7 +42,8 @@ for (int i = 0, k = 0 ; i < m - 1; i++) {
 model.allDifferent(diffs, "BC").post();
 //symmetry-breaking constraints
 model.arithm(diffs[0], "<", diffs[diffs.length - 1]).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 A search strategy
 -----------------
@@ -50,27 +52,32 @@ A simple but efficient strategy to guide the search is to select the
 mark variable in lexicographical order and to instantiate each of them
 to its lower bound.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Solver solver = model.getSolver();
 solver.setSearch(Search.inputOrderLBSearch(ticks));
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The resolution objective
 ------------------------
 
 The objective is to minimize the last mark.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // Find a solution that minimizes the last mark
 solver.findOptimalSolution(ticks[m - 1], false);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 This method attempts to find the optimal solution.
 
 The entire code
 ---------------
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 int m = 10;
 // A new model instance
 Model model = new Model("Golomb ruler");
@@ -107,7 +114,8 @@ solver.setSearch(Search.inputOrderLBSearch(ticks));
 solver.showShortStatistics();
 // Find a solution that minimizes the last mark
 solver.findOptimalSolution(ticks[m - 1], false);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The trace of the execution is roughly:
 

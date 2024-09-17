@@ -11,7 +11,8 @@ description: >
 A model
 -------
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // load parameters
 // ...
 // A new model instance
@@ -46,7 +47,8 @@ for (int i = 0; i < C; i++) {
 model.subCircuit(succ, 0, model.intVar(C)).post();
 // Defining the total distance
 model.sum(dist, "=", totDist).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The `table` constraints maintain the distance metric when the sub-set of cities to be visited from a given one is refined.
 In order to limit tuples, those expressing a loop over a city (when `i = j`) are not added to `tuples`.
@@ -59,11 +61,13 @@ This is achieved calling `tuples.setUniversalValue(star)`, where `star` is the u
 
 Alternatively in the TSP, table constraints can be replaced by element constraints:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 for (int i = 0; i < C; i++) {
     model.element(dist[i], D[i], succ[i]).post();
 }   
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The `subCircuit` constraint ensures that `next` variables form a circuit of size `C`.
 
@@ -78,7 +82,8 @@ To choose the distance variable to be fixed, we will consider the difference bet
 And select the one that maximizes this difference.
 Doing so, we try to favour variables whose non-selection could increase the objective function too much. 
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Solver solver = model.getSolver();
 solver.setSearch(
     Search.intVarSearch(
@@ -86,17 +91,20 @@ solver.setSearch(
         new IntDomainMin(), 
         dist)
 );
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The resolution objective
 ------------------------
 
 The objective is to minimize 'totDist'.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // Find a solution that minimizes 'totDist'
 Solution best = solver.findOptimalSolution(totDist, false);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 This method attempts to find the optimal solution.
 
@@ -105,7 +113,8 @@ Pretty solution output
 
 We can define a function that prints any solutions in a pretty way.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 int current = 0;
 System.out.printf("C_%d ", current);
 for (int j = 0; j < C; j++) {
@@ -113,14 +122,16 @@ for (int j = 0; j < C; j++) {
     current = succ[current].getValue();
 }
 System.out.printf("\nTotal distance = %d\n", totDist.getValue());
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Calling this method is made easy with the unfold resolution instruction.
 
 The entire code
 ---------------
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // GR17 is a set of 17 cities, from TSPLIB. The minimal tour has length 2085.
 // number of cities
 int C = 17;
@@ -195,7 +206,8 @@ while(solver.solve()){
     }
     System.out.printf("\nTotal distance = %d\n", totDist.getValue());
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The best solution found is:
 

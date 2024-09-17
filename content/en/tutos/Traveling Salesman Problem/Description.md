@@ -20,7 +20,8 @@ Input data
 
 We consider here the following input (in java):
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // GR17 is a set of 17 cities, from TSPLIB. The minimal tour has length 2085.
 // number of cities
 int C = 17;
@@ -44,4 +45,5 @@ int[][] D = new int[][]{
             {246, 745, 472, 237, 528, 364, 332, 349, 202, 685, 542, 157, 289, 426, 483, 0, 336},
             {121, 518, 142, 84, 297, 35, 29, 36, 236, 390, 238, 301, 55, 96, 153, 336, 0}
     };
-```
+{{< /tab >}}
+{{< /tabpane >}}

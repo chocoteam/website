@@ -13,7 +13,8 @@ Model with a global interpretation
 
 The first model is based on the global interpretation of the equation.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Model model = new Model("SEND+MORE=MONEY");
 IntVar S = model.intVar("S", 1, 9, false);
 IntVar E = model.intVar("E", 0, 9, false);
@@ -40,7 +41,8 @@ Solver solver = model.getSolver();
 solver.showStatistics();
 solver.showSolutions();
 solver.findSolution();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The solution found is:
 
@@ -85,14 +87,16 @@ first solution (if any) and stops *on it*, that is, on a state wherein
 each variable is assigned to a single value. Their value can then be
 read calling S.getValue():
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 model.getSolver().showStatistics();
 if (model.getSolver().solve()) {
     System.out.printf("%s = %d\n", S.getName(), S.getValue());
     System.out.printf("%s = %d\n", E.getName(), E.getValue());
     // ...
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 {{% alert title="Hint" color="primary" %}}
 Simply replace the `if` statement by a `while` statement to look for all solutions and print
@@ -105,7 +109,8 @@ Model with a local interpretation
 
 The second model requires to introduces 3 additional variables.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // additional variables: the carries
 BoolVar[] r = model.boolVarArray(3);
 // declare local equations
@@ -113,7 +118,8 @@ D.add(E).eq(Y.add(r[0].mul(10))).post();
 r[0].add(N).add(R).eq(E.add(r[1].mul(10))).post();
 r[1].add(E).add(O).eq(N.add(r[2].mul(10))).post();
 r[2].add(S).add(M).eq(O.add(M.mul(10))).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Doing so, we increase the number of variables and constraints and
 introduce some search noise. Indeed, without indication on how to
@@ -125,9 +131,11 @@ assigned by propagation.
 To do so, we can precise the *decision variables* and how to branch on
 it:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 solver.setSearch(Search.inputOrderLBSearch(S, E, N, D, M, O, R, Y));
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Here, we consider the variables in the input order (`S` is selected first,
 then `E`, then `N`, ...) and each of them are, in turn, assigned to their

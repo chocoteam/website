@@ -90,7 +90,8 @@ itself.
 
 The entailment method can be implemented as is:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Override
 public ESat isEntailed() {
    int sumUB = 0, sumLB = 0;
@@ -106,7 +107,8 @@ public ESat isEntailed() {
    }
    return ESat.UNDEFINED;
 }
-```
+{{< /tab >}} 
+{{< /tabpane>}}
 
 ### Filtering algorithm
 
@@ -146,7 +148,8 @@ example, the domain becomes empty.
 
 The filtering method can be implemented as is:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 @Override
 public void propagate(int evtmask) throws ContradictionException {
     int sumLB = 0;
@@ -165,7 +168,8 @@ public void propagate(int evtmask) throws ContradictionException {
         }
     }
 }
-```
+{{< /tab >}} 
+{{< /tabpane>}}
 
 The parameter of the method is ignored for now. On line 9, since the
 condition of unsatisfaction is met, a `ContradictionException` is thrown
@@ -216,12 +220,14 @@ In our case, nothing can be done on value removal nor on upper bound
 modification. Thus, the following method can be override (note that is
 optional but leads to better performances):
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 @Override
 public int getPropagationConditions(int vIdx) {
     return IntEventType.combine(IntEventType.INSTANTIATE, IntEventType.INCLOW);
 }
-```
+{{< /tab >}} 
+{{< /tabpane>}}
 
 Note that this method is called statically on each of its variables
 (denoted by `vIdx`) when posting the constraint to the model. Some
@@ -260,7 +266,8 @@ priority is based on the complexity which is linear in the number of
 variables and false. In addition, the constant 'b' needs to be stored
 too.
 
-``` java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 /**
  * Constructor of the specific sum propagator : x1 + x2 + ... + xn <= b
  * @param x array of integer variables
@@ -270,14 +277,16 @@ public MyPropagator(IntVar[] x, int b) {
     super(x, PropagatorPriority.LINEAR, false);
     this.b = b;
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ### MyPropagator
 
 A basic yet sound propagator which ensures that the sum of all variables
 is less than or equal to a constant is declared below.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 public class MyPropagator extends Propagator<IntVar> {
 
  /**
@@ -335,7 +344,8 @@ public class MyPropagator extends Propagator<IntVar> {
     return ESat.UNDEFINED;
  }
 }
-```
+{{< /tab >}} 
+{{< /tabpane>}}
 
 This first implementation outlines key concepts a propagator required.
 The entailment method should not ignored since it is helpful (even
@@ -371,7 +381,8 @@ be reactivated automatically on backtrack).
 
 The filtering method can be modified like that:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 @Override
 public void propagate(int evtmask) throws ContradictionException {
     int sumLB = 0;
@@ -396,7 +407,8 @@ public void propagate(int evtmask) throws ContradictionException {
         this.setPassive();
     }
 }
-```
+{{< /tab >}} 
+{{< /tabpane>}}
 
 Line 18, a counter is updated with the sharpest upper bound of each
 variables. Line 21-23, if the condition is satisfied, the propagator is
@@ -423,7 +435,8 @@ First, a `IStateInt` object and an `IStateInt` array are declared as class
 variables. In the propagator's constructor, through the `Model`, the
 objects are initialized:
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 /**
  * The constant the sum cannot be greater than
  */
@@ -455,7 +468,8 @@ public MyPropagator(IntVar[] x, int b) {
         prev_lbs[i] = this.model.getEnvironment().makeInt(0);
     }
 }
-```
+{{< /tab >}} 
+{{< /tabpane>}}
 
 $F$ is created with value 0; its correct value will be set on the first call
 to `propagate(int evtmask)` method. Same goes with prev\_ubs. Any
@@ -491,7 +505,8 @@ the case here) or no delayed call to custom filtering algorithm.
 In our case, we will only incrementally maintain $F$ and then delegate the
 filtering to the custom propagation.
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 private void prepare(){
     int sumLB = 0;
     for(int i = 0 ; i < vars.length; i++){
@@ -533,7 +548,8 @@ public void propagate(int evtmask) throws ContradictionException {
         }
     }
 }
-```
+{{< /tab >}} 
+{{< /tabpane>}}
 
 A call to `forcePropagate(int evtmask)` will call `propagate(int evtmask)`
 only when all fine events are received. This ensures that F is set to

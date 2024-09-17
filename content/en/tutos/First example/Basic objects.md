@@ -17,9 +17,11 @@ covers the basic information.
 The Model
 ---------
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Model model = new Model("My model");
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 As said before, the `Model` is a key component of the library. It has to
 be the first instruction declared, since it provides entry point methods
@@ -34,10 +36,12 @@ needed to describe a problem from it.
 For example, it stores its variables and constraints. Variables and
 constraints of a model can be retrieved thanks to API :
 
-``` java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 model.retrieveIntVars(true); // extract IntVars, including BoolVars
 model.getCstrs(); // extract posted constraints
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 {{% alert title="Info" color="primary" %}}
 We strongly encourage you to attach the Javadoc (provides either on the website or on Maven Central Repository) to the library in your IDE.
@@ -61,20 +65,25 @@ A variable can be declared in only one model at a time. Indeed, a reference to t
 An integer variable, `IntVar`, should be assigned to an integer value. There are
 many ways to declare an `IntVar`:
 
-``` java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // A variable with a unique value in its domain, in other words, a constant
 IntVar two = model.intVar("TWO", 2);
 // Any value in [1..4] can be assigned to this variable
 IntVar x = model.intVar("X", 1, 4);
 // Only the values 1, 3 and 4 can be assigned to this variable
 IntVar y = model.intVar("X", new int[]{1, 3, 4});
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 {{% alert title="Warning" color="secondary" %}}
 Declaring a variable with an *infinite* domain, like :
-``` java
+
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 model.intVar("X", Integer.MIN_VALUE, Integer.MAX_VALUE)
-```
+{{< /tab >}}
+{{< /tabpane >}}
 is clearly a bad idea.
 
 Too large domains may lead to underflow or overflow issues and most of
@@ -119,10 +128,12 @@ store).
 
 Here is the common way to declare a BoolVar
 
-``` java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // A [0,1]-variable
 BoolVar b = model.boolVar("b");
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ### Set variable
 
@@ -131,11 +142,14 @@ A set variable, `SetVar`, should be assigned to a set of integer values
 intervals $[\\![m,o]\\!]$ where $m$ denotes the integers that figure in all
 solutions and $o$ the integers that potentially figure in a solution.
 
-``` java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // SetVar representing a subset of {1,2,3,5,12}
 SetVar y = model.setVar("y", new int[]{}, new int[]{1,2,3,5,12});
 // possible values: {}, {2}, {1,3,5} ...
-```
+{{< /tab >}}
+{{< /tabpane >}}
+
 
 ### Real variable
 
@@ -144,10 +158,12 @@ domain is defined by its bounds and a *precision*. The precision
 parameter helps considering a real variable as instantiated: when the
 distance between the two bounds is less than or equal to the precision.
 
-``` java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // A [0.2d, 3.4d]-variable, with a precision of 0.001d
 RealVar x = model.realVar("x", 0.2d, 3.4d, 0.001d);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 {{% alert title="Info" color="primary" %}}
 Using RealVar requires to install [Ibex](http://www.ibx-lib.org)
@@ -176,12 +192,14 @@ values to be removed are detected.
 For a constraint to be integrated in a model, a call to post() is
 required :
 
-``` java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // x and y must be different in any solution
 model.arithm(x, "!=", y).post();
 // or, in a more verbose way
 model.post(model.arithm(x, "<", z));
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 {{% alert title="Info" color="primary" %}}
 A constraint can be posted in only one model at a time. Indeed, a
@@ -203,13 +221,15 @@ The only reason why a constraint is not posted a model is to *reify* it.
 
 Alternatively, a constraint can be reified with a BoolVar :
 
-``` java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // the constraint is reified with `b`
 BoolVar r1 = model.arithm(x, "!=", y).reify();
 // equivalent to:
 BoolVar r2 = model.boolVar("r2");
 model.arithm(x, "<", z).reifyWith(r2);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The BoolVar that reifies a constraint represents whether or not a
 constraint is satisfied. If the constraint is satisfied, the boolean
@@ -219,11 +239,14 @@ to true the constraint should be satisfied, unsatisfied otherwise.
 Reifying constraints is helpful to express conditions like:
 (x = y) xor (x \> 15) :
 
-``` java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 BoolVar c1 = model.arithm(x, "=", y).reify();
 BoolVar c2 = model.arithm(x, ">", 15).reify();
 model.arithm(c1, "+", c2, "=", 1).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
+
 
 {{% alert title="Warning" color="secondary" %}}
 A reified constraint **should not** be posted. Indeed, posting it will
@@ -250,13 +273,15 @@ The Solver
 The `Model` serves at describing the problem with variables and
 constraints. The resolution is managed by the Solver.
 
-``` java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Model model = new Model("My problem");
 // variables declaration
 // constraints declaration
 Solver solver = model.getSolver();
 Solution solution = solver.findSolution();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Having access to the Solver is needed to tune the resolution and launch
 it. It provides methods to configure *search strategies*, to define

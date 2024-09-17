@@ -13,10 +13,12 @@ _This file can be downloaded as a [jupyter notebook](https://jupyter.org/) and e
 [>> ipynb <<](</notebooks/content/en/tutos/Other examples/The_knapsack_problem.ipynb>)
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // Add maven dependencies at runtime 
 %maven org.choco-solver:choco-solver:4.10.13
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ------ 
 <a href="http://en.wikipedia.org/wiki/Knapsack_problem">Wikipedia</a>:<br/>
@@ -25,7 +27,8 @@ _This file can be downloaded as a [jupyter notebook](https://jupyter.org/) and e
 First manage imports.
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.exception.ContradictionException;
@@ -35,19 +38,22 @@ import java.util.Arrays;
 
 import static org.chocosolver.solver.search.strategy.Search.inputOrderLBSearch;
 import static org.chocosolver.solver.search.strategy.Search.inputOrderUBSearch;
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ## Input data
 
 
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 int n = 10; // number of different items
 int W = 67; // a maximum weight capacity 
 int[] w = new int[]{23, 26,20,18,32, 27, 29, 26, 30, 27}; // weight of items
 int[] v = new int[]{505, 352, 458, 220, 354, 414, 498, 545, 473, 543}; // value of items
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ## The model
 
@@ -57,19 +63,23 @@ It is required to declare and store the variables and the constraints.
 For convenience, an instance can be declared with a name.
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Model model = new Model("Knapsack");
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 For each object, a variable is declared to count the number of times it appears in the knapsack.
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar[] items = new IntVar[n];
 for (int i = 0; i < n; i++) {
     items[i] = model.intVar("item_" + (i + 1), 0, (int) Math.ceil(W*1. / w[i]));
 }
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The paramaters are:
 - the prefix for setting the variables' name,
@@ -82,30 +92,38 @@ The problem is to maximize the sum of the values of the items in the knapsack.
 This amount is maintained in a variable:
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar value = model.intVar("value", 0, Arrays.stream(v).max().orElse(999) * n);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The sum of the weights is less than or equal to the knapsack's capacity:
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 IntVar weight = model.intVar("weight", 0, W);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 All variables are now declared, the `knapsack` constraint can be declared:
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 model.knapsack(items, weight, value, w, v).post();
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 The `value` variable has to be maximized:
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 model.setObjective(Model.MAXIMIZE, value);
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 ## Finding the optimal solution
 
@@ -113,17 +131,19 @@ Now that the model is ready, the solving step can be set up.
 Here we define a top-down maximization:
 
 
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 Solver solver = model.getSolver();
 solver.setSearch(
     inputOrderUBSearch(value), 
     inputOrderLBSearch(items));
-```
+{{< /tab >}}
+{{< /tabpane >}}
 
 Let's execute the solving:
 
-
-```Java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 while (solver.solve()) {
     System.out.printf("Knapsack -- %d items\n", n);
     System.out.println("\tItem: Count");
@@ -134,25 +154,27 @@ while (solver.solve()) {
     System.out.printf("\n\tValue: %d\n", value.getValue());
 }
 solver.reset(); // to solve the model several times
+{{< /tab >}}
+{{< /tabpane >}}
+
 ```
+Knapsack -- 10 items
+	Item: Count
+	Item #1: 2
+	Item #2: 0
+	Item #3: 1
+	Item #4: 0
+	Item #5: 0
+	Item #6: 0
+	Item #7: 0
+	Item #8: 0
+	Item #9: 0
+	Item #10: 0
 
-    Knapsack -- 10 items
-    	Item: Count
-    	Item #1: 2
-    	Item #2: 0
-    	Item #3: 1
-    	Item #4: 0
-    	Item #5: 0
-    	Item #6: 0
-    	Item #7: 0
-    	Item #8: 0
-    	Item #9: 0
-    	Item #10: 0
-    
-    	Weight: 66
-    
-    	Value: 1468
+	Weight: 66
 
+	Value: 1468
+```
 
 The optimal value for this instance of the knapsack problem is $1468$ with a total weight of $66$.
 

@@ -28,7 +28,8 @@ Input data
 
 We consider here the following input (in java):
 
-```java
+{{< tabpane langEqualsHeader=true >}} 
+{{< tab "Java" >}}
 // number of warehouses
 int W = 5;
 // number of stores
@@ -49,4 +50,5 @@ int[][] P = new int[][]{
     {10, 73, 13, 43, 96},
     {93, 35, 63, 85, 46},
     {47, 65, 55, 71, 95}};
-```
+{{< /tab >}}
+{{< /tabpane >}}
