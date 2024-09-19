@@ -156,7 +156,7 @@ what is the value of each letter?
 ### A Model
 
 - __Variables__: 
-  - $\forall i \in \\{a,b,c,d,e\\}, l_i \in [ 0,9]$
+  - $\forall i \in \\{a,b,c,d,e\\}, l_i \in [\\![ 0,9]\\!]$
 
 - __Constraints__ : 
   - $\forall i\neq j \in \\{a,b,c,d,e\\}, l_i \neq l_j$
@@ -245,8 +245,8 @@ Can you model this as a CP problem?
 - **Parameters**
   - $input$: the current year
 - **Variables**
-  - $\forall i \in \\{th,hu,te,on\\}, x_i \in [0,9]$
-  - $age \in [0,99]$
+  - $\forall i \in \\{th,hu,te,on\\}, x_i \in [\\![0,9]\\!]$
+  - $age \in [\\![0,99]\\!]$
 - **Constraints**
   - $x_{th} + x_{hu} + x_{te} + x_{on} = {age}$
   - $1000x_{th} + 100x_{hu} + 10x_{te} + x_{on} + age = input$
