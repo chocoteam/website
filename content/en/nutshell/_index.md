@@ -11,7 +11,9 @@ highlight_theme = "github"
 ## CP in a Nutshell
 
 </br>
-Charles Prud'homme, Sept. 2025
+Charles Prud'homme, Philippe David 
+
+Sept. 2025
 
 IMT Atlantique, LS2N, TASC
 
@@ -22,11 +24,11 @@ IMT Atlantique, LS2N, TASC
 
 ## Constraint Programming 
 
-CP is a powerful paradigm for solving combinatorial problems.  
+Powerful paradigm for solving {{% calert c="combinatorial problems" %}}  
 
-Originated from AI and operations research.
+Originated from {{% calert c="AI" %}} and {{% calert c="OR" %}}
 
-Widely used in scheduling, planning, and resource allocation.
+Widely used in scheduling, planning, configuration, etc.
 
 ---
 
@@ -73,6 +75,10 @@ CP is more flexible in expressing combinatorial relationships.
 
 # P = (V,D,C)
 
+- A set of variables : X = {X1, X2, ..., Xn} 
+- A domain for each variable: D = {D1, D2, ..., Dn}
+- A set of constraints: C = {C1, C2, ..., Cm}
+
 --- 
 
 ## What is a Variable?
@@ -106,10 +112,10 @@ A constraint defines a condition that must be satisfied by the variables in its 
 ---
 
 ### Examples
-- In Sudoku, "each row must contain all numbers from 1 to 9" is a constraint.
-- In scheduling, "no two tasks can happen at the same time" is a constraint.
-- In routing, "each node must be visited exactly once" is a constraint.
-- In packing, "the sum of weights in each bin must not exceed the bin capacity" is a constraint.
+- In Sudoku, "_each row must contain all numbers from 1 to 9_" is a constraint.
+- In scheduling, "_no two tasks can happen at the same time_" is a constraint.
+- In routing, "_each node must be visited exactly once_" is a constraint.
+- In packing, "_the sum of weights in each bin must not exceed the bin capacity_" is a constraint.
 
 ---
 
