@@ -205,13 +205,13 @@ This constraint is very helpful to count the number of occurences of some values
 {{< tab "Java" >}}
 IntVar[] vars = model.intVarArray("X", 7, 0, 5);
 int[] values = new int[]{1, 3, 5};
-IntVar[] occs = model.intVarArray("O", 0, 3);
+IntVar[] occs = model.intVarArray("O", 2, 0, 3);
 model.globalCardinality(vars, values, occs, false).post();
 {{< /tab >}}
 {{< tab "Python" >}}
 vars = model.intvars(7, 0, 5, "X")
 values = [1,3,5]
-occs = model.intvars(7, 0, 5, "O")
+occs = model.intvars(2, 0, 3, "O")
 model.global_cardinality(vars, values, occs, False).post();
 {{< /tab >}}
 {{< /tabpane >}}

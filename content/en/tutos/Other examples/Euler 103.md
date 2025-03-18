@@ -1,13 +1,17 @@
 ---
 title: "Project Euler, Problem 103"
+type: docs
 date: 2021-02-02T09:21:16+01:00
-draft: false
 author: Charles Prud'homme
+weight: 104
 description: >  
   Project Euler, Problem 103
 ---
 
+
 Thanks to [Mathieu Vavrille](https://www.univ-nantes.fr/mathieu-vavrille) for his modelling of [problem 103 of the Euler project](https://projecteuler.net/problem=103), "Special subset sums: optimum", using Constraint Programming and Choco.
+
+
 
 {{< tabpane langEqualsHeader=true >}} 
 {{< tab "Java" >}}
