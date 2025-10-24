@@ -102,7 +102,9 @@ github_branch="master"
 gcs_engine_id = "002090051099228186981:fjdyae7kf1k"
 
 # Google Analytics 4
-googleAnalyticsID = "G-738NJHH4T5"
+[services]
+  [services.googleAnalytics]
+    id = "G-738NJHH4T5"
 
 # Enable Algolia DocSearch
 algolia_docsearch = false
