@@ -7,20 +7,19 @@ description: >
   Using Ibex.
 ---
 
-To manage continuous constraints with Choco, an interface with [Ibex](http://www.ibex-lib.org/) has been done.
+To manage continuous constraints with Choco, an interface with [Ibex](https://github.com/ibex-team/ibex-lib) has been done.
 It needs this library to be installed on your system.
 
 > “IBEX is a C++ library for constraint processing over real numbers.
 > It provides reliable algorithms for handling non-linear constraints.
 > In particular, round off errors are also taken into account.
-> It is based on interval arithmetic and affine arithmetic.”
-> – [http://www.ibex-lib.org/](http://www.ibex-lib.org/)
+> It is based on interval arithmetic.”
+> – [github](https://github.com/ibex-team/ibex-lib)
 
 ### Installing Ibex
 
-See the [installation instructions](http://www.ibex-lib.org/doc/install.html) of Ibex to complied Ibex on your system.
-More specially, take a look at [Installation as a dynamic library](http://www.ibex-lib.org/doc/install.html#installation-as-a-dynamic-library)
-Do not forget to add the `--with-java-package=org.chocosolver.solver.constraints.real` configuration option.
+See the [installation instructions](https://ibex-team.github.io/ibex-lib/install-cmake.html) of Ibex to compile Ibex on your system.
+More specially, take a look at the`-DBUILD_JAVA_INTERFACE=ON`, `-DBUILD_SHARED_LIBS=ON` and `-DJAVA_PACKAGE=org.chocosolver.solver.constraints.real` [configuration options](https://ibex-team.github.io/ibex-lib/install-cmake.html#configuration-options).
 
 ### Using Ibex
 
