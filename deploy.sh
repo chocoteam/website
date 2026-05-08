@@ -6,8 +6,10 @@ set -e
 printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
 
 # Build the project.
-#hugo -t docsy
-hugo
+# main website
+hugo --config config.toml 
+# presentations part
+hugo --config config-reveal.toml
 
 
 # Go To Public folder

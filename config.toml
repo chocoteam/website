@@ -65,8 +65,8 @@ defaultContentLanguageInSubdir = false
   algolia_docsearch = false
 
   [params.author]
-    name = "Your Name"
-    email = "you@yourdomain.com"
+    name = "Charles Prud'homme"
+    email = "charles.prudhomme@imt-atlantique.fr"
 
   [params.ui]
     sidebar_menu_compact = false

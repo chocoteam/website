@@ -10,3 +10,10 @@ notebooks/docenv
 notebooks/ijava*
 notebooks/**/.ipynb_checkpoints
 notebooks/**/._.DS_Store
+public/
+resources/
+resources/_gen/
+hugo_stats.json
+.hugo_build.lock
+
+CLAUDE.md
