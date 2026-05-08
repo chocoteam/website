@@ -1,0 +1,1019 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.161.1">
+
+<META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Designing a constraint | Choco-solver</title><meta property="og:url" content="https://choco-solver.org/tutos/constraints/">
+  <meta property="og:site_name" content="Choco-solver">
+  <meta property="og:title" content="Designing a constraint">
+  <meta property="og:description" content="Steps to follow to create your own constraint.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="tutos">
+    <meta property="article:published_time" content="2020-02-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-09-17T15:47:21+02:00">
+
+  <meta itemprop="name" content="Designing a constraint">
+  <meta itemprop="description" content="Steps to follow to create your own constraint.">
+  <meta itemprop="datePublished" content="2020-02-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-09-17T15:47:21+02:00">
+  <meta itemprop="wordCount" content="2938">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Designing a constraint">
+  <meta name="twitter:description" content="Steps to follow to create your own constraint.">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-738NJHH4T5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-738NJHH4T5');
+</script>
+<link rel="preload" href="/scss/main.min.0b7cf04986ecfb729599828ee3bfc20b0cc9b0a3076563c7eb3e5e6e28c11b67.css" as="style" integrity="sha256-C3zwSYbs&#43;3KVmYKO47/CCwzJsKMHZWPH6z5ebijBG2c=" crossorigin="anonymous">
+<link href="/scss/main.min.0b7cf04986ecfb729599828ee3bfc20b0cc9b0a3076563c7eb3e5e6e28c11b67.css" rel="stylesheet" integrity="sha256-C3zwSYbs&#43;3KVmYKO47/CCwzJsKMHZWPH6z5ebijBG2c=" crossorigin="anonymous">
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+<script
+  src="https://unpkg.com/lunr@2.3.8/lunr.min.js"
+  integrity="sha384-vRQ9bDyE0Wnu+lMfm57BlYLO0/XauFuKpVsZPs7KEDwYKktWi5+Kz3MP8++DFlRY"
+  crossorigin="anonymous"></script>
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$','$']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+};
+</script>
+
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll">
+<div class="td-navbar-container container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 500 500" style="enable-background:new 0 0 500 500"><path style="fill:#005c94;stroke:none;stroke-width:4.78758144" id="path2" d="m279.38249 191.64706c-5.13397-7.99619-.49997-20.9386 10.34205-28.91 10.85587-7.96647 23.80888-7.93677 28.9475.0694 5.13861 8.00113.51387 20.94354-10.34204 28.91-10.84664 7.96153-23.80888 7.93677-28.94751-.0693m60.91337 161.55234c0-12.74437-9.30965-14.87832-14.2955-14.87832-12.6984.0-13.55482 16.74491-4.60161 16.74491 6.23113.0 10.59666-3.74803 8.49491-9.47655 5.29602 4.64917 4.26828 16.56173-9.97633 15.97253-16.36486-.6585-15.48525-28.22675 4.79606-28.90507 13.81869-.46043 25.04031 7.15946 25.04031 20.55241.0 21.71095-28.71142 34.40086-53.97393 20.54744 18.13327 8.31306 44.51609-1.69825 44.51609-20.55735M221.0801 379.08926c0 13.5712-10.11059 21.01777-22.41548 21.01777-12.30951.0-25.76712-10.28855-19.61467-28.38517-3.67111 16.48252 10.13369 21.66147 17.82773 21.66147 9.97168.0 16.01302-7.26339 16.01302-15.08134.0-7.81298-4.00905-10.17964-8.36528-10.17964-6.38856.0-10.65222 7.03565-6.62927 9.76869-7.69403.0-3.42575-13.84351 6.92091-14.80406 8.84674-.82683 16.26304 4.89673 16.26304 16.00228m85.79166-143.69352c18.4851-7.50106 32.30379.3763 84.74543-17.03706 47.49743-15.77447 108.81357-81.14008 61.79759-126.750421-38.48404-37.341884-116.35484-26.632444-159.8988 4.34219-16.02692 11.392671-27.95683 26.478951-37.63685 41.466211 2.65265.47035 4.99511 1.63883 6.66632 3.70349 5.09693 6.29791 2.29616 17.81931-6.24504 25.71648-6.91631 6.39694-15.43437 8.37741-21.15164 5.58988-16.39264 25.10252-37.26652 35.67333-52.68697 39.45108 14.79549-6.71383 31.7066-22.71109 38.97473-38.2628-41.96531 16.29436-55.72848-24.45391-24.70238-30.65281-14.95288 4.21841-14.03163 25.01342 5.66637 25.01342 22.63767.0 27.83648-41.25333-5.66637-41.25333-19.37394.0-31.15569 10.08064-39.2664 22.95868 36.78045 25.52832 18.36478 60.33025-6.76814 60.33025-45.02073.0-20.5915-56.74064.69903-35.08909-17.79534-11.94723-28.96602 24.63712-.3472 24.63712 22.68396.0 24.4524-31.08852 1.56937-41.81278-18.32309-8.58043-42.75233-6.71383-57.066373 11.94719-13.47148 17.57673-10.85126 38.37173 7.226453 51.02203 22.10531 15.46752 11.76791 39.6838-.18056 47.45716-13.735373 8.93195-31.164973 4.31744-31.164973-7.43669.0-4.10949 2.7915-10.8233 8.02272-10.8233-5.75896 1.48535-6.61077 14.13565 5.86078 14.13565 8.19865.0 18.249033-4.26794 18.249033-16.67562.0-8.22886-4.370153-20.94849-27.378163-20.94849-22.60064.0-46.46509 19.75526-46.46509 49.79908.0 30.04875 26.86892 41.89696 58.63572 38.35686 25.128263-2.79742 36.090663-21.45845 59.681963-7.83773 26.17915 15.12093 21.0498 49.4277 12.82803 67.46984-10.2078 22.39423-5.61081 61.50368 36.91004 57.67145 34.71572-3.11926 41.79867-28.79612 40.83113-45.63016-1.05088-18.47784-10.81887-27.34543-22.68396-31.44995 17.45274-5.22846 38.18313 3.75795 47.81684 27.62268 6.63393 16.42806 22.33677 29.86063 47.46969 29.86063 38.39143.0 58.55704-24.81536 55.83957-55.24537-1.05086-11.75908-8.0227-29.11795-24.4246-31.72722 9.07359-12.31853 23.38301-17.17565 53.04807-10.45195 25.79027 5.83744 48.16868-15.30413 48.16868-35.46537.0-33.96516-28.97066-40.31753-41.53015-40.31753-14.66588.0-28.42903 8.19916-28.42903 23.1369.0 12.68991 9.39302 17.93322 20.04521 17.93322 12.22158.0 19.80451-4.87693 19.80451-12.90777.0-13.06618-17.71201-15.49723-24.01262-7.03562 5.90711-13.77421 30.73446-9.61523 30.73446 8.74873.0 10.05093-6.99036 19.40371-27.57259 19.40371-24.5033.0-36.6508-23.51815-28.62808-41.06514-6.97186 1.86658-13.95296 7.47132-21.05905 10.58564-40.8589 17.9035-51.60833-16.28942-36.32674-22.48337"/></svg></span><span class="navbar-brand__name">Choco-solver</span></a>
+  <div class="td-navbar__main td-navbar-nav-scroll td-navbar-nav-scroll--indicator" id="main_navbar">
+    <div class="scroll-indicator scroll-left"></div>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/docs/"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/tutos/"><span>Tutorials</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/docs/frequently-asked-questions/"><span>FAQ</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/community/"><span>Community</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://javadoc.io/doc/org.choco-solver/choco-solver/latest/org.chocosolver/module-summary.html" target="_blank" rel="noopener"><span>Javadoc</span></a>
+      </li>
+      </ul>
+    <div class="scroll-indicator scroll-right"></div>
+  </div>
+  <div class="td-navbar__search d-none d-lg-block">
+    <div class="td-search">
+  <div class="td-search__icon"></div>
+  <input type="search" name="q" class="td-search__input form-control td-search-input" placeholder='Search this site…' aria-label='Search this site…' autocomplete="off">
+</div><div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    name="q"
+    class="td-search__input form-control"
+    placeholder='Search this site…'
+    aria-label='Search this site…'
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.fe895d99bab75ffa1b7356b525a0683f.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main" data-bs-spy="scroll" data-bs-target=".td-toc" data-bs-root-margin="0px 0px -10%">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    <div class="td-search">
+  <div class="td-search__icon"></div>
+  <input type="search" name="q" class="td-search__input form-control td-search-input" placeholder='Search this site…' aria-label='Search this site…' autocomplete="off">
+</div><div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    name="q"
+    class="td-search__input form-control"
+    placeholder='Search this site…'
+    aria-label='Search this site…'
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.fe895d99bab75ffa1b7356b525a0683f.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+    <button class="btn btn-link td-sidebar__toggle" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="td-sidebar-nav collapse" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-tutos-li">
+    <a href="/tutos/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-tutos"><span class="">Tutorials</span></a>
+    <ul class="ul-1">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-tutosfirst-example-li">
+    <a href="/tutos/first-example/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-tutosfirst-example"><span class="">First Example</span></a>
+    <ul class="ul-2 foldable">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosfirst-examplefirst-model-li">
+    <a href="/tutos/first-example/first-model/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosfirst-examplefirst-model"><span class="">First Model</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosfirst-examplefollow-up-li">
+    <a href="/tutos/first-example/follow-up/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosfirst-examplefollow-up"><span class="">Follow-Up</span></a>
+  </li>
+    </ul>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-tutosverbal-arithmetic-li">
+    <a href="/tutos/verbal-arithmetic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-tutosverbal-arithmetic"><span class="">Verbal Arithmetic</span></a>
+    <ul class="ul-2 foldable">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosverbal-arithmeticdescription-li">
+    <a href="/tutos/verbal-arithmetic/description/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosverbal-arithmeticdescription"><span class="">Description</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosverbal-arithmeticmath-li">
+    <a href="/tutos/verbal-arithmetic/math/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosverbal-arithmeticmath"><span class="">Mathematical model</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosverbal-arithmeticcode-li">
+    <a href="/tutos/verbal-arithmetic/code/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosverbal-arithmeticcode"><span class="">Code</span></a>
+  </li>
+    </ul>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-tutoswarehouse-location-problem-li">
+    <a href="/tutos/warehouse-location-problem/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-tutoswarehouse-location-problem"><span class="">Warehouse Location Problem</span></a>
+    <ul class="ul-2 foldable">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutoswarehouse-location-problemdescription-li">
+    <a href="/tutos/warehouse-location-problem/description/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutoswarehouse-location-problemdescription"><span class="">Description</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutoswarehouse-location-problemmath-li">
+    <a href="/tutos/warehouse-location-problem/math/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutoswarehouse-location-problemmath"><span class="">Math</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutoswarehouse-location-problemcode-li">
+    <a href="/tutos/warehouse-location-problem/code/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutoswarehouse-location-problemcode"><span class="">Code</span></a>
+  </li>
+    </ul>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-tutosaircraft-landing-problem-li">
+    <a href="/tutos/aircraft-landing-problem/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-tutosaircraft-landing-problem"><span class="">Airplane Landing Problem</span></a>
+    <ul class="ul-2 foldable">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosaircraft-landing-problemdescription-li">
+    <a href="/tutos/aircraft-landing-problem/description/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosaircraft-landing-problemdescription"><span class="">Description</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosaircraft-landing-problemmath-li">
+    <a href="/tutos/aircraft-landing-problem/math/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosaircraft-landing-problemmath"><span class="">Math</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosaircraft-landing-problemcode-li">
+    <a href="/tutos/aircraft-landing-problem/code/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosaircraft-landing-problemcode"><span class="">Code</span></a>
+  </li>
+    </ul>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-tutosnonogram-li">
+    <a href="/tutos/nonogram/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-tutosnonogram"><span class="">Nonogram</span></a>
+    <ul class="ul-2 foldable">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosnonogramdescription-li">
+    <a href="/tutos/nonogram/description/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosnonogramdescription"><span class="">Description</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosnonogrammath-li">
+    <a href="/tutos/nonogram/math/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosnonogrammath"><span class="">Math</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosnonogramcode-li">
+    <a href="/tutos/nonogram/code/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosnonogramcode"><span class="">Code</span></a>
+  </li>
+    </ul>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-tutosgolomb-ruler-li">
+    <a href="/tutos/golomb-ruler/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-tutosgolomb-ruler"><span class="">Golomb Ruler</span></a>
+    <ul class="ul-2 foldable">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosgolomb-rulerdescription-li">
+    <a href="/tutos/golomb-ruler/description/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosgolomb-rulerdescription"><span class="">Description</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosgolomb-rulermath-li">
+    <a href="/tutos/golomb-ruler/math/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosgolomb-rulermath"><span class="">Math</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosgolomb-rulercode-li">
+    <a href="/tutos/golomb-ruler/code/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosgolomb-rulercode"><span class="">Code</span></a>
+  </li>
+    </ul>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-tutostraveling-salesman-problem-li">
+    <a href="/tutos/traveling-salesman-problem/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-tutostraveling-salesman-problem"><span class="">Traveling Salesman Problem</span></a>
+    <ul class="ul-2 foldable">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutostraveling-salesman-problemdescription-li">
+    <a href="/tutos/traveling-salesman-problem/description/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutostraveling-salesman-problemdescription"><span class="">Description</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutostraveling-salesman-problemmath-li">
+    <a href="/tutos/traveling-salesman-problem/math/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutostraveling-salesman-problemmath"><span class="">Math</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutostraveling-salesman-problemcode-li">
+    <a href="/tutos/traveling-salesman-problem/code/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutostraveling-salesman-problemcode"><span class="">Code</span></a>
+  </li>
+    </ul>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-tutosconstraints-li">
+    <a href="/tutos/constraints/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-tutosconstraints"><span class="td-sidebar-nav-active-item">Designing a constraint</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutoscdcl_overview-li">
+    <a href="/tutos/cdcl_overview/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutoscdcl_overview"><span class="">A CD-CL overview</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-tutosother-examples-li">
+    <a href="/tutos/other-examples/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-tutosother-examples"><span class="">Other examples</span></a>
+    <ul class="ul-2 foldable">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosother-examplesthe-connector-problem-li">
+    <a href="/tutos/other-examples/the-connector-problem/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosother-examplesthe-connector-problem"><span class="">The connector problem</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosother-examplesthe-keysort-example-li">
+    <a href="/tutos/other-examples/the-keysort-example/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosother-examplesthe-keysort-example"><span class="">The keysort example</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosother-examplesthe_knapsack_problem-li">
+    <a href="/tutos/other-examples/the_knapsack_problem/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosother-examplesthe_knapsack_problem"><span class="">The knapsack problem</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-tutosother-exampleseuler-103-li">
+    <a href="/tutos/other-examples/euler-103/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-tutosother-exampleseuler-103"><span class="">Project Euler, Problem 103</span></a>
+  </li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+    </ul>
+  </nav>
+</div>
+          </aside>
+          <aside class="td-sidebar-toc">
+            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+<a href="https://github.com/chocoteam/website/tree/master/content/en/tutos/Constraints.md" class="td-page-meta--view td-page-meta__view" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines fa-fw"></i> View page source</a>
+  <a href="https://github.com/chocoteam/website/edit/master/content/en/tutos/Constraints.md" class="td-page-meta--edit td-page-meta__edit" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> Edit this page</a>
+  <a href="https://github.com/chocoteam/website/new/master/content/en/tutos?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60get-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child td-page-meta__child" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> Create child page</a>
+  <a href="https://github.com/chocoteam/website/issues/new?title=Designing%20a%20constraint" class="td-page-meta--issue td-page-meta__issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> Create documentation issue</a>
+  <a href="https://github.com/chocoteam/choco-solver/issues/new" class="td-page-meta--project td-page-meta__project-issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> Create project issue</a>
+  
+</div>
+
+            <div class="td-toc" data-proofer-ignore>
+<div class="td-toc-title">
+      <span class="td-toc-title__text">On this page</span>
+      <a class="td-toc-title__link" title="Top of page" href="#"></a>
+    </div>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#a-first-implementation">A first implementation</a>
+      <ul>
+        <li><a href="#entailment">Entailment</a></li>
+        <li><a href="#filtering-algorithm">Filtering algorithm</a></li>
+        <li><a href="#propagation-conditions-optional">Propagation conditions (optional)</a></li>
+        <li><a href="#constructor">Constructor</a></li>
+        <li><a href="#mypropagator">MyPropagator</a></li>
+      </ul>
+    </li>
+    <li><a href="#a-more-complex-version">A more complex version</a>
+      <ul>
+        <li><a href="#reduce-to-silence">Reduce to silence</a></li>
+        <li><a href="#incrementally-updating-f">Incrementally updating $F$</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+
+            
+
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/tutos/">Tutorials</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    Designing a constraint</li>
+  </ol>
+</nav>
+<div class="td-content">
+	<h1>Designing a constraint</h1>
+	<div class="lead">Steps to follow to create your own constraint.</div>
+	<header class="article-meta">
+		
+</header>
+	<p>In this part, we are going to see how to create a constraint to be used
+by Choco-solver. The work will be based on the sum constraint, more
+specifically: $\sum_{i = 1}^{n} x_i \leq b$ where
+$x_i = [\underline{x_i},\overline{x_i}]$ are distinct variables and
+where $b$ is a constant.</p>
+<p><a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.8.8962">Bounds Consistency Techniques for Long Linear
+Constraint</a>
+by W.Harvey and J.Schimpf described in details how such a constraint is
+implemented and will serve as a basis of this tutorials.</p>
+<div class="alert alert-secondary" role="alert"><div class="h4 alert-heading" role="heading">Important</div>
+<p>The implementation presented here can be improved in many ways but
+that is not the goal this tutorial to discuss improvements but to show
+what is important to know when creating a constraint.</p>
+</div>
+<p>The first filtering algorithm they depicted in the article is roughly
+the following:</p>
+<ul>
+<li>First, compute $F = b - \sum_{i = 1}^{n} \underline{x_i}$</li>
+<li>then, update variables domain,
+$\forall i \in [1,n], x_i \leq F + \underline{x_i}$</li>
+</ul>
+<p>Note that if $F &lt; 0$ the constraint is unsatisfiable.</p>
+<h2 id="a-first-implementation">A first implementation</h2>
+<p>When one needs to declare its own constraint, actually, he needs to
+create a propagator. Indeed, in Choco-solver, a constraint is a container which
+is composed of propagators, and each propagator can
+eliminate values from domain variables. So the first step will be to
+create a java class that extends <code>Propagator&lt;IntVar&gt;</code>. The generic
+parameter <code>&lt;IntVar&gt;</code> indicates that the propagator only manages integer
+variable. Set it to BoolVar, SetVar or Variable are possible
+alternatives.</p>
+<p>Once the class is created, a constructor is needed plus two methods :</p>
+<ul>
+<li><code>public void propagate(int evtmask) throws ContradictionException</code>
+where the filtering algorithm will be applied,</li>
+<li><code>public ESat isEntailed()</code> where the entailment/satisfaction of the
+propagator is checked.</li>
+</ul>
+<p>We now describe how these two methods can be implemented, plus an
+optional yet important method and the constructor parametrization.</p>
+<h3 id="entailment">Entailment</h3>
+<p>For debugging purpose or to enable constraint reification, a method
+named <code>isEntailed()</code> has to be implemented. The former is mainly used when
+implementing the constraint to make sure that found solutions respect
+the constraint specifications. The latter is called to valuate the
+boolean variable attached to a propagator when it is reified. The method
+returns <code>ESat.TRUE</code>, <code>ESat.FALSE</code> or <code>ESat.UNDEFINED</code> when respectively with
+respect to the current domain of the variables, the propagator can
+always be satisfied however they are instantiated, the propagator can
+never be satisfied and nothing can be deduced.</p>
+<p>For example, consider the constraint $c = (x_1 + x_2 \leq 10)$ and the
+three following states:</p>
+<ul>
+<li>$x_1 = [1,2], x_2 = [1,2]$ : the method returns <code>ESat.TRUE</code> since all
+combinations satisfy c,</li>
+<li>$x_1 = [22,23], x_2 = [10,12]$ : the method returns <code>ESat.FALSE</code> since
+no combination satisfies c and</li>
+<li>$x_1 = [1,10], x_2 = [1,10]$ : the method returns <code>ESat.UNDEFINED</code>
+since some combinations satisfy $c$, other don&rsquo;t.</li>
+</ul>
+<div class="alert alert-primary" role="alert"><div class="h4 alert-heading" role="heading">Info</div>
+<blockquote>
+</blockquote>
+<p>When an instance of a propagator is created, an array of its variables
+is automatically created and named vars. The order of elements of
+&lsquo;vars&rsquo; shouldn&rsquo;t be modified: each variable knows its position in each
+of its propagators, modifying a position is only made by the solver
+itself.</p>
+</div>
+<p>The entailment method can be implemented as is:</p>
+ 
+ 
+<ul class="nav nav-tabs" id="tabs-2" role="tablist">
+  <li class="nav-item">
+      <button class="nav-link active"
+          id="tabs-02-00-tab" data-bs-toggle="tab" data-bs-target="#tabs-02-00" role="tab"
+          data-td-tp-persist="java" aria-controls="tabs-02-00" aria-selected="true">
+        Java
+      </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="tabs-2-content">
+    <div class="tab-pane fade show active"
+        id="tabs-02-00" role="tabpanel" aria-labelled-by="tabs-02-00-tab" tabindex="2">
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span>Override
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> ESat <span style="color:#a6e22e">isEntailed</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">int</span> sumUB <span style="color:#f92672">=</span> 0, sumLB <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> vars.<span style="color:#a6e22e">length</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>       sumLB <span style="color:#f92672">+=</span> vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>       sumUB <span style="color:#f92672">+=</span> vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getUB</span>();
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> (sumUB <span style="color:#f92672">&lt;=</span> b) {
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">return</span> ESat.<span style="color:#a6e22e">TRUE</span>;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> (sumLB <span style="color:#f92672">&gt;</span> b) {
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">return</span> ESat.<span style="color:#a6e22e">FALSE</span>;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> ESat.<span style="color:#a6e22e">UNDEFINED</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+    </div>
+</div>
+
+<h3 id="filtering-algorithm">Filtering algorithm</h3>
+<p>A propagator&rsquo;s first objective is to remove, from its variables domain,
+values that cannot belong to any solutions. This is the role of the
+propagate(int m) method. This method bases its deductions on the current
+domain of the variables and can update their domain on the fly. The
+expected state of this method exit is called a &lsquo;fix-point&rsquo;.</p>
+<div class="alert alert-primary" role="alert"><div class="h4 alert-heading" role="heading">Info</div>
+<p>A local fix-point (wrt to a propagator) is reached when no more deductions can be done by a propagator on its variables.
+A global fix point (<em>wrt</em> to a model) is reached when no more deductions can be done by any propagator on all variables.</p>
+</div>
+<p>Indeed, a propagator &lsquo;p&rsquo; is not notified of its modifications but only
+those triggered by other propagators which modified at least one
+variable of &lsquo;p&rsquo;. Each time one, at least, of its variable is modified,
+the satisfaction of a propagator need to check along with some
+filtering, if any, based on earlier modification.</p>
+<p>Applying filtering rules can lead to a contradiction. In that case, the
+solver resumes after the filtering algorithm is stopped and manages to
+undo domain modification. Since restoring previous states is managed by
+the solver, it can safely be ignored when creating a propagator.</p>
+<p>In the case of the sum constraint, $F$ is computed first, then fast check
+of $F$ is made to check obvious unsatisfaction and eventually a loop is
+operated over the variables to make sure that each upper bound is
+correct wrt to $F$. A simple loop is enough since $F$ is computed reading
+$\overline{x_i}$ and writing $\underline{x_i}$.</p>
+<p>Note that the method can throw an exception. An exception denotes that a
+failure is detected and the execution has to be stopped. In our case, if
+$F &lt; 0$ an exception should be thrown. In other cases, the methods that
+modify the variables domain can thrown such an exception too, when for
+example, the domain becomes empty.</p>
+<p>The filtering method can be implemented as is:</p>
+ 
+ 
+<ul class="nav nav-tabs" id="tabs-4" role="tablist">
+  <li class="nav-item">
+      <button class="nav-link active"
+          id="tabs-04-00-tab" data-bs-toggle="tab" data-bs-target="#tabs-04-00" role="tab"
+          data-td-tp-persist="java" aria-controls="tabs-04-00" aria-selected="true">
+        Java
+      </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="tabs-4-content">
+    <div class="tab-pane fade show active"
+        id="tabs-04-00" role="tabpanel" aria-labelled-by="tabs-04-00-tab" tabindex="4">
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">propagate</span>(<span style="color:#66d9ef">int</span> evtmask) <span style="color:#66d9ef">throws</span> ContradictionException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sumLB <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i  <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> vars.<span style="color:#a6e22e">length</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        sumLB <span style="color:#f92672">+=</span> vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> F <span style="color:#f92672">=</span> b <span style="color:#f92672">-</span> sumLB;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (F <span style="color:#f92672">&lt;</span> 0) {
+</span></span><span style="display:flex;"><span>        fails();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i  <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> vars.<span style="color:#a6e22e">length</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> lb <span style="color:#f92672">=</span> vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> ub <span style="color:#f92672">=</span> vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getUB</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (ub <span style="color:#f92672">-</span> lb <span style="color:#f92672">&gt;</span> F) {
+</span></span><span style="display:flex;"><span>            vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">updateUpperBound</span>(F <span style="color:#f92672">+</span> lb, <span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+    </div>
+</div>
+
+<p>The parameter of the method is ignored for now. On line 9, since the
+condition of unsatisfaction is met, a <code>ContradictionException</code> is thrown
+by calling <code>fails()</code>. On line 16, the $i^{th}$ variable upper bound is
+updated. If the new value is greater or equal to than the current upper
+bound of the variable, nothing happens. If not, the variable is
+modified. If the new upper bound is lesser than the current lower bound,
+a <code>ContradictionException</code> is thrown automatically. Otherwise, the old
+upper bound is stored (for future restoration), the new upper bound is
+set and the propagators&rsquo; list of the variable is iterated to inform each
+of them (except the one that triggers the event) that the variable
+domain has changed which can question their local fix-point.</p>
+<div class="alert alert-secondary" role="alert"><div class="h4 alert-heading" role="heading">Important</div>
+<p>An <code>IntVar</code> can be modified in many ways: instantiation, upper bound
+modification, lower bound modification or value removal(s). These
+modifications can be achieved calling :
+<code>instantiateTo(...)</code>,<code>updateUpperBound(...)</code>, <code>updateLowerBound(...)</code>, <code>removeValue(...)</code>,
+<code>removeValues(...)</code>, &hellip;</p>
+</div>
+<div class="alert alert-primary" role="alert"><div class="h4 alert-heading" role="heading">Some events can be promoted</div>
+<p>For instance, when the new upper bound of a variable becomes equal
+to its current lower bound, the upper bound modification is
+promoted to an instantiation. The same goes with the new lower
+bound being equal to the current upper bound. Or when a value
+removal affects one bound, it is promoted to a bound modification
+(which in turn can be promoted to instantiation).</p>
+<p>When the term &lsquo;value removal&rsquo; is used it qualifies a hole in the
+middle of a variable domain, otherwise, due to promotion, the most
+accurate term is used.</p>
+</div>
+<h3 id="propagation-conditions-optional">Propagation conditions (optional)</h3>
+<p>When a variables is modified, the type of <em>event</em> the modification
+corresponds is declared. For example when the upper bound of a variables
+is decreased, the event indicates <code>DEC_UPP</code>.</p>
+<p>Not all types of event is relevant for all propagators and each of them
+can give its filtering conditions. By default, a propagator is informed
+of all type of modifications.</p>
+<p>In our case, nothing can be done on value removal nor on upper bound
+modification. Thus, the following method can be override (note that is
+optional but leads to better performances):</p>
+ 
+ 
+<ul class="nav nav-tabs" id="tabs-7" role="tablist">
+  <li class="nav-item">
+      <button class="nav-link active"
+          id="tabs-07-00-tab" data-bs-toggle="tab" data-bs-target="#tabs-07-00" role="tab"
+          data-td-tp-persist="java" aria-controls="tabs-07-00" aria-selected="true">
+        Java
+      </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="tabs-7-content">
+    <div class="tab-pane fade show active"
+        id="tabs-07-00" role="tabpanel" aria-labelled-by="tabs-07-00-tab" tabindex="7">
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getPropagationConditions</span>(<span style="color:#66d9ef">int</span> vIdx) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> IntEventType.<span style="color:#a6e22e">combine</span>(IntEventType.<span style="color:#a6e22e">INSTANTIATE</span>, IntEventType.<span style="color:#a6e22e">INCLOW</span>);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+    </div>
+</div>
+
+<p>Note that this method is called statically on each of its variables
+(denoted by <code>vIdx</code>) when posting the constraint to the model. Some
+propagators can thus declare distinct propagation conditions for each
+variable.</p>
+<h3 id="constructor">Constructor</h3>
+<p>Finally, any propagator should extends Propagator which is an abstract
+class and a call to super is expected as first instruction of the
+constructor.</p>
+<p><code>Propagator</code> abstract class provides three constructors but we will only
+depict one, the most important:
+<code>Propagator(V[] vars, PropagatorPriority priority, boolean reactToFineEvt)</code>.</p>
+<p>The first argument is the list of variables, here an array of <code>IntVar</code>.
+The list of all variables the propagator can react on should be passed
+here. Consider that, with few exceptions, all variables of the
+propagator are expected.</p>
+<p>The second parameter considers the filtering algorithm arity or
+complexity. There are seven ordered levels of priority, the three first
+ones (arity levels) are <code>UNARY</code>, <code>BINARY</code> and <code>TERNARY</code>. The three following
+ones (complexity levels) are <code>LINEAR</code>, <code>QUADRATIC</code>, <code>CUBIC</code>. Actually a
+<code>TERNARY</code> priority propagator is expected to run faster than a <code>QUADRATIC</code>
+priority one. So, considering the complexity instead of the arity may be
+more relevant when the filtering algorithm is very costly even if the
+propagator relies on only three variables.</p>
+<p>The third parameter indicates if the propagator is able to react on fine
+events. This parameter will be presented in more details later on.</p>
+<p>In our case, the input parameters are the array of IntVar &lsquo;x&rsquo;, the
+priority is based on the complexity which is linear in the number of
+variables and false. In addition, the constant &lsquo;b&rsquo; needs to be stored
+too.</p>
+ 
+
+<ul class="nav nav-tabs" id="tabs-8" role="tablist">
+  <li class="nav-item">
+      <button class="nav-link active"
+          id="tabs-08-00-tab" data-bs-toggle="tab" data-bs-target="#tabs-08-00" role="tab"
+          data-td-tp-persist="java" aria-controls="tabs-08-00" aria-selected="true">
+        Java
+      </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="tabs-8-content">
+    <div class="tab-pane fade show active"
+        id="tabs-08-00" role="tabpanel" aria-labelled-by="tabs-08-00-tab" tabindex="8">
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Constructor of the specific sum propagator : x1 + x2 + ... + xn &lt;= b
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param x array of integer variables
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param b a constant
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">MyPropagator</span>(IntVar<span style="color:#f92672">[]</span> x, <span style="color:#66d9ef">int</span> b) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">super</span>(x, PropagatorPriority.<span style="color:#a6e22e">LINEAR</span>, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> b;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+    </div>
+</div>
+
+<h3 id="mypropagator">MyPropagator</h3>
+<p>A basic yet sound propagator which ensures that the sum of all variables
+is less than or equal to a constant is declared below.</p>
+ 
+ 
+<ul class="nav nav-tabs" id="tabs-9" role="tablist">
+  <li class="nav-item">
+      <button class="nav-link active"
+          id="tabs-09-00-tab" data-bs-toggle="tab" data-bs-target="#tabs-09-00" role="tab"
+          data-td-tp-persist="java" aria-controls="tabs-09-00" aria-selected="true">
+        Java
+      </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="tabs-9-content">
+    <div class="tab-pane fade show active"
+        id="tabs-09-00" role="tabpanel" aria-labelled-by="tabs-09-00-tab" tabindex="9">
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyPropagator</span> <span style="color:#66d9ef">extends</span> Propagator<span style="color:#f92672">&lt;</span>IntVar<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  * The constant the sum cannot be greater than
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  */</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> b;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  * Constructor of the specific sum propagator : x1 + x2 + ... + xn &lt;= b
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  * @param x array of integer variables
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  * @param b a constant
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  */</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">MyPropagator</span>(IntVar<span style="color:#f92672">[]</span> x, <span style="color:#66d9ef">int</span> b) {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">super</span>(x, PropagatorPriority.<span style="color:#a6e22e">LINEAR</span>, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> b;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getPropagationConditions</span>(<span style="color:#66d9ef">int</span> vIdx) {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">return</span> IntEventType.<span style="color:#a6e22e">combine</span>(IntEventType.<span style="color:#a6e22e">INSTANTIATE</span>, IntEventType.<span style="color:#a6e22e">INCLOW</span>);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">propagate</span>(<span style="color:#66d9ef">int</span> evtmask) <span style="color:#66d9ef">throws</span> ContradictionException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sumLB <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (IntVar <span style="color:#66d9ef">var</span> <span style="color:#960050;background-color:#1e0010">: </span>vars) {
+</span></span><span style="display:flex;"><span>        sumLB <span style="color:#f92672">+=</span> var.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> F <span style="color:#f92672">=</span> b <span style="color:#f92672">-</span> sumLB;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (F <span style="color:#f92672">&lt;</span> 0) {
+</span></span><span style="display:flex;"><span>        fails();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (IntVar <span style="color:#66d9ef">var</span> <span style="color:#960050;background-color:#1e0010">: </span>vars) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> lb <span style="color:#f92672">=</span> var.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> ub <span style="color:#f92672">=</span> var.<span style="color:#a6e22e">getUB</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (ub <span style="color:#f92672">-</span> lb <span style="color:#f92672">&gt;</span> F) {
+</span></span><span style="display:flex;"><span>            var.<span style="color:#a6e22e">updateUpperBound</span>(F <span style="color:#f92672">+</span> lb, <span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">public</span> ESat <span style="color:#a6e22e">isEntailed</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sumUB <span style="color:#f92672">=</span> 0, sumLB <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (IntVar <span style="color:#66d9ef">var</span> <span style="color:#960050;background-color:#1e0010">: </span>vars) {
+</span></span><span style="display:flex;"><span>        sumLB <span style="color:#f92672">+=</span> var.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>        sumUB <span style="color:#f92672">+=</span> var.<span style="color:#a6e22e">getUB</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (sumUB <span style="color:#f92672">&lt;=</span> b) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ESat.<span style="color:#a6e22e">TRUE</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (sumLB <span style="color:#f92672">&gt;</span> b) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ESat.<span style="color:#a6e22e">FALSE</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ESat.<span style="color:#a6e22e">UNDEFINED</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+    </div>
+</div>
+
+<p>This first implementation outlines key concepts a propagator required.
+The entailment method should not ignored since it is helpful (even
+essential) to check the correctness of the implementation. The optional
+one which describes the propagation conditions can sometimes reduce the
+number of times a propagator is called without deducing new information
+(domain modifications or failure).</p>
+<h2 id="a-more-complex-version">A more complex version</h2>
+<p>Based on <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.8.8962">Bounds Consistency Techniques for Long Linear
+Constraint</a>,
+the first version can be improved in some ways.</p>
+<p>We will consider first to desactivate the propagator when some
+conditions are satisfied, then we will show how backtrackable structures
+can be used and finally how a propagator can react to fine events.</p>
+<h3 id="reduce-to-silence">Reduce to silence</h3>
+<p>An interesting feature available by default is the capacity to set
+passive a propagator that is entailed (i.e., is always true). Indeed, if
+all variables domain are in such state that any combinations satisfy the
+constraint, the propagator can be ignored in the propagation loop since
+it will not filter values nor fail.</p>
+<p>In our case, this happens when the sum of the upper bounds is equal to
+or less than &lsquo;b&rsquo;. If so, the propagator can safely be set to a passivate
+state in which it will not be informed of any new modifications
+occurring <strong>in the current search sub-tree</strong> (i.e., the propagator will
+be reactivated automatically on backtrack).</p>
+<p>The filtering method can be modified like that:</p>
+ 
+ 
+<ul class="nav nav-tabs" id="tabs-10" role="tablist">
+  <li class="nav-item">
+      <button class="nav-link active"
+          id="tabs-10-00-tab" data-bs-toggle="tab" data-bs-target="#tabs-10-00" role="tab"
+          data-td-tp-persist="java" aria-controls="tabs-10-00" aria-selected="true">
+        Java
+      </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="tabs-10-content">
+    <div class="tab-pane fade show active"
+        id="tabs-10-00" role="tabpanel" aria-labelled-by="tabs-10-00-tab" tabindex="10">
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">propagate</span>(<span style="color:#66d9ef">int</span> evtmask) <span style="color:#66d9ef">throws</span> ContradictionException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sumLB <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i  <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> vars.<span style="color:#a6e22e">length</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        sumLB <span style="color:#f92672">+=</span> vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> F <span style="color:#f92672">=</span> b <span style="color:#f92672">-</span> sumLB;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (F <span style="color:#f92672">&lt;</span> 0) {
+</span></span><span style="display:flex;"><span>        fails();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sumUB <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i  <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> vars.<span style="color:#a6e22e">length</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> lb <span style="color:#f92672">=</span> vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> ub <span style="color:#f92672">=</span> vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getUB</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (ub <span style="color:#f92672">-</span> lb <span style="color:#f92672">&gt;</span> F) {
+</span></span><span style="display:flex;"><span>            vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">updateUpperBound</span>(F <span style="color:#f92672">+</span> lb, <span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        sumUB <span style="color:#f92672">+=</span> vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getUB</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> E <span style="color:#f92672">=</span> sumUB <span style="color:#f92672">-</span> b;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (E <span style="color:#f92672">&lt;=</span> 0) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setPassive</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+    </div>
+</div>
+
+<p>Line 18, a counter is updated with the sharpest upper bound of each
+variables. Line 21-23, if the condition is satisfied, the propagator is
+entailed and set to a passive state.</p>
+<div class="alert alert-primary" role="alert"><div class="h4 alert-heading" role="heading">Info</div>
+<p>We could also consider updating the propagation conditions to
+integrate upper bound modifications. Doing so, when one variable upper
+bound is modified, the entailment condition could be checked earlier.</p>
+</div>
+<h3 id="incrementally-updating-f">Incrementally updating $F$</h3>
+<p>One may have noted that F is always computed as first step of
+<code>propagate(int evtmask)</code> method. On cases where few bounds are updated,
+there could be a benefit to incrementally compute $F$.</p>
+<p>To compute $F$ in an incremental way, three steps are needed:</p>
+<ol>
+<li>creating a <em>backtrackable</em> <code>int</code> to record $F$ but also variables&rsquo; lower bound</li>
+<li>initializing it on <code>propagate(int evtmask)</code> first call</li>
+<li>anytime a variable is being modified, maintaining $F$</li>
+</ol>
+<p>First, a <code>IStateInt</code> object and an <code>IStateInt</code> array are declared as class
+variables. In the propagator&rsquo;s constructor, through the <code>Model</code>, the
+objects are initialized:</p>
+ 
+ 
+<ul class="nav nav-tabs" id="tabs-12" role="tablist">
+  <li class="nav-item">
+      <button class="nav-link active"
+          id="tabs-12-00-tab" data-bs-toggle="tab" data-bs-target="#tabs-12-00" role="tab"
+          data-td-tp-persist="java" aria-controls="tabs-12-00" aria-selected="true">
+        Java
+      </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="tabs-12-content">
+    <div class="tab-pane fade show active"
+        id="tabs-12-00" role="tabpanel" aria-labelled-by="tabs-12-00-tab" tabindex="12">
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * The constant the sum cannot be greater than
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> b;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * object to store F in an incremental way.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Corresponds to a backtrackable int.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> IStateInt F;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * array to store variables&#39; previous lower bound.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * each cell is a backtrackable int.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> IStateInt<span style="color:#f92672">[]</span> prev_lbs;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Constructor of the specific sum propagator : x1 + x2 + ... + xn &lt;= b
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param x array of integer variables
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param b a constant
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">MyPropagator</span>(IntVar<span style="color:#f92672">[]</span> x, <span style="color:#66d9ef">int</span> b) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">super</span>(x, PropagatorPriority.<span style="color:#a6e22e">LINEAR</span>, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> b;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">F</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">getEnvironment</span>().<span style="color:#a6e22e">makeInt</span>(0);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">prev_lbs</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> IStateInt<span style="color:#f92672">[</span>x.<span style="color:#a6e22e">length</span><span style="color:#f92672">]</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0 ; i <span style="color:#f92672">&lt;</span> x.<span style="color:#a6e22e">length</span>; i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        prev_lbs<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">getEnvironment</span>().<span style="color:#a6e22e">makeInt</span>(0);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+    </div>
+</div>
+
+<p>$F$ is created with value 0; its correct value will be set on the first call
+to <code>propagate(int evtmask)</code> method. Same goes with prev_ubs. Any
+backtrackable primitive or operation is created thanks to the
+<em>environment</em> attached to the model. This ensures the integrity of the
+structure when backtracks occur.</p>
+<p>The role of prev_ubs is to store the value of each variable lower
+bound. Then, anytime a variable lower bound is modified, its value can
+be retrieved and substracted from the current value to update $F$.</p>
+<p>Second, $F$ is initialized in the first call to <code>propagate(int evtmask)</code>
+method. This is where the value of evtmask is helpful. It can take 2
+distinct values: one is dedicated to a full propagation, the other to a
+custom propagation. A full propagation is run on the initial propagation
+call, when each propagator is awaken by the solver. Then, if the
+propagator was declared not reacting to fine events (last parameter of
+the super constructor), full propagation is always run. On the other
+hand, if the propagator reacts to fine events, which will be the case
+for now, the initial propagation is kept full but then the main entry
+point of the filtering algorithm will be
+<code>propagate(int vIdx, int evtmask)</code> method (with <strong>two</strong> arguments). This
+method reacts to fine events, that means all variables modifications
+will be given as input thanks to the variable&rsquo;s index in vars (<code>vIdx</code>) and
+the event mask which is can be a combination of event types, like in
+propagation conditions.</p>
+<p>Most of the time, this method is decomposed into a fast but naive
+filtering algorithm and a delayed call to a custom, presumably not fast,
+filtering algorithm. But it can be made of no filtering at all (that&rsquo;s
+the case here) or no delayed call to custom filtering algorithm.</p>
+<p>In our case, we will only incrementally maintain $F$ and then delegate the
+filtering to the custom propagation.</p>
+ 
+ 
+<ul class="nav nav-tabs" id="tabs-13" role="tablist">
+  <li class="nav-item">
+      <button class="nav-link active"
+          id="tabs-13-00-tab" data-bs-toggle="tab" data-bs-target="#tabs-13-00" role="tab"
+          data-td-tp-persist="java" aria-controls="tabs-13-00" aria-selected="true">
+        Java
+      </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="tabs-13-content">
+    <div class="tab-pane fade show active"
+        id="tabs-13-00" role="tabpanel" aria-labelled-by="tabs-13-00-tab" tabindex="13">
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">prepare</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sumLB <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0 ; i <span style="color:#f92672">&lt;</span> vars.<span style="color:#a6e22e">length</span>; i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        sumLB <span style="color:#f92672">+=</span> vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// set the current lower bound in &#39;prev_lbs&#39;</span>
+</span></span><span style="display:flex;"><span>        prev_lbs<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">set</span>(vars<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getLB</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// set the value of F</span>
+</span></span><span style="display:flex;"><span>    F.<span style="color:#a6e22e">set</span>(b <span style="color:#f92672">-</span> sumLB);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">propagate</span>(<span style="color:#66d9ef">int</span> vIdx, <span style="color:#66d9ef">int</span> mask) <span style="color:#66d9ef">throws</span> ContradictionException {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 1. get the current lower bound of the modified variable</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> lb <span style="color:#f92672">=</span> vars<span style="color:#f92672">[</span>vIdx<span style="color:#f92672">]</span>.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 2. update F with the difference between old and new lower bound</span>
+</span></span><span style="display:flex;"><span>    F.<span style="color:#a6e22e">add</span>(lb <span style="color:#f92672">-</span> prev_lbs<span style="color:#f92672">[</span>vIdx<span style="color:#f92672">]</span>.<span style="color:#a6e22e">get</span>());
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 3. set the new lower bound</span>
+</span></span><span style="display:flex;"><span>    prev_lbs<span style="color:#f92672">[</span>vIdx<span style="color:#f92672">]</span>.<span style="color:#a6e22e">set</span>(lb);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 4. delegate the filtering later on</span>
+</span></span><span style="display:flex;"><span>    forcePropagate(PropagatorEventType.<span style="color:#a6e22e">CUSTOM_PROPAGATION</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">propagate</span>(<span style="color:#66d9ef">int</span> evtmask) <span style="color:#66d9ef">throws</span> ContradictionException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(PropagatorEventType.<span style="color:#a6e22e">isFullPropagation</span>(evtmask)){
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// First call to the filtering algorithm, F is not up-to-date</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// so prepare initialize its value and &#39;prev_lbs&#39;</span>
+</span></span><span style="display:flex;"><span>        prepare();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (F.<span style="color:#a6e22e">get</span>() <span style="color:#f92672">&lt;</span> 0) {
+</span></span><span style="display:flex;"><span>        fails();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (IntVar <span style="color:#66d9ef">var</span> <span style="color:#960050;background-color:#1e0010">: </span>vars) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> lb <span style="color:#f92672">=</span> var.<span style="color:#a6e22e">getLB</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> ub <span style="color:#f92672">=</span> var.<span style="color:#a6e22e">getUB</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (ub <span style="color:#f92672">-</span> lb <span style="color:#f92672">&gt;</span> F.<span style="color:#a6e22e">get</span>()) {
+</span></span><span style="display:flex;"><span>            var.<span style="color:#a6e22e">updateUpperBound</span>(F.<span style="color:#a6e22e">get</span>() <span style="color:#f92672">+</span> lb, <span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+    </div>
+</div>
+
+<p>A call to <code>forcePropagate(int evtmask)</code> will call <code>propagate(int evtmask)</code>
+only when all fine events are received. This ensures that F is set to
+the correct value before filtering forbidden values.</p>
+
+	<style>
+  .feedback--answer {
+    display: inline-block;
+  }
+  .feedback--answer-no {
+    margin-left: 1em;
+  }
+  .feedback--response {
+    display: none;
+    margin-top: 1em;
+  }
+  .feedback--response__visible {
+    display: block;
+  }
+</style>
+<div class="d-print-none">
+<h2 class="feedback--title">Feedback</h2>
+<p class="feedback--question">Was this page helpful?</p>
+<button class="btn btn-primary mb-4 feedback--answer feedback--answer-yes">Yes</button>
+<button class="btn btn-primary mb-4 feedback--answer feedback--answer-no">No</button>
+<p class="feedback--response feedback--response-yes">
+  Glad to hear it! Please <a href="https://github.com/chocoteam/choco-solver/issues/new">tell us how we can improve</a>.
+</p>
+<p class="feedback--response feedback--response-no">
+  Sorry to hear that. Please <a href="https://github.com/chocoteam/choco-solver/issues/new">tell us how we can improve</a>.
+</p>
+</div>
+<script>
+  const yesButton = document.querySelector('.feedback--answer-yes');
+  const noButton = document.querySelector('.feedback--answer-no');
+  const yesResponse = document.querySelector('.feedback--response-yes');
+  const noResponse = document.querySelector('.feedback--response-no');
+  const disableButtons = () => {
+    yesButton.disabled = true;
+    noButton.disabled = true;
+  };
+  const sendFeedback = (value) => {
+    if (typeof gtag !== 'function') return;
+    gtag('event', 'page_helpful', {
+      'event_category': 'Helpful',
+      'event_label': window.location.pathname,
+      'value': value
+    });
+  };
+  yesButton.addEventListener('click', () => {
+    yesResponse.classList.add('feedback--response__visible');
+    disableButtons();
+    sendFeedback( 100 );
+  });
+  noButton.addEventListener('click', () => {
+    noResponse.classList.add('feedback--response__visible');
+    disableButtons();
+    sendFeedback(0);
+  });
+</script>
+<br />
+<div class="td-page-meta__lastmod">
+  Last modified September 17, 2024: <a data-proofer-ignore href="https://github.com/chocoteam/website/commit/e8ffa5003757c6217effce8ba4f5be27c31a7ff7">Change codeFence to tabpane (e8ffa50)</a>
+</div>
+
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Stack Overflow" aria-label="Stack Overflow">
+    <a href="https://stackoverflow.com/questions/tagged/choco" aria-label="Stack Overflow" target="_blank" rel="noopener">
+      <i class="fab fa-stack-overflow"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Discord" aria-label="Discord">
+    <a href="https://discord.gg/aH6zxa7e64" aria-label="Discord" target="_blank" rel="noopener">
+      <i class="fab fa-discord"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a href="https://github.com/chocoteam/choco-solver" aria-label="GitHub" target="_blank" rel="noopener">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2026
+    <span class="td-footer__authors">The Choco-solver Authors</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.min.c60de03ed52a34012f330c3e18c526426ec97efa9822bedfadbf14ffe917bc3e.js" integrity="sha256-xg3gPtUqNAEvMww&#43;GMUmQm7JfvqYIr7frb8U/&#43;kXvD4=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.24576ff9fe9f85bb1948ecae52ce227cafce53757a3ad52301f2a79260f6b97d.js" integrity="sha256-JFdv&#43;f6fhbsZSOyuUs4ifK/OU3V6OtUjAfKnkmD2uX0=" crossorigin="anonymous"></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>
