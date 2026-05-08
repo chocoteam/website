@@ -10,7 +10,7 @@ notebooks/docenv
 notebooks/ijava*
 notebooks/**/.ipynb_checkpoints
 notebooks/**/._.DS_Store
-public/
+# public/ do not ignore it, otherwise submodule will not work
 resources/
 resources/_gen/
 hugo_stats.json
