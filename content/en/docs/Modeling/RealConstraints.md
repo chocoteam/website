@@ -65,7 +65,7 @@ A call to this method requires [Ibex]({{< ref "/docs/Advanced usages/Ibex.md" >}
 
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
@@ -95,7 +95,7 @@ Calling `equation()` on a relation expression will return a `Constraint` object 
 A call to this method **does not** create additional variables and returns a single constraint.
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
@@ -121,7 +121,7 @@ This is achieved calling the `ibex(prec)` method which returns a `Constraint` ob
 It must be then posted or reified.
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
@@ -144,7 +144,7 @@ It is sometimes relevant to map a real variable to an integer variable.
 Doing so, the real variable is forced to take integer values but it can be declared in real constraints (either as an equation or in Ibex).
 This is achieved by posting an `eq` constraint like this:
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar foo = model.intVar("foo", new int[]{0, 15, 20});
 RealVar bar = model.realVar("bar", 0, 20, 1e-5);
 model.eq(bar, foo).post();
@@ -158,7 +158,7 @@ This relation is also known as an `element` constraint.
 All double values in the array must be different and sorted in a increasing order.  
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 RealVar value = model.realVar("V", 0., 10., 1.e-4);
 IntVar index = model.intVar("I", 0, 5);
 double[] values = new double[]{-1., .8, Math.PI, 12.};
@@ -171,7 +171,7 @@ A scalar product where coefficients are double values can be defined over a set 
 Available operators are `"=", ">=", "<="`.
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 double[] coeffs = new double[]{1, 5, 7, 8};
 RealVar[] vars = model.realVarArray(4, 1., 6., .1);
 model.scalar(vars, coeffs, "=", 35).post();

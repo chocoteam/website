@@ -38,7 +38,7 @@ An arithmetic expression can be turned into an `IntVar` by calling the `intVar()
 If necessary, it creates intermediary variable and posts intermediary constraints then returns the resulting variable.
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar x = model.intVar(1, 5);
 IntVar y = model.intVar(1, 5);
 // z = min((x+5)%3, y^2);
@@ -71,7 +71,7 @@ When decomposed, an analysis of the tree structure is done, starting from leaves
 A call to this method creates additional variables and posts additional constraints.
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar x = model.intVar(0, 5);
 IntVar y = model.intVar(0, 5);
 x.ge(y).decompose().post();
@@ -86,7 +86,7 @@ Alternatively, tuples can be extracted from a relation expression and a Table co
 This is achieved calling the `extension()` method which returns a `Constraint` object (that needs to be posted).
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar x = model.intVar(0, 5);
 IntVar y = model.intVar(0, 5);
 x.ge(y).extension().post();
@@ -106,7 +106,7 @@ Any relation expression can be turned into a `BoolVar` by calling the `boolVar()
 The resulting Boolean variable indicates whether or not the relationship holds.
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar x = model.intVar(0, 5);
 IntVar y = model.intVar(0, 5);
 BoolVar b = x.gt(y).boolVar();
@@ -131,7 +131,7 @@ Based on an **relational expression** `r`, a logical expression can be built usi
 Note that `pi` is relational expression and `yi` can be either an integer or an arithemic expression.
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar x = model.intVar(0, 5);
 IntVar y = model.intVar(0, 5);
 // (x = y + 1) ==> (x + 2 < 6)
@@ -194,7 +194,7 @@ A call to this method requires [Ibex]({{< ref "/docs/Advanced usages/Ibex.md" >}
 
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
@@ -225,7 +225,7 @@ Calling `equation()` on a relation expression will return a `Constraint` object 
 A call to this method **does not** create additional variables and returns a single constraint.
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);
@@ -252,7 +252,7 @@ This is achieved calling the `ibex(prec)` method which returns a `Constraint` ob
 It must be then posted or reified.
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 double p = 0.01d;
 RealVar x = model.realVar(1, 5, p);
 RealVar y = model.realVar(1, 5, p);

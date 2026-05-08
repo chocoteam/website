@@ -45,7 +45,7 @@ For more information, [please contact us](mailto:choco-solver@imt-atlantique.fr?
 
 ### Licence
 
-Choco is a Free Open-Source Java library distributed under BSD 4-Clause license. It is therefore important to know the different aspects that make up this licence. It is of course necessary to contact a legal department, but consulting the [Wikipedia page of the licence](https://en.wikipedia.org/wiki/BSD_licenses) is a good start.
+Choco is a Free Open-Source Java library distributed under **BSD 3-Clause license** (as of version 6.0.0; earlier versions used BSD 4-Clause). It is therefore important to know the different aspects that make up this licence. It is of course necessary to contact a legal department, but consulting the [Wikipedia page of the licence](https://en.wikipedia.org/wiki/BSD_licenses) is a good start.
 
 ### The project
 

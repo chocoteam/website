@@ -75,7 +75,7 @@ class NotEqual:
 
 {{< slide id="imp7" background="#b4c6d0" >}}
 
-## :rocket: Constraints
+## 🚀 Constraints
 
 - Different level of inconsistency
 - Global reasoning vs decomposition

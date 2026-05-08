@@ -25,7 +25,7 @@ solver.printStatistics();
 On a call to `solver.printVersion()`, the following message will be printed:
 
 ```none
-** Choco 4.10.2 (2019-10) : Constraint Programming Solver, Copyright (c) 2010-2019
+** Choco 6.0.0 (2026-05) : Constraint Programming Solver, Copyright (c) 2010-2026
 ```
 
 ### Resolution measures

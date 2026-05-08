@@ -22,7 +22,7 @@ An integer variable is an unknown whose value should be an integer. Therefore, t
 To create an integer variable, the `Model` should be used:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 // Create a constant variable equal to 42
 IntVar v0 = model.intVar("v0", 42);
 // Create a variable taking its value in [1, 3] (the value is 1, 2 or 3)
@@ -30,7 +30,7 @@ IntVar v1 = model.intVar("v1", 1, 3);
 // Create a variable taking its value in {1, 3} (the value is 1 or 3)
 IntVar v2 = model.intVar("v2", new int[]{1, 3});
 {{< /tab >}}
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 # Create a constant variable equal to 42
 v0 = model.intvar(42, name="v0")
 # Create a variable taking its value in [1, 3] (the value is 1, 2 or 3)
@@ -43,13 +43,13 @@ v2 = model.intvar([1, 3], name="v2")
 It is then possible to build directly arrays and matrices of variables having the same initial domain with:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 // Create an array of 5 variables taking their value in [-1, 1]
 IntVar[] vs = model.intVarArray("vs", 5, -1, 1);
 // Create a matrix of 5x6 variables taking their value in [-1, 1]
 IntVar[][] vs = model.intVarMatrix("ws", 5, 6, -1, 1);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 # Create an array of 5 variables taking their value in [-1, 1]
 vs = model.intvars(5, -1, 1,name="vs")
 # Create a matrix of 5x6 variables taking their value in [-1, 1]
@@ -71,7 +71,7 @@ However, whenever the values 9 and 10 are removed from the variable's domain, th
 To specify you want to use bounded domains, set the `boundedDomain` argument to `true` when creating variables:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar v = model.intVar("v", 1, 12, true);
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -94,11 +94,11 @@ To specify you want to use enumerated domains, either set the `boundedDomain` ar
 or use the signature that specifies the array of possible values:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar v = model.intVar("v", 1, 4, false);
 IntVar v = model.intVar("v", new int[]{1,2,3,4});
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 v = model.intvar([1,2,3,4], name="2")
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -119,12 +119,12 @@ The avantage of `BoolVar` is twofold:
 To create a new boolean variable:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 BoolVar b = model.boolVar("b");
 // A Boolean variable fixed to True
 BoolVar b = model.boolVar(true);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 b = model.boolVar(name="b")
 # A Boolean variable fixed to True
 t = model.boolvar(True)
@@ -149,7 +149,7 @@ A set variable is instantiated if and only if $m = o$.
 A set variable can be created as follows:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 // Constant SetVar equal to {2,3,12}
 SetVar x = model.setVar("x", new int[]{2,3,12});
 
@@ -161,7 +161,7 @@ SetVar y = model.setVar("y", new int[]{}, new int[]{1,2,3,5,12});
 SetVar z = model.setVar("z", new int[]{2,3}, new int[]{1,2,3,5,12});
 // possible values: {2,3}, {2,3,5}, {1,2,3,5} ...
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 # Constant SetVar equal to {2,3,12}, with a list
 x1 = model.setvar([2,3,12], name="x1")
 # or with a set
@@ -190,7 +190,7 @@ A graph variable is instantiated if and only if $\underline{G} = \overline{G}$.
 A graph variable can be created as follows:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 // A directed graph
 // first declare the lower bound
 DirectedGraph LB = GraphFactory.makeStoredDirectedGraph(model, 3, SetType.BITSET, SetType.BITSET);
@@ -208,7 +208,7 @@ UndirectedGraph LB = GraphFactory.makeStoredUndirectedGraph(model, 3, SetType.BI
 UndirectedGraph UB = GraphFactory.makeCompleteStoredUndirectedGraph(model, 3, SetType.BITSET, SetType.BITSET, true);
 UndirectedGraphVar g = model.graphVar("g", LB, UB);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 from pychoco.objects.graphs.directed_graph import create_directed_graph
 # A directed graph
 # first declare the lower bound
@@ -236,7 +236,7 @@ Real variables have a specific status in Choco 4, which uses [Ibex solver](http:
 A real variable is declared with three doubles defining its bound and a precision:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 RealVar x = model.realVar("x", 0.2d, 3.4d, 0.001d);
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -245,6 +245,78 @@ RealVar x = model.realVar("x", 0.2d, 3.4d, 0.001d);
 {{% alert title="Info" color="primary" %}}
 `pychoco` version does not support `realvar`.
 {{% /alert %}}
+
+## Task variables
+
+Task variables are used for scheduling problems. A task has a start time (IntVar), a duration, and an end time (IntVar). The constraint `start + duration = end` is automatically enforced.
+
+### Basic Task
+
+A task is created with a start variable and a fixed duration:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+IntVar start = model.intVar("start", 0, 10);
+int duration = 5;
+Task task = model.taskVar(start, duration);
+{{< /tab >}}
+{{< tab header="Python" >}}
+start = model.intvar(0, 10, "start")
+duration = 5
+task = model.task(start, duration)
+{{< /tab >}}
+{{< /tabpane >}}
+
+You can also specify an end variable or a variable duration:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+IntVar start = model.intVar("start", 0, 10);
+IntVar duration = model.intVar("duration", 1, 5);
+IntVar end = model.intVar("end", 0, 15);
+Task task = model.taskVar(start, duration, end);
+{{< /tab >}}
+{{< /tabpane >}}
+
+Or from time bounds (EST, LST, ECT, LCT):
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+// Earliest Start Time, Latest Start Time, duration, Earliest Completion Time, Latest Completion Time
+Task task = model.taskVar(0, 5, 3, 5, 10);
+{{< /tab >}}
+{{< /tabpane >}}
+
+### Optional Task
+
+An optional task is a task that may or may not be performed. It has an additional Boolean variable `performed` that indicates whether the task is active:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+IntVar start = model.intVar("start", 0, 10);
+int duration = 5;
+BoolVar performed = model.boolVar("performed");
+OptionalTask task = model.taskVar(start, duration, performed);
+// or with variable duration
+IntVar dur = model.intVar("duration", 1, 5);
+OptionalTask task = model.taskVar(start, dur, performed);
+{{< /tab >}}
+{{< /tabpane >}}
+
+Optional tasks are useful in scheduling problems where some tasks are optional or conditional.
+
+### Task arrays
+
+Create arrays of task variables for modeling multiple scheduling entities:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+IntVar[] starts = model.intVarArray("s", 10, 0, 20);
+int[] durations = {2, 3, 4, 2, 5, 3, 2, 4, 3, 2};
+IntVar[] ends = model.intVarArray("e", 10, 0, 25);
+Task[] tasks = model.taskVarArray(starts, durations, ends);
+{{< /tab >}}
+{{< /tabpane >}}
 
 ## Views: Creating variables from constraints
 
@@ -259,10 +331,10 @@ An arithmetical view requires an integer variable.
 #### $x = y + 2$ :
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar x = model.intOffsetView(y, 2);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 x = model.int_offset_view(y, 2)
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -270,10 +342,10 @@ x = model.int_offset_view(y, 2)
 #### $x = -y$ :
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar x = model.intMinusView(y);
 {{< /tab >}}
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 x = model.int_minus_view(y)
 {{< /tab >}}  
 {{< /tabpane >}}
@@ -281,10 +353,10 @@ x = model.int_minus_view(y)
 #### $x = 3\times y$ :
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar x = model.intScaleView(y, 3);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 x = model.int_scale_view(y, 3)
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -296,10 +368,10 @@ A logical view is based on an integer variable, a basic arithmetical relation ($
 #### $b \Leftrightarrow (x = 4)$ :
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 BoolVar b = model.intEqView(x, 4);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 b = model.int_eq_view(x, 4)
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -307,10 +379,10 @@ b = model.int_eq_view(x, 4)
 #### $b \Leftrightarrow (x \neq 4)$ :
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 BoolVar b = model.intNeView(x, 4);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 b = model.int_ne_view(x, 4)
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -319,10 +391,10 @@ b = model.int_ne_view(x, 4)
 #### $b \Leftrightarrow (x \leq 4)$ :
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 BoolVar b = model.intLeView(x, 4);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 b = model.int_le_view(x, 4)
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -330,10 +402,10 @@ b = model.int_le_view(x, 4)
 #### $b \Leftrightarrow (x \geq 4)$ :
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 BoolVar b = model.intGeView(x, 4);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 b = model.int_ge_view(x, 4)
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -343,10 +415,10 @@ This is a specific case, related to the negation of a `BoolVar`.
 No additional variable is needed, a view based on the variable to refute is enough. 
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 BoolVar d = model.boolNotView(b);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 d = model.bool_not_view(b)
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -355,7 +427,7 @@ d = model.bool_not_view(b)
 The same result can be obtained in shorted version (in Java only):
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 BoolVar d = b.not();
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -370,10 +442,10 @@ BoolVar d = b.not();
 Views can be combined together, e.g. $x = 2\times y + 5$ is:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar x = model.intOffsetView(model.intScaleView(y,2),5);
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 x = model.int_offset_view(model.int_scale_view(y,2),5)
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -382,7 +454,7 @@ x = model.int_offset_view(model.int_scale_view(y,2),5)
 We can also use a view mecanism to link an integer variable with a real variable.
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 IntVar ivar = model.intVar("i", 0, 4);
 double precision = 0.001d;
 RealVar rvar = model.realIntView(ivar, precision);
@@ -390,3 +462,103 @@ RealVar rvar = model.realIntView(ivar, precision);
 {{< /tabpane >}}
 
 This code enables to embed an integer variable in a constraint that is defined over real variables.
+
+## Result Variables
+
+Result variables are convenience methods that create a new variable and immediately post a constraint linking it to other variables or values. This eliminates the need to manually create the variable and post the constraint separately.
+
+### Sum result variable
+
+Create a sum variable directly:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+IntVar[] vars = model.intVarArray("x", 5, 0, 10);
+// This creates an IntVar constrained to be the sum of vars
+IntVar sum = model.sum("sum", vars);
+// equivalent to:
+// IntVar sum = model.intVar("sum", 0, 50);
+// model.sum(vars, "=", sum).post();
+{{< /tab >}}
+{{< /tabpane >}}
+
+### Count result variable
+
+Create a count variable that counts occurrences of a value:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+IntVar[] vars = model.intVarArray("x", 5, 0, 10);
+// Count how many times value 5 appears in vars
+IntVar count = model.count("count", 5, vars);
+// Or with a variable value to count
+IntVar val = model.intVar("val", 0, 10);
+IntVar count2 = model.count("count2", val, vars);
+{{< /tab >}}
+{{< /tabpane >}}
+
+### Min/Max result variables
+
+Create minimum and maximum variables:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+IntVar[] vars = model.intVarArray("x", 5, 0, 10);
+IntVar min = model.min("min", vars);
+IntVar max = model.max("max", vars);
+{{< /tab >}}
+{{< /tabpane >}}
+
+### Argument min/max
+
+Create variables representing the index of the minimum or maximum:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+IntVar[] vars = model.intVarArray("x", 5, 0, 10);
+IntVar argmin = model.argmin("argmin", vars, 0);  // 0 is the offset
+IntVar argmax = model.argmax("argmax", vars, 0);
+{{< /tab >}}
+{{< /tabpane >}}
+
+### Element result variable
+
+Create an element variable that retrieves a value from a table by index:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+int[] table = {10, 20, 30, 40, 50};
+IntVar index = model.intVar("index", 0, 4);
+// Create a variable constrained to be the element at position index
+IntVar element = model.element("element", table, index, 0);
+{{< /tab >}}
+{{< /tabpane >}}
+
+### Set result variables
+
+Result variables for set operations:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+SetVar[] sets = model.setVarArray("s", 3, new int[]{}, new int[]{0, 1, 2, 3});
+
+// Union of all sets
+SetVar union = model.union("union", sets);
+
+// Intersection of all sets
+SetVar intersection = model.intersection("intersection", sets);
+
+// Count non-empty sets
+IntVar nbEmpty = model.nbEmpty("nbEmpty", sets);
+
+// Number of distinct elements across all sets
+IntVar nValues = model.nValues("nValues", sets);
+
+// Sum of elements in a set
+int[] weights = {1, 2, 3, 4};
+SetVar s = model.setVar("s", new int[]{}, new int[]{0, 1, 2, 3});
+IntVar weightedSum = model.sum("wsum", weights, 0, s);
+{{< /tab >}}
+{{< /tabpane >}}
+
+These result variables are particularly useful when you need an intermediate variable that's purely derived from other variables, avoiding the boilerplate of creating the variable and posting the constraint separately.

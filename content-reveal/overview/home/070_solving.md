@@ -8,7 +8,7 @@ weight = 70
 
 ---
 
-{{< slide id="code3" transition="none-out" >}}
+{{% slide id="code3" transition="none-out" %}}
 
 ## CSP
 
@@ -32,7 +32,7 @@ A call to {{% ccode c="solver.solve()" %}} returns {{% ccode c="true" %}} if a s
 
 ---
 
-{{< slide id="code4" transition="in-out" >}}
+{{% slide id="code4" transition="in-out" %}}
 
 ## CSP
 

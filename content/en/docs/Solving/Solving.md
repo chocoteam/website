@@ -13,7 +13,7 @@ _This file can be downloaded as a [jupyter notebook](https://jupyter.org/) and e
 
 ```Java
 // Add maven dependencies at runtime 
-%maven org.choco-solver:choco-solver:4.10.13
+%maven org.choco-solver:choco-solver:6.0.0
 ```
 
 ----
@@ -187,6 +187,73 @@ where $X_i$ is the $i^{th}$ objective variable and $b_i$ its value in the soluti
 Solution solution = solver.findLexOptimalSolution(objectives, Model.MAXIMIZE);
 ```
 
+### Stream-based optimization
+
+The `streamOptimalSolutions()` method returns a stream of optimal solutions:
+
+```java
+model.setObjective(Model.MINIMIZE, objective);
+solver.streamOptimalSolutions(objective, Model.MINIMIZE)
+    .forEach(solution -> System.out.println("Optimal: " + solution));
+```
+
+## Solution Processing Helpers
+
+### Processing each solution with measurements
+
+The `eachSolutionWithMeasure()` helper allows you to process each solution along with solver measurements (nodes, fails, time, etc.):
+
+```java
+solver.eachSolutionWithMeasure((solution, measures) -> {
+    System.out.println("Solution found");
+    System.out.println("  Nodes: " + measures.getNodeCount());
+    System.out.println("  Time: " + measures.getTimeCountInNanoSeconds());
+    System.out.println("  Fails: " + measures.getFailCount());
+});
+```
+
+This is useful for profiling and understanding the solver's behavior when finding solutions.
+
+### Solution sampling
+
+The `tableSampling()` method enables you to enumerate a representative sample of solutions rather than all solutions. This is useful for large solution spaces:
+
+```java
+// Sample 100 solutions from the solution space
+// - pivot: restart after N nodes to explore different parts of the tree
+// - nbVariablesInTable: number of variables tracked for solution diversity
+// - probaTuple: probability of accepting a solution tuple
+List<Solution> samples = solver.tableSampling(100, 5, 0.8, new Random(42));
+
+for (Solution s : samples) {
+    System.out.println(s);
+}
+```
+
+### Solution hook
+
+The `onSolution()` method registers a callback that fires every time a solution is found:
+
+```java
+solver.onSolution(() -> {
+    System.out.println("New solution found!");
+    System.out.println("Objective = " + objective.getValue());
+});
+
+// Run search
+while (solver.solve()) {
+    // The callback above is called automatically for each solution
+}
+```
+
+This is a simpler alternative to using monitors when you just need to execute code on each solution:
+
+```java
+// Compare with the monitor approach (still valid)
+solver.plugMonitor((IMonitorSolution) () -> {
+    System.out.println("New solution found!");
+});
+```
 
 ## Propagation
 

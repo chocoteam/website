@@ -38,7 +38,7 @@ variables = {"x1": {1, 2, 3},
 
 {{< slide id="imp1" background="#b4c6d0" >}}
 
-## :rocket: Possible improvements
+## 🚀 Possible improvements
 
 - Creating a variable object
 - Effective domain representation (_e.g._, bitset)

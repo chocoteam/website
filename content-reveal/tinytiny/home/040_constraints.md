@@ -15,7 +15,7 @@ Let's roll up our sleeves and tackle the case of the binary _"strictly less"_ co
 
 ---
 
-{{< slide id="ex3" background="#C6D0B4" >}}
+{{% slide id="ex3" background="#C6D0B4" %}}
 
 Such a constraint will take {{% calert c="two variables" %}} as argument and makes sure that the former one takes a value less than the latter one in any solution.
 

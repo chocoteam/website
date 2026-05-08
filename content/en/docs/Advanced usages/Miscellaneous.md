@@ -80,11 +80,149 @@ s.plugMonitor(new IMonitorSolution() {
 
 In Java 8 style:
 
-```
+```java
 Solver s = model.getSolver();
 s.plugMonitor((IMonitorSolution) () -> {System.out.println("x = "+x.getValue());});
 ```
 
+Or with lambda:
+
+```java
+Solver s = model.getSolver();
+s.onSolution(() -> System.out.println("x = " + x.getValue()));
+```
+
+## Model Analysis
+
+### ModelAnalyser: Introspection and debugging
+
+The `ModelAnalyser` class provides introspection capabilities to analyze the structure and state of your model. This is useful for:
+- **Debugging**: Understanding what constraints and variables are present
+- **Optimization**: Identifying unconstrained or redundant variables
+- **Analysis**: Learning about propagator states and relationships
+
+### Accessing the analyser
+
+```java
+Model model = new Model("My Problem");
+// ... build model ...
+
+ModelAnalyser analyser = model.getModelAnalyser();
+```
+
+### Analysis methods
+
+**Overall analysis:**
+
+```java
+// Get comprehensive variable analysis
+analyser.analyseVariables();
+
+// Get comprehensive constraint analysis
+analyser.analyseConstraints();
+
+// Get full model analysis
+analyser.analyseModel();
+```
+
+**Variable information:**
+
+```java
+// Get types of variables in the model
+Set<String> varTypes = analyser.getVariableTypes();
+// Returns: {"IntVar", "BoolVar", "SetVar", "RealVar", ...}
+
+// Get unconstrained variables (not involved in any constraint)
+List<Variable> unconstrained = analyser.getUnconstrainedVariables();
+
+// Get variables that are views (derived from other variables)
+List<Variable> viewVars = analyser.getVariablesWithViews();
+```
+
+**Constraint information:**
+
+```java
+// Get types of constraints in the model
+Set<String> constraintTypes = analyser.getConstraintTypes();
+// Returns: {"Arithm", "Element", "AllDifferent", ...}
+```
+
+**Propagator state analysis:**
+
+```java
+// Get propagators that are entailed (always satisfied)
+List<Propagator<?>> entailed = analyser.getEntailedPropagators();
+
+// Get propagators that are passive (no more filtering possible)
+List<Propagator<?>> passive = analyser.getPassivePropagators();
+
+// Get propagators where all variables are instantiated
+List<Propagator<?>> instantiated = analyser.getCompletelyInstantiatedPropagators();
+
+// Get reified propagators (inside if-then-else constraints)
+List<Propagator<?>> reified = analyser.getReifiedPropagators();
+```
+
+### Use cases
+
+**Finding unconstrained variables (common bug):**
+
+```java
+List<Variable> unconstrained = analyser.getUnconstrainedVariables();
+if (!unconstrained.isEmpty()) {
+    System.out.println("WARNING: Variables without constraints:");
+    for (Variable v : unconstrained) {
+        System.out.println("  " + v.getName());
+    }
+}
+```
+
+**Checking view usage:**
+
+```java
+List<Variable> views = analyser.getVariablesWithViews();
+System.out.println("View variables (" + views.size() + "): ");
+for (Variable v : views) {
+    System.out.println("  " + v);
+}
+```
+
+**Analyzing constraint distribution:**
+
+```java
+Set<String> types = analyser.getConstraintTypes();
+System.out.println("Constraint types in model: " + types);
+
+// Useful before choosing search strategy
+// If many AllDifferent constraints, certain strategies are recommended
+// If many Element constraints, others are better
+```
+
+**Detecting optimization opportunities:**
+
+```java
+// Find variables/constraints that don't contribute to search
+List<Propagator<?>> entailed = analyser.getEntailedPropagators();
+if (!entailed.isEmpty()) {
+    System.out.println("Entailed propagators (" + entailed.size() + "):");
+    // These constraints are automatically satisfied and don't filter domains
+}
+
+List<Propagator<?>> passive = analyser.getPassivePropagators();
+if (!passive.isEmpty()) {
+    System.out.println("Passive propagators (" + passive.size() + "):");
+    // These can no longer filter and might be removed
+}
+```
+
+### Best practices
+
+- **Use analyser after model construction** to verify your model is correct
+- **Check for unconstrained variables** — often indicates modeling errors
+- **Analyze propagator states** before solving to understand expected behavior
+- **Export results** to log files for complex models to help with debugging
+
+---
 
 ## Settings
 

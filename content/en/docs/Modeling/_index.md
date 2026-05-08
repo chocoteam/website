@@ -11,10 +11,10 @@ description: >
 The object `Model` is the key component. It should be imported :
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 import org.chocosolver.solver.Model;
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 from pychoco import Model
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -22,10 +22,10 @@ from pychoco import Model
 Then, an instance of a model is built as follows:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 Model model = new Model();
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 model = Model()
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -33,10 +33,10 @@ model = Model()
 A name can be attached to an instance:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 Model model = new Model("my problem");
 {{< /tab >}} 
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 model = Model("my problem");
 {{< /tab >}} 
 {{< /tabpane >}}

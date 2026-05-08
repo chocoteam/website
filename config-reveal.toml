@@ -1,0 +1,38 @@
+baseURL = "https://choco-solver.org/presentations/"
+title = "Choco-solver Presentations"
+
+# Empêche la suppression du dossier 'public' de Docsy
+# On publie dans un sous-dossier spécifique
+publishDir = "public/presentations"
+contentDir = "content-reveal"
+
+# Désactive les taxonomies pour gagner en vitesse et éviter les erreurs
+disableKinds = ["taxonomy", "term", "RSS", "404"]
+
+
+[params]
+  [params.author]
+    name = "Charles Prud'homme"
+    email = "charles.prudhomme@imt-atlantique.fr"
+
+# Configuration spécifique à Reveal-hugo
+[outputFormats.Reveal]
+  baseName = "index"
+  mediaType = "text/html"
+  isHTML = true
+
+[outputs]
+  # Reveal-hugo a besoin de l'output format Reveal pour fonctionner
+  home = ["HTML", "Reveal"]
+  section = ["HTML", "Reveal"]
+  page = ["HTML", "Reveal"]
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[markup.highlight]
+codeFences = false
+
+[module]
+  [[module.imports]]
+    path = "github.com/joshed-io/reveal-hugo"

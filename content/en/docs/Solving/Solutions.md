@@ -75,6 +75,58 @@ int val = s.getIntVal(Y[0])
 
 The solution object can be used to store all variables in Choco Solver (binaries, integers, sets and reals)
 
+## Solution Management
+
+### Checking solution existence
+
+The `exists()` method checks whether a solution has been recorded:
+
+```java
+Solution solution = new Solution(model);
+if (solver.solve()) {
+    solution.record();
+}
+if (solution.exists()) {
+    System.out.println("Solution was recorded");
+}
+```
+
+### Restoring model state
+
+The `restore()` method restores the model to the state captured by a solution. This is useful when you want to return to a previously found solution state:
+
+```java
+Solution solution = new Solution(model);
+while (solver.solve()) {
+    solution.record();
+}
+// Model variables are now instantiated to values from the last solution
+// Restore the last solution to ensure variables are instantiated
+solution.restore();
+System.out.println("x = " + x.getValue());
+```
+
+This is particularly useful in multi-objective optimization or when you need to manipulate variable values after the search is complete.
+
+### Copying solutions
+
+The `copySolution()` method creates a deep copy of a solution. This is useful when you want to preserve a solution before the next iteration overwrites it:
+
+```java
+Solution solution = new Solution(model);
+List<Solution> allSolutions = new ArrayList<>();
+
+while (solver.solve()) {
+    allSolutions.add(solution.copySolution());  // deep copy
+}
+
+// Now allSolutions contains all found solutions
+// (the original solution object was reused across iterations)
+for (Solution s : allSolutions) {
+    System.out.println("x = " + s.getIntVal(x));
+}
+```
+
 ## Accessing variable value
 
 The value of a variable can be accessed directly through the `getValue()` method only once the variable is instantiated, i.e. the value has been computed

@@ -13,7 +13,7 @@ The [Considerations](/docs/considerations) page indicates the correct reference 
 ### Can a constraint be removed once resolution has begun?
 
 First and foremost, it should be noted that choco-solver was not initially designed to safely manage the removal of constraints or variables. 
-The standard scenario for using the library is as follows: declaration of the model, taht is adding variables and constraints then search for solutions (satisfaction or optimisation). It may be possible to declare variables and constraints during resolution, but this is not a problem since adding constraints simply reduces the search space.
+The standard scenario for using the library is as follows: declaration of the model, that is adding variables and constraints then search for solutions (satisfaction or optimisation). It may be possible to declare variables and constraints during resolution, but this is not a problem since adding constraints simply reduces the search space.
 
 Before resolution has begun, it is possible to remove a constraint. This is done using the `unpost()` method for constraints that have been added explicitly using the `post()` command. For constraints that have been added implicitly, for example reified, deletion is not possible. 
 

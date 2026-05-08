@@ -58,7 +58,7 @@ There are 0 solutions
 
 {{< slide id="imp4" background="#b4c6d0" >}}
 
-## :rocket: Possible improvements
+## 🚀 Possible improvements
 
 - Explaining failures (LCG)
 - Adapting the research strategy:

@@ -8,14 +8,14 @@ weight = 20
 
 ---
 
-- JRE 11+ installed ([Oracle](https://www.oracle.com/java/technologies/downloads/) or [OpenJDK](https://jdk.java.net/21/))
+- JRE 17+ installed ([Oracle](https://www.oracle.com/java/technologies/downloads/) or [OpenJDK](https://jdk.java.net/21/))
 - Easier with:
 	- an IDE: [IntelliJ IDEA](https://www.jetbrains.com/idea/), [Eclipse IDE](https://www.eclipse.org/downloads/), [Apache NetBeans](https://netbeans.apache.org/) or [VSCode](https://code.visualstudio.com/)
 	- a build automation tool: [Apache Maven 3+](https://maven.apache.org/download.cgi) or [Gradle 6+](https://gradle.org/releases/)  
 
 ---
 
-{{< slide background-iframe="https://choco-solver.org/docs/getting-started/" >}}
+{{% slide background-iframe="https://choco-solver.org/docs/getting-started/" %}}
 
 ---
 

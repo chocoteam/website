@@ -12,11 +12,19 @@ Interested in using Choco-solver in your project?
 Choco-solver is available as a Java library or a Python package.
 
 ### Java
-The only prerequisite for running Choco-solver is to have Java (Oracle JRE 11 or OpenJDK 11) installed on your machine.
-We strongly recommend to use a build automation tool, like Maven or Gradle, but adding manually the JAR file to the classpath is still an option.
+The only prerequisite for running Choco-solver is to have **Java 17** (or later) installed on your machine.
+We strongly recommend to use a build automation tool, like Maven (3.6.0+) or Gradle (6+), but adding manually the JAR file to the classpath is still an option.
 
+**Important**: `slf4j-nop` is no longer included as a runtime dependency. You must provide your own SLF4J binding (e.g., `slf4j-simple` or `logback-classic`) to avoid SLF4J warnings, or add `slf4j-nop` explicitly if you want to suppress logging:
+```xml
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-nop</artifactId>
+    <version>2.0.9</version>
+</dependency>
+```
 
-#### Maven 3+
+#### Maven 3.6.0+
 
 Copy-paste the artifact description to your `pom.xml`:
 
@@ -40,7 +48,7 @@ To test snapshot release, you should update your `pom.xml` with :
 </repository>
 {{< /highlight >}}
 
-#### Gradle 6+
+#### Gradle 6+ (requires Java 17)
 
 Copy-paste the dependency declaration in your `build.gradle`:
 
@@ -77,10 +85,9 @@ pip install pychoco
 
 Stay up to date on the development of Choco solver and reach out to the community with these helpful resources.
 
-- Join [the official Gitter room](https://gitter.im/chocoteam/choco-solver#).
-- Get help on the [google group](https://groups.google.com/forum/#!forum/choco-solver)
-- Implementation help may be found at Stack Overflow (tagged [`choco`](https://stackoverflow.com/questions/tagged/choco)).
-- Use the [issue tracker](https://github.com/chocoteam/choco-solver/issues) on GitHub to report issues. As far as possible, provide a [Minimal Working Example](https://en.wikipedia.org/wiki/Minimal_Working_Example).
+- <i class="fa-brands fa-discord"></i> Join [the Discord server](https://discord.gg/aH6zxa7e64) for discussion and quick help.
+- <i class="fa-brands fa-stack-overflow"></i> Get help on [Stack Overflow](https://stackoverflow.com/questions/tagged/choco) (tagged [`choco`](https://stackoverflow.com/questions/tagged/choco)).
+- <i class="fa-brands fa-github"></i> Use the [issue tracker](https://github.com/chocoteam/choco-solver/issues) on GitHub to report issues. As far as possible, provide a [Minimal Working Example](https://en.wikipedia.org/wiki/Minimal_Working_Example).
 
 
 Feel free to meet cho-coders : [@cprudhom](https://github.com/cprudhom) (Charles Prud'homme) and [@jgFages](https://github.com/jgFages) (Jean-Guillaume Fages) 

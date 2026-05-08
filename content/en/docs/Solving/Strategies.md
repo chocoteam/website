@@ -13,7 +13,7 @@ Thus, the search space needs to be explored using one or more *search strategies
 A search strategy defines how to explore the search space by computing *decisions*.
 A decision involves a variables, a value and an operator, e.g. $x = 5$, and triggers new constraint propagation.
 Decisions are computed and applied until all the variables are instantiated, that is, a solution has been found, or a failure has been detected (backtrack occurs).
-Choco 4.10.2 builds a binary search tree: each decision can be refuted (if $x = 5$ leads to no solution, then $x \neq 5$ is applied).
+Choco-solver builds a binary search tree: each decision can be refuted (if $x = 5$ leads to no solution, then $x \neq 5$ is applied).
 The classical search is based on [Depth First Search](http://en.wikipedia.org/wiki/Depth-first_search).
 
 **NOTE**: There are many ways to explore the search space and this steps should not be overlooked.
@@ -22,7 +22,7 @@ Thus, it is strongly recommended to adapt the search space exploration to the pr
 
 ### Default search strategy
 
-If no search strategy is specified to the resolver, Choco 4 will rely on the default one (defined by a `defaultSearch` in `Search`).
+If no search strategy is specified to the resolver, Choco-solver will rely on the default one (defined by a `defaultSearch` in `Search`).
 In many cases, this strategy will not be sufficient to produce satisfying performances and it will be necessary to specify a dedicated strategy, using `solver.setSearch(...)`.
 The default search strategy splits variables according to their type and defines specific search strategies for each type that are sequentially applied:
 
@@ -134,4 +134,144 @@ Most search strategies rely on :
 {{% alert title="Info" color="primary" %}}
 Note that some strategies are *dynamic* and might work more efficiently when combined with a [restart policy]({{< ref "Restarts.md" >}}).
 {{%/alert%}}
+
+## Advanced Search Strategy Composition
+
+### Round-robin search strategies
+
+The `roundRobinSearch` combines multiple search strategies in a cyclic fashion:
+
+```java
+import static org.chocosolver.solver.search.strategy.Search.*;
+
+// Alternate between different variable selection heuristics
+solver.setSearch(roundRobinSearch(myIntVars));
+```
+
+The `adaptiveRoundRobinSearch` is more sophisticated — it uses a **multi-armed bandit** (UCB1 algorithm) to adaptively select the best combination of variable selector, value selector, and meta-strategy based on past performance:
+
+```java
+solver.setSearch(adaptiveRoundRobinSearch(myIntVars));
+```
+
+This is particularly useful for problems where:
+- No single strategy dominates across different search phases
+- You want the solver to automatically tune its search behavior
+- You have multiple good strategies but no way to predict which will work best
+
+### BlackBoxConfigurator: Automatic search tuning
+
+`BlackBoxConfigurator` is the **recommended approach** for automatically configuring search strategies. Instead of manually specifying variable selectors, value selectors, and meta-strategies, you provide problem characteristics and let the configurator build an optimized strategy:
+
+```java
+import org.chocosolver.solver.search.strategy.BlackBoxConfigurator;
+
+Solver solver = model.getSolver();
+
+// For CSP (Constraint Satisfaction): find any feasible solution
+BlackBoxConfigurator.init()
+    .forCSP()
+    .build()
+    .configureSearch(solver);
+
+// For COP (Constraint Optimization): find optimal solution
+BlackBoxConfigurator.init()
+    .forCOP()
+    .build()
+    .configureSearch(solver);
+```
+
+**Presets:**
+- `forCSP()`: Optimized for satisfaction problems (find any solution)
+- `forCOP()`: Optimized for optimization problems (find best solution)
+
+**Customization:**
+
+You can customize the black-box configuration with additional settings:
+
+```java
+BlackBoxConfigurator.init()
+    .forCSP()
+    .searchRandomized()           // Use randomized value selection
+    .build()
+    .configureSearch(solver);
+```
+
+Example with full customization:
+
+```java
+var config = BlackBoxConfigurator.init()
+    .forCOP()
+    .searchDomOverWDeg()          // Variable selector: dom/wdeg
+    .maxDomainValues(1000)        // Adaptive heuristic for large domains
+    .build();
+
+config.configureSearch(solver);
+```
+
+**When to use:**
+- When you want **automatic tuning** without manual strategy composition
+- For **prototyping** and quick problem solving
+- When you're **unsure which strategy** would work best
+- For **production** use where you need robust default behavior
+
+### Value selectors: IntDomainSticky
+
+The `IntDomainSticky` value selector **remembers previously chosen values** for variables and tends to revisit them. This can be effective for problems with **strong locality**:
+
+```java
+import org.chocosolver.solver.search.strategy.selectors.values.IntDomainSticky;
+import static org.chocosolver.solver.search.strategy.Search.*;
+
+Solver solver = model.getSolver();
+solver.setSearch(intVarSearch(
+    new FirstFail(model),           // Variable selector
+    new IntDomainSticky(),           // Value selector (sticky)
+    myIntVars
+));
+```
+
+**When to use:**
+- Problems with **strong value clustering** (solutions group around certain value assignments)
+- **Warm-start** scenarios where you have hints from previous runs
+- Problems where **locality matters** (neighboring solutions are often good)
+
+## Comparison: Manual vs. BlackBox
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Manual Configuration" >}}
+```java
+// Explicit control, requires expertise
+solver.setSearch(
+    intVarSearch(
+        new DomOverWDeg(model),
+        new IntDomainMin(),
+        x, y, z
+    ),
+    setVarSearch(sets),
+    lastConflict(...)
+);
+```
+{{< /tab >}}
+{{< tab header="BlackBox Configuration" >}}
+```java
+// Automatic tuning, recommended for most cases
+BlackBoxConfigurator.init()
+    .forCOP()
+    .build()
+    .configureSearch(solver);
+```
+{{< /tab >}}
+{{< /tabpane >}}
+
+**BlackBox advantages:**
+- Less expertise required
+- Robustness across different problem types
+- Automatically combines multiple heuristics
+- Well-tested for typical problems
+
+**Manual configuration advantages:**
+- Fine-grained control for expert users
+- Optimization for domain-specific patterns
+- Educational value for understanding search
 

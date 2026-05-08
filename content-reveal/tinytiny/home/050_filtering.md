@@ -178,7 +178,7 @@ Well almost, but still you can pat yourself back !
 
 {{< slide id="imp2" background="#b4c6d0" >}}
 
-## :rocket: Managing backups
+## 🚀 Managing backups
 
 <small>📄"Comparing trailing and copying for constraint programming", C. Schulte, ICLP'99.</small>
 
@@ -193,7 +193,7 @@ Well almost, but still you can pat yourself back !
 
 {{< slide id="imp3" background="#b4c6d0" >}}
 
-## :rocket: Making decisions
+## 🚀 Making decisions
 
 - Dynamic criteria for variable selection
 - And value selection (_min_, _max_, _mid_, _rnd_)

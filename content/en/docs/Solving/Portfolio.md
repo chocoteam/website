@@ -13,11 +13,11 @@ _This file can be downloaded as a [jupyter notebook](https://jupyter.org/) and e
 
 ```Java
 // Add maven dependencies at runtime 
-%maven org.choco-solver:choco-solver:4.10.13
+%maven org.choco-solver:choco-solver:6.0.0
 ```
 
 -----
-Choco 4 provides a simple way to use several threads to treat a problem. The main idea of that driver is to solve the *same* model with different search strategies and to share few information to make these threads help each others.
+Choco-solver provides a simple way to use several threads to treat a problem. The main idea of that driver is to solve the *same* model with different search strategies and to share information to make these threads help each other.
 
 To use a portfolio of solvers in parallel, use `ParallelPortfolio` as follows:
 
@@ -89,7 +89,8 @@ This means that the first thread will run according to your settings whereas the
 Then, a call to `portfolio.solve()` will look for the first solution, whatever model you use to find it.
 The solver that found the solution first can then be consulted using the `portfolio.getBestModel()` method.
 
-
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="While loop" >}}
 ```Java
 int nbSols = 0;
 while (portfolio.solve()) {
@@ -99,6 +100,16 @@ while (portfolio.solve()) {
 }
 portfolio.getModels().forEach(m -> m.getSolver().reset()); // to solve the models several times
 ```
+{{< /tab >}}
+{{< tab header="Stream API" >}}
+```Java
+// Using Stream API for solution enumeration
+portfolio.streamSolutions().forEach(solution -> {
+    System.out.println(solution);
+});
+```
+{{< /tab >}}
+{{< /tabpane >}}
 
     a[9] = 80
     a[9] = 75
@@ -140,6 +151,43 @@ In such case, one can allow no-goods when those threads restart.
 portfolio.stealNogoodsOnRestarts();
 ```
 
-Doing so, anytime a thread restarts, it records not only no-goods based on the search space it has explored since last restart, but also ones of other threads (restricted to those equiped with a restart policy). 
+Doing so, anytime a thread restarts, it records not only no-goods based on the search space it has explored since last restart, but also ones of other threads (restricted to those equipped with a restart policy). 
 In that case, the models should all be identical: same variables and same constraints, declared in the same order.
 Indeed, the unique variables' id is used to share no-goods between models.
+
+### Stream-based solution enumeration
+
+In Choco, you can use the Java Stream API to enumerate solutions from the portfolio:
+
+```Java
+// Get all solutions as a stream
+portfolio.streamSolutions().forEach(solution -> {
+    Model finder = solution.getModel();  // get the model that found this solution
+    System.out.println(solution);
+});
+```
+
+This is particularly useful when you want to process solutions in a functional style or apply transformations and filters to the solution stream.
+
+### Complete example with helpers
+
+Here's a complete example combining `stealNogoodsOnRestarts()` and stream-based enumeration:
+
+```Java
+int nbModels = 5;
+ParallelPortfolio portfolio = new ParallelPortfolio();
+
+for(int s = 0; s < nbModels; s++){
+    portfolio.addModel(makeModel(s, 10));
+}
+
+// Enable no-good sharing across restarts
+portfolio.stealNogoodsOnRestarts();
+
+// Enumerate solutions using streams
+int solutionCount = (int) portfolio.streamSolutions()
+    .peek(sol -> System.out.println("Found: " + sol))
+    .count();
+
+System.out.println("Total solutions: " + solutionCount);
+```

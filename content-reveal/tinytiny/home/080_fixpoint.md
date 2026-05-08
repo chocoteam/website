@@ -183,7 +183,7 @@ outputs:
 
 {{< slide id="imp6" background="#b4c6d0" >}}
 
-## :rocket: Propagation engine
+## 🚀 Propagation engine
 
 - Event-based reasoning, advisors, watch literals
 - Scheduling and propagating

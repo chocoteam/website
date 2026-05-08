@@ -7,7 +7,7 @@ description: >
   Using explanations.
 ---
 
-From version 5.0.0, Choco-solver supports [Lazy Clause Generation](https://people.eng.unimelb.edu.au/pstuckey/papers/lazy.pdf) (LCG), even though it is not enabled by default.
+Since version 5.0.0, Choco-solver supports [Lazy Clause Generation](https://people.eng.unimelb.edu.au/pstuckey/papers/lazy.pdf) (LCG), even though it is not enabled by default. In Choco 6.0.0+, LCG is a first-class feature with enhanced configuration options.
 
 ### Principle
 
@@ -30,16 +30,31 @@ Both rely on the capacity of the explanation engine to motivate a failure, durin
 
 **API**:
 
-```java
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
 Model model = new Model(
     "My problem", 
-    Settings.init().setLCG(true)
-                   .setWarnUser(true));
-```
+    SettingsBuilder.init().setLCG(true).build());
+{{< /tab >}}
+{{< tab header="Java (5.0.x)" >}}
+Model model = new Model(
+    "My problem", 
+    Settings.init().setLCG(true));
+{{< /tab >}}
+{{< /tabpane >}}
 
-- `Settings.init()`: initializes the settings. 
-- `setLCG(true)`: enables the LCG framework.
-- `setWarnUser(true)`: enables the warning message to inform the user of the non-explained constraints.
+In Choco 6.0.0+:
+- `SettingsBuilder.init()`: creates a settings builder. Use `.prod()` or `.dev()` for preset configurations.
+- `.setLCG(true)`: enables the LCG framework.
+- `.build()`: returns the configured `Settings` object.
+
+At runtime, check if LCG is enabled with:
+```java
+Solver solver = model.getSolver();
+if (solver.isLCG()) {
+    // LCG is active
+}
+```
 
 
 ### How to equip a propagator with explanations?
@@ -100,4 +115,57 @@ In the example above, the explanation was written as an implication.
 But, any implication can be rewritten into a clause: 
 $$A \Rightarrow B \Leftrightarrow \neg A \lor B$$.
 If the premise $A$ is a conjunction of literals, like $A_1 \land A_2 \land \ldots \land A_n$, then $\neg A$ is a disjunction of the negation of each literal in $A$: $\neg A_1 \lor \neg A_2 \lor \ldots \lor \neg A_n$.
+
+## LCG Configuration Settings
+
+When LCG is enabled, you can customize its behavior through the following settings. All are configured via `SettingsBuilder`:
+
+{{< tabpane langEqualsHeader=true >}}
+{{< tab header="Java" >}}
+Model model = new Model("Problem", SettingsBuilder.init()
+    .setLCG(true)
+    .setLcgExtractFromVariablesOnSolution(false)
+    .setNbMaxLearntClauses(10000)
+    .setReduceLearntClausesBase(100)
+    .setReduceLearntClausesFactor(1.1)
+    .setSatCCMinMode(2)
+    .setReasonManager(1)
+    .setSortLitsOnSolution(true)
+    .build());
+{{< /tab >}}
+{{< /tabpane >}}
+
+### LCG Settings Reference
+
+| Setting | Method | Default | Description |
+|---------|--------|---------|-------------|
+| **LCG Enable** | `setLCG(boolean)` | `false` | Enable/disable Lazy Clause Generation framework |
+| **Extract from Variables** | `setLcgExtractFromVariablesOnSolution(boolean)` | `false` | When `true`, the solution-forbidding clause is built from current variable assignments; when `false`, from the decision path. See explanation below. |
+| **Max Learnt Clauses** | `setNbMaxLearntClauses(int)` | `100000` | Maximum number of clauses the SAT solver can learn before triggering reduction |
+| **Learnt Clause Reduction Base** | `setReduceLearntClausesBase(int)` | `100` | Initial threshold for reducing learnt clauses |
+| **Learnt Clause Reduction Factor** | `setReduceLearntClausesFactor(double)` | `1.5` | Multiplier for increasing reduction threshold after each reduction |
+| **SAT CC Min Mode** | `setSatCCMinMode(int)` | `0` | Conflict clause minimization: 0=none, 1=local, 2=recursive |
+| **Reason Manager** | `setReasonManager(int)` | `0` | Reason manager strategy: 0=none, 1=array-based, 2=chunk-based |
+| **Sort Lits on Solution** | `setSortLitsOnSolution(boolean)` | `false` | Sort solution clause literals by search-tree depth (can improve clause quality) |
+| **Lazy Lit with Weak Bounds** | `setIntVarLazyLitWithWeakBounds(boolean)` | `false` | Advanced option for literal creation |
+
+### Extract from Variables vs. Decision Path
+
+The `setLcgExtractFromVariablesOnSolution(boolean)` setting controls how the clause forbidding the current solution is constructed:
+
+- **`false` (default)**: The clause is built from the decision path (sequence of branching decisions made during search). This preserves the logical structure of the search tree.
+  
+- **`true`**: The clause is built from the current variable assignments. This can be more restrictive and may sometimes lead to more effective backjumping, but it loses information about the search path.
+
+**Example**:
+```
+Decision path: x=1 → y=2 → z=3 → solution found
+- Extract from decisions: clause forbids (x=1 ∧ y=2 ∧ z=3)
+- Extract from variables: clause forbids (x=1 ∧ y=2 ∧ z=3) - same in this case
+
+But with a more complex path (after propagation resets), extracting from 
+variables may produce different, potentially weaker clauses.
+```
+
+The choice depends on your problem structure and search characteristics. For most problems, the default (`false`) is recommended.
 

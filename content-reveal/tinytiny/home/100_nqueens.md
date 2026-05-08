@@ -53,7 +53,7 @@ Four groups of inequality <span style="color:deepskyblue;">constraints</span> ar
 
 ---
 
-## 6 Queens puzzle in Python
+## 8 Queens puzzle in Python
 
 ```python{4-6|8-13|15-17|19-23}
 import model as m

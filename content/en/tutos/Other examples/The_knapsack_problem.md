@@ -16,7 +16,7 @@ _This file can be downloaded as a [jupyter notebook](https://jupyter.org/) and e
 {{< tabpane langEqualsHeader=true >}} 
 {{< tab "Java" >}}
 // Add maven dependencies at runtime 
-%maven org.choco-solver:choco-solver:4.10.13
+%maven org.choco-solver:choco-solver:6.0.0
 {{< /tab >}}
 {{< /tabpane >}}
 

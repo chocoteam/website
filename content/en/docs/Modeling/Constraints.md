@@ -68,10 +68,10 @@ Please refer to the javadoc of `Model` to have the complete list of available co
 To be effective, a constraint must be posted to the solver. This is achieved using the `post()` method:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 model.allDifferent(vars).post();
 {{< /tab >}}
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 model.all_different(vars).post()
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -86,10 +86,10 @@ In Choco-solver, it is possible to reify any constraint. Reifying a constraint m
 to represent whether or not the constraint is satisfied :
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 BoolVar b = constraint.reify();
 {{< /tab >}}
-{{< tab "Python" >}}
+{{< tab header="Python" >}}
 b = constraint.reify()
 {{< /tab >}} 
 {{< /tabpane >}}
@@ -98,7 +98,7 @@ b = constraint.reify()
 Or:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 BoolVar b = model.boolVar();
 constraint.reifyWith(b);
 {{< /tab >}} 
@@ -110,7 +110,7 @@ Therefore, the reified constraint **should not** be posted.
 For instance, let us consider “if `x<0` then `y>42`”:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 model.ifThen(
    model.arithm(x,"<",0),
    model.arithm(y,">",42)
@@ -133,7 +133,7 @@ A constraint is reified with only one boolean variable. Multiple calls to `const
 However, the following call will associate `b1` with the constraint and then post `b1 = b2`:
 
 {{< tabpane langEqualsHeader=true >}} 
-{{< tab "Java" >}}
+{{< tab header="Java" >}}
 BoolVar b1 = model.boolVar();
 BoolVar b2 = model.boolVar();
 constraint.reifyWith(b1);
