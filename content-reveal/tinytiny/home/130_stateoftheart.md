@@ -10,7 +10,7 @@ that we do not develop
 
 ---
 
-## At the modelling level
+## From user point of view
 
 - Other kinds of variables
 - Other constraints or way to express rules
@@ -20,7 +20,7 @@ that we do not develop
 	- Alternatives to DFS
 ---
 
-## At the solving step
+## From developer point of view
 
 - Refine the way constraints are propagated
 - Fine response of propagators to variables' changes

@@ -61,7 +61,7 @@ defaultContentLanguageInSubdir = false
 
   # Search
   gcs_engine_id = "002090051099228186981:fjdyae7kf1k"
-  offlineSearch = true
+  offlineSearch = false
   algolia_docsearch = false
 
   [params.author]
@@ -71,7 +71,7 @@ defaultContentLanguageInSubdir = false
   [params.ui]
     sidebar_menu_compact = false
     breadcrumb_disable = false
-    sidebar_search_disable = false
+    sidebar_search_disable = true
     navbar_logo = true
     footer_about_enable = true
     bootstrap_version = 5

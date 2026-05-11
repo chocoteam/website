@@ -145,7 +145,8 @@ def filter(self, variables):
         return False
     variables[self.v1] = nd1 # update the domain of "x1"
     variables[self.v2] = nd2 # update the domain of "x2"
-    modif = cd1 > nd1 or cd2 > nd2 # reduction of a domain
+    # reduction of a domain ?
+    modif = len(cd1) > len(nd1) or len(cd2) > len(nd2) 
     return modif or None
 ```
 
