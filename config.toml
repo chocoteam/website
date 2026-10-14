@@ -6,7 +6,6 @@ description = "A Java library for Constraint Programming"
 enableRobotsTXT = true
 enableGitInfo = true
 enableEmoji = true
-theme = ["docsy"]
 
 disableKinds = ["taxonomy", "term", "RSS"]
 
@@ -107,11 +106,35 @@ defaultContentLanguageInSubdir = false
 [module]
   [module.hugoVersion]
     extended = true
-    min = "0.75.0"
+    min = "0.153.0"
   [[module.imports]]
     path = "github.com/google/docsy"
   [[module.imports]]
     path = "github.com/google/docsy/dependencies"
+  # User documentation and tutorials live next to the code, in docs/ of choco-solver.
+  # The version is pinned in go.mod: `hugo mod get github.com/chocoteam/choco-solver@<tag or commit>`.
+  # To preview a local clone of choco-solver:
+  #   HUGO_MODULE_REPLACEMENTS="github.com/chocoteam/choco-solver -> /path/to/choco-solver" hugo server
+  [[module.imports]]
+    path = "github.com/chocoteam/choco-solver"
+    [[module.imports.mounts]]
+      source = "docs/content"
+      target = "content"
+      [module.imports.mounts.sites.matrix]
+        languages = ["en"]
+    [[module.imports.mounts]]
+      source = "docs/static"
+      target = "static"
 
 # --- Divers ---
 time_format_default = "02.01.2006"
+# Pages coming from choco-solver: "Edit this page" links point to that repository.
+[[cascade]]
+  github_repo = "https://github.com/chocoteam/choco-solver"
+  github_branch = "develop"
+  github_subdir = ""
+  [cascade.path_base_for_github_subdir]
+    from = '^.*/docs/content/'
+    to = 'docs/content/'
+  [cascade.target]
+    path = '{/docs,/docs/**,/tutos,/tutos/**}'
