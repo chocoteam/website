@@ -3,7 +3,7 @@ Store Hugo's content and other source file of Choco-solver website.
 
 > Les pages `docs/` et `tutos/` ne sont plus ici : elles vivent dans `docs/content/` du dépôt
 > [choco-solver](https://github.com/chocoteam/choco-solver), importé comme module Hugo (voir `config.toml`).
-> Après une release : `hugo mod get github.com/chocoteam/choco-solver@vX.Y.Z`, mettre à jour `choco_version`, puis `./deploy.sh`.
+> Publication : un tag `vX.Y.Z` poussé sur choco-solver lance `.github/workflows/deploy.yml`, qui fixe la version de la doc (`hugo mod get`), met à jour `choco_version`, construit et publie le site. On peut aussi le lancer à la main (onglet Actions) avec un tag ou un commit de choco-solver ; `./deploy.sh` reste possible en local.
 > Pour prévisualiser un clone local : `HUGO_MODULE_REPLACEMENTS="github.com/chocoteam/choco-solver -> /chemin/vers/choco-solver" hugo server`.
 =======
 
